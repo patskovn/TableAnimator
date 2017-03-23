@@ -1,0 +1,16 @@
+PODS:
+  - NPTableAnimator (0.1.0)
+
+DEPENDENCIES:
+  - NPTableAnimator (from `../`)
+
+EXTERNAL SOURCES:
+  NPTableAnimator:
+    :path: ../
+
+SPEC CHECKSUMS:
+  NPTableAnimator: 8550719958a6bbbda701da599071efb88e816a61
+
+PODFILE CHECKSUM: 17e35e103bc3605ededdb5552c37cca420248e7f
+
+COCOAPODS: 1.2.0
