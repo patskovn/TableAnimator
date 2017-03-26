@@ -9,20 +9,33 @@
 import Foundation
 
 
+public enum PreferredMoveDirection {
+	
+	case top
+	
+	case bottom
+	
+}
+
 
 open class TableAnimator<Section: TableAnimatorSection> {
 	
+	private let preferredMoveDirection: PreferredMoveDirection
 	
-	open func buildAnimations(from fromList: [Section], to toList: [Section]) -> TableAnimations {
+	public init(preferredMoveDirection: PreferredMoveDirection = .top) {
+		self.preferredMoveDirection = preferredMoveDirection
+	}
+	
+	open func buildAnimations(from fromList: [Section], to toList: [Section]) -> (sections: SectionsAnimations, cells: CellsAnimations) {
 		
 		let sectionTransformResult = makeSectionTransformations(from: fromList, to: toList)
 		
-		let sectionAnimations = TableAnimations.Sections(toInsert: sectionTransformResult.toAdd
+		let sectionAnimations = SectionsAnimations(toInsert: sectionTransformResult.toAdd
 			, toDelete: sectionTransformResult.toRemove
 			, toMove: sectionTransformResult.toMove
 			, toUpdate: sectionTransformResult.toUpdate)
 		
-		var cellsAnimations = TableAnimations.Cells(toInsert: [], toDelete: [], toMove: [], toUpdate: [])
+		var cellsAnimations = CellsAnimations(toInsert: [], toDelete: [], toMove: [], toUpdate: [])
 		
 		for index in 0 ..< sectionTransformResult.existedSectionFromList.count {
 			
@@ -39,20 +52,22 @@ open class TableAnimator<Section: TableAnimatorSection> {
 		}
 		
 		
-		return TableAnimations(sections: sectionAnimations, cells: cellsAnimations)
+		return (sections: sectionAnimations, cells: cellsAnimations)
 	}
 	
 	
 	
-	private func makeSectionTransformations(from fromList: [Section], to toList: [Section]) -> SectionsTransformationResult {
+	func makeSectionTransformations(from fromList: [Section], to toList: [Section]) -> SectionsTransformationResult {
 		
 		var toAdd = IndexSet()
 		var toRemove = IndexSet()
-		var toMove = [(from: Int, to: Int)]()
 		var toUpdate = IndexSet()
 		
-		var existedSectionInFromList: [Int] = []
-		var existedSectionInToList: [Int] = []
+		var toUpdateSections = Set<Section>()
+		
+		var existedSectionIndecies: [Section : (from: Int, to: Int)] = [:]
+		var orderedExistedSectionsFrom: [(index: Int, section: Section)] = []
+		var orderedExistedSectionsTo: [(index: Int, section: Section)] = []
 		
 		
 		for (index, section) in fromList.enumerated() {
@@ -63,14 +78,11 @@ open class TableAnimator<Section: TableAnimatorSection> {
 				
 				if section.updateField != newSection.updateField {
 					toUpdate.insert(index)
+					toUpdateSections.insert(section)
 					
 				} else {
-					existedSectionInFromList.append(index)
-				}
-				
-				
-				if index != indexInNewSection {
-					toMove.append((from: index, to: indexInNewSection))
+					orderedExistedSectionsFrom.append((index, section))
+					existedSectionIndecies[section] = (index, 0)
 				}
 				
 			} else {
@@ -84,17 +96,20 @@ open class TableAnimator<Section: TableAnimatorSection> {
 			if !fromList.contains(section) {
 				toAdd.insert(index)
 			} else if section.updateField == section.updateField {
-				existedSectionInToList.append(index)
+				orderedExistedSectionsTo.append((index, section))
+				existedSectionIndecies[section]!.to = index
 			}
 		}
 		
+		
+		let toMove = recognizeSectionsMove(existedSectionIndecies: existedSectionIndecies, existedSectionsFrom: orderedExistedSectionsFrom, existedSectionsTo: orderedExistedSectionsTo)
 		
 		let result = SectionsTransformationResult(toAdd: toAdd
 			, toRemove: toRemove
 			, toMove: toMove
 			, toUpdate: toUpdate
-			, existedSectionFromList: existedSectionInFromList
-			, existedSectionToList: existedSectionInToList)
+			, existedSectionFromList: orderedExistedSectionsFrom.map{ $0.index }
+			, existedSectionToList: orderedExistedSectionsTo.map{ $0.index })
 		
 		return result
 		
@@ -102,17 +117,92 @@ open class TableAnimator<Section: TableAnimatorSection> {
 	
 	
 	
-	private func makeSingleSectionTransformation(from fromSection: Section, fromSectionIndex: Int, to toSection: Section, toSectionIndex: Int) -> TableAnimations.Cells {
+	
+	func recognizeSectionsMove(existedSectionIndecies: [Section : (from: Int, to: Int)], existedSectionsFrom: [(index: Int, section: Section)], existedSectionsTo: [(index: Int, section: Section)]) -> [(from: Int, to: Int)] {
+		
+		var toMove = [(from: Int, to: Int)]()
+		
+		var toMoveSections = Set<Section>()
+		
+		let toIndexCalculatingClosure: (Int) -> Int
+		let toEnumerateList: [(index: Int, section: Section)]
+		
+		
+		switch preferredMoveDirection {
+		case .top:
+			toEnumerateList = existedSectionsTo.reversed()
+			
+			toIndexCalculatingClosure = { existedSectionsTo.count - $0 - 1 }
+			
+		case .bottom:
+			toEnumerateList = existedSectionsTo
+			
+			toIndexCalculatingClosure = { $0 }
+			
+		}
+		
+		
+		for (anIndex, value) in toEnumerateList.enumerated() {
+			
+			let toSection = value.section
+			
+			let indexTo = toIndexCalculatingClosure(anIndex)
+			let indexFrom = existedSectionsFrom.index{ $0.section == toSection }!
+			
+			let (fromIndex, toIndex) = existedSectionIndecies[toSection]!
+			
+			
+			guard fromIndex != toIndex else { continue }
+			guard !toMoveSections.contains(toSection) else { continue }
+			
+			
+			let sectionsBeforeFrom = Set<Section>(existedSectionsFrom[0 ..< indexFrom].map{ $0.section })
+			let sectionsAfterFrom = Set<Section>(existedSectionsFrom[indexFrom + 1 ..< existedSectionsFrom.count].map{ $0.section })
+			
+			let sectionsBeforeTo = Set<Section>(existedSectionsTo[0 ..< indexTo].map{ $0.section })
+			let sectionsAfterTo = Set<Section>(existedSectionsTo[indexTo + 1 ..< existedSectionsTo.count].map{ $0.section })
+			
+			let moveFromTopToBottom = sectionsBeforeTo.subtracting(sectionsBeforeFrom)
+			let moveFromBottomToTop = sectionsAfterTo.subtracting(sectionsAfterFrom)
+			
+			
+			toMoveSections.formUnion(moveFromTopToBottom)
+			toMoveSections.formUnion(moveFromBottomToTop)
+		}
+		
+		
+		for section in toMoveSections {
+			let indexes = existedSectionIndecies[section]!
+			
+			toMove.append(indexes)
+		}
+		
+		return toMove
+	}
+	
+	
+	
+	
+	func makeSingleSectionTransformation(from fromSection: Section, fromSectionIndex: Int, to toSection: Section, toSectionIndex: Int) -> CellsAnimations {
 		
 		var toAdd = [IndexPath]()
 		var toRemove = [IndexPath]()
 		var toUpdate = [IndexPath]()
-		var toMove = [(from: IndexPath, to: IndexPath)]()
 		
+		var toUpdateCells = Set<Section.Cell>()
+		
+		var existedCellIndecies: [Section.Cell : (from: Int, to: Int)] = [:]
+		var orderedExistedCellsFrom: [(index: Int, element: Section.Cell)] = []
+		var orderedExistedCellsTo: [(index: Int, element: Section.Cell)] = []
 		
 		
 		for (index, cell) in fromSection.cells.enumerated() {
-			if !toSection.cells.contains(cell) {
+			
+			if let indexInToList = toSection.cells.index(of: cell) {
+				orderedExistedCellsFrom.append((index, cell))
+				existedCellIndecies[cell] = (index, 0)
+				
+			} else {
 				let path = IndexPath(row: index, section: fromSectionIndex)
 				toRemove.append(path)
 			}
@@ -131,27 +221,97 @@ open class TableAnimator<Section: TableAnimatorSection> {
 					toUpdate.append(path)
 				}
 				
-				
-				if indexInOldList != index {
-					let fromPath = IndexPath(row: indexInOldList, section: toSectionIndex)
-					toMove.append((from: fromPath, to: path))
-				}
-				
+				orderedExistedCellsTo.append((index, cell))
+				existedCellIndecies[cell]!.to = index
 				
 			} else {
 				toAdd.append(path)
-				
 			}
 			
 		}
 		
-		let cellsTransformations = TableAnimations.Cells(toInsert: toAdd
+		let toMove = recognizeCellsMove(existedElementsIndecies: existedCellIndecies
+			, existedElementsFrom: orderedExistedCellsFrom
+			, existedElementsTo: orderedExistedCellsTo)
+			.map {
+				(from: IndexPath(row: $0.from, section: toSectionIndex)
+					, to: IndexPath(row: $0.to, section: toSectionIndex))
+			}
+		
+		let cellsTransformations = CellsAnimations(toInsert: toAdd
 			, toDelete: toRemove
 			, toMove: toMove
 			, toUpdate: toUpdate)
 		
 		return cellsTransformations
 		
+	}
+	
+	
+	
+	
+	
+	
+	func recognizeCellsMove(existedElementsIndecies: [Section.Cell : (from: Int, to: Int)], existedElementsFrom: [(index: Int, element: Section.Cell)], existedElementsTo: [(index: Int, element: Section.Cell)]) -> [(from: Int, to: Int)] {
+		
+		var toMove = [(from: Int, to: Int)]()
+		
+		var toMoveElements = Set<Section.Cell>()
+		
+		let toIndexCalculatingClosure: (Int) -> Int
+		let toEnumerateList: [(index: Int, element: Section.Cell)]
+		
+		
+		switch preferredMoveDirection {
+		case .top:
+			toEnumerateList = existedElementsTo.reversed()
+			
+			toIndexCalculatingClosure = { existedElementsTo.count - $0 - 1 }
+			
+		case .bottom:
+			toEnumerateList = existedElementsTo
+			
+			toIndexCalculatingClosure = { $0 }
+			
+		}
+		
+		
+		for (anIndex, value) in toEnumerateList.enumerated() {
+			
+			let toSection = value.element
+			
+			let indexTo = toIndexCalculatingClosure(anIndex)
+			let indexFrom = existedElementsFrom.index{ $0.element == toSection }!
+			
+			let (fromIndex, toIndex) = existedElementsIndecies[toSection]!
+			
+			
+			guard fromIndex != toIndex else { continue }
+			guard !toMoveElements.contains(toSection) else { continue }
+			
+			
+			let elementsBeforeFrom = Set<Section.Cell>(existedElementsFrom[0 ..< indexFrom].map{ $0.element })
+			let elementsAfterFrom = Set<Section.Cell>(existedElementsFrom[indexFrom + 1 ..< existedElementsFrom.count].map{ $0.element })
+			
+			let elementsBeforeTo = Set<Section.Cell>(existedElementsTo[0 ..< indexTo].map{ $0.element })
+			let elementsAfterTo = Set<Section.Cell>(existedElementsTo[indexTo + 1 ..< existedElementsTo.count].map{ $0.element })
+			
+			let moveFromTopToBottom = elementsBeforeTo.subtracting(elementsBeforeFrom)
+			let moveFromBottomToTop = elementsAfterTo.subtracting(elementsAfterFrom)
+			
+			
+			toMoveElements.formUnion(moveFromTopToBottom)
+			toMoveElements.formUnion(moveFromBottomToTop)
+		}
+		
+		
+		for element in toMoveElements {
+			let indexes = existedElementsIndecies[element]!
+			
+			toMove.append(indexes)
+		}
+		
+		return toMove
 	}
 	
 	

@@ -16,11 +16,11 @@ public protocol TableAnimatorUpdatable {
 
 
 
-public protocol TableAnimatorCell: Equatable, TableAnimatorUpdatable {}
+public protocol TableAnimatorCell: Hashable, TableAnimatorUpdatable {}
 
 
 
-public protocol TableAnimatorSection: Equatable, TableAnimatorUpdatable {
+public protocol TableAnimatorSection: Hashable, TableAnimatorUpdatable {
 	
 	associatedtype Cell: TableAnimatorCell
 	

@@ -10,73 +10,63 @@ import UIKit
 import NPTableAnimator
 
 
-func == (lhs: MySection, rhs: MySection) -> Bool {
-	let order = Calendar.current.compare(lhs.firstCellDate, to: rhs.firstCellDate, toGranularity: .day)
-	return order == .orderedSame
-}
-
-
-func == (lhs: MyCell, rhs: MyCell) -> Bool {
+public func == (lhs: MySection, rhs: MySection) -> Bool {
 	return lhs.id == rhs.id
 }
 
 
-struct MySection: TableAnimatorSection {
+public func == (lhs: MyCell, rhs: MyCell) -> Bool {
+	return lhs.id == rhs.id
+}
+
+
+public struct MySection: TableAnimatorSection {
 	
-	typealias Cell = MyCell
+	public typealias Cell = MyCell
 	
-	typealias UpdateCellType = Date
-	
-	typealias MoveCellType = Int
+	public typealias UpdateCellType = Int
 	
 	
-	var hashValue: Int {
-		return firstCellDate.hashValue
+	public var hashValue: Int {
+		return id.hashValue
 	}
 	
-	let firstCellDate: Date
+	let id: Int
 	
-	var cells: [MyCell]
+	public var cells: [MyCell]
 	
-	var updateField: Date {
-		return firstCellDate
+	public var updateField: Int {
+		return 0
 	}
 	
-	var moveField: Int {
+	
+	subscript(value: Int) -> MyCell {
+		return cells[value]
+	}
+	
+}
+
+
+public struct MyCell: TableAnimatorCell {
+	
+	public typealias UpdateCellType = Int
+	
+	let id: Int
+	
+	public var hashValue: Int {
+		return id.hashValue
+	}
+	
+	public var updateField: Int {
 		return 0
 	}
 	
 }
 
 
-struct MyCell: TableAnimatorCell {
+public struct MySequenceIterator: IteratorProtocol {
 	
-	typealias UpdateCellType = Date
-	
-	typealias MoveCellType = Date
-	
-	let id: String
-	let timestamp: Date
-	let dateSend: Date
-	
-	var hashValue: Int {
-		return id.hashValue
-	}
-	
-	var updateField: Date {
-		return timestamp
-	}
-	
-	var moveField: Date {
-		return dateSend
-	}
-	
-}
-
-
-struct MySequenceIterator: IteratorProtocol {
-	
-	typealias Element = MySection
+	public typealias Element = MySection
 	
 	let sequence: MySequence
 	
@@ -84,7 +74,7 @@ struct MySequenceIterator: IteratorProtocol {
 		self.sequence = sequence
 	}
 	
-	mutating func next() -> MySection? {
+	mutating public func next() -> MySection? {
 		
 		let lastIndex = sequence.sections.count - 1
 		var nextIndex = 0
@@ -99,7 +89,7 @@ struct MySequenceIterator: IteratorProtocol {
 }
 
 
-struct MySequence: TableAnimationSequence {
+public struct MySequence: TableAnimationSequence {
 	
 	typealias Iterator = MySequenceIterator
 	
@@ -109,55 +99,116 @@ struct MySequence: TableAnimationSequence {
 	}
 	
 	
-	typealias Section = MySection
+	public typealias Section = MySection
 	
-	var sections: [MySection]
+	public var sections: [MySection]
 	
+	subscript(value: Int) -> MySection {
+		return sections[value]
+	}
 }
 
 
 
-class ViewController: UIViewController {
+class ViewController: UITableViewController {
 
+	var currentList: MySequence! = nil
+	
+	let animator = TableAnimator<MySection>(preferredMoveDirection: .bottom)
+	
+	@IBAction func animate(_ sender: UIBarButtonItem) {
+		
+		let toList = generateToList()
+		
+		let animations = animator.buildAnimations(from: currentList.sections, to: toList.sections)
+		
+		let savedList = currentList
+		
+		tableView.beginUpdates()
+		
+		currentList = toList
+		
+		tableView.insertSections(animations.sections.toInsert, with: .fade)
+		tableView.deleteSections(animations.sections.toDelete, with: .fade)
+		
+		for move in animations.sections.toMove {
+			tableView.moveSection(move.from, toSection: move.to)
+		}
+		
+		tableView.reloadSections(animations.sections.toUpdate, with: .none)
+		
+		tableView.insertRows(at: animations.cells.toInsert, with: .fade)
+		tableView.deleteRows(at: animations.cells.toDelete, with: .fade)
+		
+		for move in animations.cells.toMove {
+			tableView.moveRow(at: move.from, to: move.to)
+		}
+		
+		tableView.endUpdates()
+		
+	}
+	
+	
+	
+	func generateFromList() -> MySequence {
+		
+		let cells = (1...6).map{ MyCell(id: $0) }
+		
+		let sections = MySection(id: 0, cells: cells)
+		
+		return MySequence(sections: [sections])
+	}
+	
+	
+	func generateToList() -> MySequence {
+		
+		let zeroCell = MyCell(id: 0)
+		
+		var result = MySection(id: 0, cells: [])
+		
+		result.cells.append(zeroCell)
+		result.cells.append(currentList[0][2])
+		result.cells.append(currentList[0][4])
+		result.cells.append(currentList[0][5])
+		result.cells.append(currentList[0][3])
+		
+		return MySequence(sections: [result])
+	}
+	
+	
     override func viewDidLoad() {
         super.viewDidLoad()
 		
-		
-		let fromList = MySequence(sections: [])
-		let toList = MySequence(sections: [])
-		
-		let exceptionableAnimator = TableAnimationsExcaptionable<MySequence>()
-		
-		exceptionableAnimator.registerReloadExceptionComparingListClosure {
-			fromList, toList in
-			
-			if fromList.sections.count == 0 && toList.sections.count == 0 {
-				return true
-			}
-			
-			return false
-		}
-		
-		exceptionableAnimator.registerReloadException(key: "test", defaultPersistenceValue: Date()) {
-			persistableValue in
-			
-			let myDate = persistableValue as! Date
-			
-			if myDate == Date() {
-				return (true, Date())
-			}
-			
-			return (false, myDate)
-		}
-		
-		let result = exceptionableAnimator.buildAnimations(from: fromList, to: toList)
+		currentList = generateFromList()
 		
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
+	
+	override func numberOfSections(in tableView: UITableView) -> Int {
+		return currentList.sections.count
+	}
+	
+	
+	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+		return currentList.sections[section].cells.count
+	}
+	
+	
+	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		let cell = UITableViewCell()
+		
+		cell.textLabel?.text = String(currentList[indexPath.section].cells[indexPath.row].id)
+		
+		return cell
+	}
 
 }
+
+
+
+
+
+
+
+
 

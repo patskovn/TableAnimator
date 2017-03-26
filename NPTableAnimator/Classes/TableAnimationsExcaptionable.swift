@@ -13,14 +13,26 @@ public enum TableAnimatorResult {
 	
 	case reloadData
 	
-	case animations(TableAnimations)
+	case animations(sections: SectionsAnimations, cells: CellsAnimations)
 	
 }
+
+
+
+public enum TableAnimatorResultInteractived<InteractiveUpdates> {
+	
+	case reloadData
+	
+	case animations(sections: SectionsAnimations, cells: CellsAnimationsInteractived<InteractiveUpdates>)
+	
+}
+
 
 
 open class TableAnimationsExcaptionable<Sequence : TableAnimationSequence> {
 	
 	private let animator = TableAnimator<Sequence.Section>()
+	
 	private var comparingListClosure: ((Sequence, Sequence) -> Bool)?
 	private var exceptionValuesDictionary = [String : Any?]()
 	private var exceptionClosuresDictionary = [String : (Any?) -> (Bool, Any?)]()
@@ -50,7 +62,7 @@ open class TableAnimationsExcaptionable<Sequence : TableAnimationSequence> {
 			
 		} else {
 			let animations = animator.buildAnimations(from: fromList.sections, to: toList.sections)
-			return .animations(animations)
+			return TableAnimatorResult.animations(sections: animations.sections, cells: animations.cells)
 		}
 		
 	}
@@ -77,7 +89,8 @@ open class TableAnimationsExcaptionable<Sequence : TableAnimationSequence> {
 		return shouldReload
 	}
 	
-	private func isExceptionableTransformation(fromList: Sequence, toList: Sequence) -> Bool {
+	
+	func isExceptionableTransformation(fromList: Sequence, toList: Sequence) -> Bool {
 		let comparingListClosureResult = comparingListClosure?(fromList, toList) ?? false
 		let registeredExceptionsResult = checkExceptions()
 		
@@ -85,3 +98,46 @@ open class TableAnimationsExcaptionable<Sequence : TableAnimationSequence> {
 	}
 	
 }
+
+
+
+open class TableAnimationsExcaptionableInteractive<Sequence : TableAnimationSequence, InteractiveUpdate>: TableAnimationsExcaptionable<Sequence> {
+	
+	private let animator: TableAnimatorInteractiveUpdates<Sequence.Section, InteractiveUpdate>
+	
+	
+	public init(preferredMoveDirection: PreferredMoveDirection = .top, interactiveUpdatesRecognition: @escaping (Sequence.Section.Cell, Sequence.Section.Cell) -> [InteractiveUpdate]) {
+		animator = TableAnimatorInteractiveUpdates(preferredMoveDirection: preferredMoveDirection, interactiveUpdatesRecognition: interactiveUpdatesRecognition)
+	}
+	
+	
+	///Use this method instead of method of superclass!
+	open func buildAnimations(from fromList: Sequence, to toList: Sequence) -> TableAnimatorResultInteractived<InteractiveUpdate> {
+		
+		if isExceptionableTransformation(fromList: fromList, toList: toList) {
+			return .reloadData
+			
+		} else {
+			let animations = animator.buildAnimations(from: fromList.sections, to: toList.sections)
+			return TableAnimatorResultInteractived.animations(sections: animations.sections, cells: animations.cells)
+		}
+		
+	}
+	
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,9 +1,9 @@
 {
   "name": "NPTableAnimator",
   "version": "0.1.0",
-  "summary": "A short description of NPTableAnimator.",
-  "description": "TODO: Add long description of the pod here.",
-  "homepage": "https://github.com/Nikita Patskov/NPTableAnimator",
+  "summary": "Animations for UITableView and UICollectionView.",
+  "description": "This pod was developed for building table animations",
+  "homepage": "https://github.com/Nekitosss/tableAnimator.git",
   "license": {
     "type": "MIT",
     "file": "LICENSE"
@@ -12,11 +12,12 @@
     "Nikita Patskov": "patskovn@yahoo.com"
   },
   "source": {
-    "git": "https://github.com/Nikita Patskov/NPTableAnimator.git",
+    "git": "https://github.com/Nekitosss/tableAnimator.git",
     "tag": "0.1.0"
   },
   "platforms": {
     "ios": "8.0"
   },
-  "source_files": "NPTableAnimator/Classes/**/*"
+  "source_files": "NPTableAnimator/Classes/**/*",
+  "frameworks": "Foundation"
 }
