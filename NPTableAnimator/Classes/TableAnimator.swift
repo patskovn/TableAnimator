@@ -63,9 +63,7 @@ open class TableAnimator<Section: TableAnimatorSection> {
 		var toRemove = IndexSet()
 		var toUpdate = IndexSet()
 		
-		var toUpdateSections = Set<Section>()
-		
-		var existedSectionIndecies: [Section : (from: Int, to: Int)] = [:]
+		var existedSectionIndecies: [(Section, (from: Int, to: Int))] = []
 		var orderedExistedSectionsFrom: [(index: Int, section: Section)] = []
 		var orderedExistedSectionsTo: [(index: Int, section: Section)] = []
 		
@@ -78,11 +76,10 @@ open class TableAnimator<Section: TableAnimatorSection> {
 				
 				if section.updateField != newSection.updateField {
 					toUpdate.insert(index)
-					toUpdateSections.insert(section)
 					
 				} else {
 					orderedExistedSectionsFrom.append((index, section))
-					existedSectionIndecies[section] = (index, 0)
+					existedSectionIndecies.append((section, (index, 0)))
 				}
 				
 			} else {
@@ -97,7 +94,10 @@ open class TableAnimator<Section: TableAnimatorSection> {
 				toAdd.insert(index)
 			} else if section.updateField == section.updateField {
 				orderedExistedSectionsTo.append((index, section))
-				existedSectionIndecies[section]!.to = index
+				
+				let existedIndex = existedSectionIndecies.index{ $0.0 == section }!
+				
+				existedSectionIndecies[existedIndex].1.to = index
 			}
 		}
 		
@@ -118,11 +118,11 @@ open class TableAnimator<Section: TableAnimatorSection> {
 	
 	
 	
-	func recognizeSectionsMove(existedSectionIndecies: [Section : (from: Int, to: Int)], existedSectionsFrom: [(index: Int, section: Section)], existedSectionsTo: [(index: Int, section: Section)]) -> [(from: Int, to: Int)] {
+	func recognizeSectionsMove(existedSectionIndecies: [(Section, (from: Int, to: Int))], existedSectionsFrom: [(index: Int, section: Section)], existedSectionsTo: [(index: Int, section: Section)]) -> [(from: Int, to: Int)] {
 		
 		var toMove = [(from: Int, to: Int)]()
 		
-		var toMoveSections = Set<Section>()
+		var toMoveSections = [Section]()
 		
 		let toIndexCalculatingClosure: (Int) -> Int
 		let toEnumerateList: [(index: Int, section: Section)]
@@ -149,30 +149,38 @@ open class TableAnimator<Section: TableAnimatorSection> {
 			let indexTo = toIndexCalculatingClosure(anIndex)
 			let indexFrom = existedSectionsFrom.index{ $0.section == toSection }!
 			
-			let (fromIndex, toIndex) = existedSectionIndecies[toSection]!
+			let existedSectionIndex = existedSectionIndecies.index{ $0.0 == toSection }!
+			
+			
+			let (fromIndex, toIndex) = existedSectionIndecies[existedSectionIndex].1
 			
 			
 			guard fromIndex != toIndex else { continue }
 			guard !toMoveSections.contains(toSection) else { continue }
 			
 			
-			let sectionsBeforeFrom = Set<Section>(existedSectionsFrom[0 ..< indexFrom].map{ $0.section })
-			let sectionsAfterFrom = Set<Section>(existedSectionsFrom[indexFrom + 1 ..< existedSectionsFrom.count].map{ $0.section })
+			let sectionsBeforeFrom = existedSectionsFrom[0 ..< indexFrom].map{ $0.section }
+			let sectionsAfterFrom = existedSectionsFrom[indexFrom + 1 ..< existedSectionsFrom.count].map{ $0.section }
 			
-			let sectionsBeforeTo = Set<Section>(existedSectionsTo[0 ..< indexTo].map{ $0.section })
-			let sectionsAfterTo = Set<Section>(existedSectionsTo[indexTo + 1 ..< existedSectionsTo.count].map{ $0.section })
+			let sectionsBeforeTo = existedSectionsTo[0 ..< indexTo].map{ $0.section }
+			let sectionsAfterTo = existedSectionsTo[indexTo + 1 ..< existedSectionsTo.count].map{ $0.section }
 			
-			let moveFromTopToBottom = sectionsBeforeTo.subtracting(sectionsBeforeFrom)
-			let moveFromBottomToTop = sectionsAfterTo.subtracting(sectionsAfterFrom)
+			let moveFromTopToBottom = sectionsBeforeTo.filter{ !sectionsBeforeFrom.contains($0) }
+			let moveFromBottomToTop = sectionsAfterTo.filter{ !sectionsAfterFrom.contains($0) }
 			
+			for section in moveFromTopToBottom where !toMoveSections.contains(section) {
+				toMoveSections.append(section)
+			}
 			
-			toMoveSections.formUnion(moveFromTopToBottom)
-			toMoveSections.formUnion(moveFromBottomToTop)
+			for section in moveFromBottomToTop where !toMoveSections.contains(section) {
+				toMoveSections.append(section)
+			}
 		}
 		
 		
 		for section in toMoveSections {
-			let indexes = existedSectionIndecies[section]!
+			let existedSectionIndex = existedSectionIndecies.index{ $0.0 == section }!
+			let indexes = existedSectionIndecies[existedSectionIndex].1
 			
 			toMove.append(indexes)
 		}

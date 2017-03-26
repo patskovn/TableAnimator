@@ -20,7 +20,7 @@ public protocol TableAnimatorCell: Hashable, TableAnimatorUpdatable {}
 
 
 
-public protocol TableAnimatorSection: Hashable, TableAnimatorUpdatable {
+public protocol TableAnimatorSection: Equatable, TableAnimatorUpdatable {
 	
 	associatedtype Cell: TableAnimatorCell
 	

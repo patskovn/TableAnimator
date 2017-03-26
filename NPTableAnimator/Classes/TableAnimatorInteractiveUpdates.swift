@@ -12,13 +12,11 @@ import Foundation
 
 open class TableAnimatorInteractiveUpdates<Section: TableAnimatorSection, InteractiveUpdate>: TableAnimator<Section> {
 	
-	private let preferredMoveDirection: PreferredMoveDirection
-	
 	private let updatesRecognitionClosure: (_ from: Section.Cell, _ to: Section.Cell) -> [InteractiveUpdate]
 	
 	public init(preferredMoveDirection: PreferredMoveDirection = .top, interactiveUpdatesRecognition: @escaping (_ from: Section.Cell, _ to: Section.Cell) -> [InteractiveUpdate]) {
-		self.preferredMoveDirection = preferredMoveDirection
 		self.updatesRecognitionClosure = interactiveUpdatesRecognition
+		super.init(preferredMoveDirection: preferredMoveDirection)
 	}
 	
 	
