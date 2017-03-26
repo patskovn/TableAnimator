@@ -31,14 +31,17 @@ public enum TableAnimatorResultInteractived<InteractiveUpdates> {
 
 open class TableAnimationsExcaptionable<Sequence : TableAnimationSequence> {
 	
-	private let animator = TableAnimator<Sequence.Section>()
+	private let animator: TableAnimator<Sequence.Section>
 	
 	private var comparingListClosure: ((Sequence, Sequence) -> Bool)?
 	private var exceptionValuesDictionary = [String : Any?]()
 	private var exceptionClosuresDictionary = [String : (Any?) -> (Bool, Any?)]()
 	
 	
-	public init(){}
+	public init(preferredMoveDirection: PreferredMoveDirection = .top) {
+		animator = TableAnimator(preferredMoveDirection: preferredMoveDirection)
+	}
+	
 	
 	
 	open func registerReloadExceptionComparingListClosure(closure: ((Sequence, Sequence) -> Bool)?) {
@@ -50,8 +53,6 @@ open class TableAnimationsExcaptionable<Sequence : TableAnimationSequence> {
 		exceptionValuesDictionary[key] = defaultPersistenceValue
 		exceptionClosuresDictionary[key] = comparingClosure
 	}
-	
-	
 	
 	
 	

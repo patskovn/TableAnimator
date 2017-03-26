@@ -67,6 +67,8 @@ public class CellsAnimations {
 
 public class CellsAnimationsInteractived<InteractiveUpdate>: CellsAnimations {
 	
+	
+	///Note: Interactive updates should used when you no need to change cell height. Possible usage: mark message as read, show checkmark image etc.
 	public var toInteractiveUpdate: [(IndexPath, [InteractiveUpdate])]
 	
 	init(toInsert: [IndexPath], toDelete: [IndexPath], toMove: [(from: IndexPath, to: IndexPath)], toUpdate: [IndexPath], toInteractiveUpdate: [(IndexPath, [InteractiveUpdate])]) {
