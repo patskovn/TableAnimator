@@ -116,13 +116,22 @@ class ViewController: UITableViewController {
 	
 	let animator = TableAnimator<MySection>(preferredMoveDirection: .bottom)
 	
+	var animationCount = 0
+	
 	@IBAction func animate(_ sender: UIBarButtonItem) {
 		
-		let toList = generateToList()
+		let toList: MySequence
+		
+		if animationCount % 2 == 0 {
+			toList = generateToList()
+			
+		} else {
+			toList = generateFromList()
+		}
+		
+		animationCount += 1
 		
 		let animations = animator.buildAnimations(from: currentList.sections, to: toList.sections)
-		
-		let savedList = currentList
 		
 		tableView.beginUpdates()
 		
@@ -168,8 +177,8 @@ class ViewController: UITableViewController {
 		
 		result.cells.append(zeroCell)
 		result.cells.append(currentList[0][2])
-		result.cells.append(currentList[0][4])
 		result.cells.append(currentList[0][5])
+		result.cells.append(currentList[0][4])
 		result.cells.append(currentList[0][3])
 		
 		return MySequence(sections: [result])
