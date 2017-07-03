@@ -29,7 +29,7 @@ open class TableAnimatorInteractiveUpdates<Section: TableAnimatorSection, Intera
 			, toMove: sectionTransformResult.toMove
 			, toUpdate: sectionTransformResult.toUpdate)
 		
-		var cellsAnimations = CellsAnimationsInteractived<InteractiveUpdate>(toInsert: [], toDelete: [], toMove: [], toUpdate: [], toInteractiveUpdate: [])
+		let cellsAnimations = CellsAnimationsInteractived<InteractiveUpdate>(toInsert: [], toDelete: [], toMove: [], toUpdate: [], toInteractiveUpdate: [])
 		
 		for index in 0 ..< sectionTransformResult.existedSectionFromList.count {
 			
@@ -59,8 +59,6 @@ open class TableAnimatorInteractiveUpdates<Section: TableAnimatorSection, Intera
 		var toUpdate = [IndexPath]()
 		var toInteractiveUpdate = [(IndexPath, [InteractiveUpdate])]()
 		
-		var toUpdateCells = Set<Section.Cell>()
-		
 		var existedCellIndecies: [Section.Cell : (from: Int, to: Int)] = [:]
 		var orderedExistedCellsFrom: [(index: Int, element: Section.Cell)] = []
 		var orderedExistedCellsTo: [(index: Int, element: Section.Cell)] = []
@@ -68,7 +66,7 @@ open class TableAnimatorInteractiveUpdates<Section: TableAnimatorSection, Intera
 		
 		for (index, cell) in fromSection.cells.enumerated() {
 			
-			if let indexInToList = toSection.cells.index(of: cell) {
+			if toSection.cells.index(of: cell) != nil {
 				orderedExistedCellsFrom.append((index, cell))
 				existedCellIndecies[cell] = (index, 0)
 				
