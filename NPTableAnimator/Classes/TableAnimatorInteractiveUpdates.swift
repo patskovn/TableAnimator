@@ -10,7 +10,7 @@ import Foundation
 
 
 
-open class TableAnimatorInteractiveUpdates<Section: TableAnimatorSection, InteractiveUpdate>: TableAnimator<Section> {
+open class TableAnimatorInteractiveUpdates<InteractiveUpdate, Section: TableAnimatorSection>: TableAnimator<Section> {
 	
 	private let updatesRecognitionClosure: (_ from: Section.Cell, _ to: Section.Cell) -> [InteractiveUpdate]
 	

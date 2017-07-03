@@ -102,9 +102,9 @@ open class TableAnimationsExcaptionable<Sequence : TableAnimationSequence> {
 
 
 
-open class TableAnimationsExcaptionableInteractive<Sequence : TableAnimationSequence, InteractiveUpdate>: TableAnimationsExcaptionable<Sequence> {
+open class TableAnimationsExcaptionableInteractive<InteractiveUpdate, Sequence : TableAnimationSequence>: TableAnimationsExcaptionable<Sequence> {
 	
-	private let animator: TableAnimatorInteractiveUpdates<Sequence.Section, InteractiveUpdate>
+	private let animator: TableAnimatorInteractiveUpdates<InteractiveUpdate, Sequence.Section>
 	
 	
 	public init(preferredMoveDirection: PreferredMoveDirection = .top, interactiveUpdatesRecognition: @escaping (Sequence.Section.Cell, Sequence.Section.Cell) -> [InteractiveUpdate]) {
