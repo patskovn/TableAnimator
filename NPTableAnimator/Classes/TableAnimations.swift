@@ -86,7 +86,7 @@ public class CellsAnimationsInteractived<InteractiveUpdate>: CellsAnimations {
 		
 		toUpdate += cells.toUpdate
 		
-		toInteractiveUpdate += toInteractiveUpdate
+		toInteractiveUpdate += cells.toInteractiveUpdate
 	}
 	
 }
