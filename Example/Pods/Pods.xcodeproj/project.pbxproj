@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0025C5BE01C787400B5405D7A3DF9174 /* TableAnimatorInteractiveUpdates.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA23B0E89A37525BC7514B5426A3656 /* TableAnimatorInteractiveUpdates.swift */; };
 		09D81825D74284DBAE150E558214A0A4 /* TableAnimationsProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 909F1F05A8899746B14F882DF7933AC3 /* TableAnimationsProtocols.swift */; };
 		16F900438D569A9D362058F2EBFB16AC /* NPTableAnimator-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E04427797F5EB66A798188A85205CD0 /* NPTableAnimator-dummy.m */; };
 		1923CC83874971566EC4008A0D20A535 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBB3DE36805AF21409EC968A9691732F /* Foundation.framework */; };
@@ -17,7 +16,6 @@
 		62776BA469247960B03081764E0A6024 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBB3DE36805AF21409EC968A9691732F /* Foundation.framework */; };
 		63169D357B76B7D5B946A1141663058B /* Pods-NPTableAnimator_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = AF9A0BD34D85B7BD8C6D3A21BCDE2217 /* Pods-NPTableAnimator_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		65A05363ACC6EB868CF8154094D04910 /* Pods-NPTableAnimator_Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 55272C1C52571ACEFEABFF880B8AD3C2 /* Pods-NPTableAnimator_Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		6951AA1AEBD0736DCF4E6E289EDAAE11 /* TableAnimationsExcaptionable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E735FA3940A1AA2F1443DE5C0CF34601 /* TableAnimationsExcaptionable.swift */; };
 		76A592169096CCC11577FF1D6F6A20CE /* TableAnimations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31F8D0DFB175B6F6DCFFDE40401E8D18 /* TableAnimations.swift */; };
 		B5AD43B8AEEBA7C5097D5C1D7233DB3A /* Pods-NPTableAnimator_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B91FD0EBCB97DD332AF3C95830E9D60 /* Pods-NPTableAnimator_Tests-dummy.m */; };
 		E5EAEC63E958BA89913C1F7E90BC83DD /* TableAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594B96938B3C900F084C963E874892BB /* TableAnimator.swift */; };
@@ -34,13 +32,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		109F4C6CA801F61EB5EDFF9E269D3F36 /* Pods_NPTableAnimator_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_NPTableAnimator_Example.framework; path = "Pods-NPTableAnimator_Example.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		109F4C6CA801F61EB5EDFF9E269D3F36 /* Pods_NPTableAnimator_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NPTableAnimator_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2555712E6181BCBFC9FEA7414966B457 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2B91FD0EBCB97DD332AF3C95830E9D60 /* Pods-NPTableAnimator_Tests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-NPTableAnimator_Tests-dummy.m"; sourceTree = "<group>"; };
 		2E62094415029B31B875CFB08A9A7582 /* Pods-NPTableAnimator_Example-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-NPTableAnimator_Example-frameworks.sh"; sourceTree = "<group>"; };
 		31F8D0DFB175B6F6DCFFDE40401E8D18 /* TableAnimations.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TableAnimations.swift; sourceTree = "<group>"; };
 		3816571C9F76A1C7F98A288A92726E43 /* Pods-NPTableAnimator_Tests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-NPTableAnimator_Tests-frameworks.sh"; sourceTree = "<group>"; };
-		491401F09B1AA78B8D30D874ED8A0DD9 /* Pods-NPTableAnimator_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-NPTableAnimator_Tests.modulemap"; sourceTree = "<group>"; };
+		491401F09B1AA78B8D30D874ED8A0DD9 /* Pods-NPTableAnimator_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-NPTableAnimator_Tests.modulemap"; sourceTree = "<group>"; };
 		5247273906A5F8B4C70C9C658E164F16 /* Pods-NPTableAnimator_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-NPTableAnimator_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		55272C1C52571ACEFEABFF880B8AD3C2 /* Pods-NPTableAnimator_Tests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-NPTableAnimator_Tests-umbrella.h"; sourceTree = "<group>"; };
 		594B96938B3C900F084C963E874892BB /* TableAnimator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TableAnimator.swift; sourceTree = "<group>"; };
@@ -49,24 +47,22 @@
 		722C145CCCBE2A011F3932089377E5DC /* Pods-NPTableAnimator_Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-NPTableAnimator_Example-dummy.m"; sourceTree = "<group>"; };
 		7524E2B1769923D3581D1184A97BEE9D /* Pods-NPTableAnimator_Example-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-NPTableAnimator_Example-acknowledgements.markdown"; sourceTree = "<group>"; };
 		765C8196B84A8AF50EC1C6C4D2EFD3E7 /* Pods-NPTableAnimator_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-NPTableAnimator_Tests.release.xcconfig"; sourceTree = "<group>"; };
-		7D51643181B9AF3E6147C728ED9C8477 /* NPTableAnimator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = NPTableAnimator.framework; path = NPTableAnimator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		88518064A32E3370A06D74DE7086B857 /* Pods_NPTableAnimator_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_NPTableAnimator_Tests.framework; path = "Pods-NPTableAnimator_Tests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7D51643181B9AF3E6147C728ED9C8477 /* NPTableAnimator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NPTableAnimator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		88518064A32E3370A06D74DE7086B857 /* Pods_NPTableAnimator_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NPTableAnimator_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D50D6F445C6BC1C878C5179871BA4B3 /* Pods-NPTableAnimator_Example-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-NPTableAnimator_Example-resources.sh"; sourceTree = "<group>"; };
 		909F1F05A8899746B14F882DF7933AC3 /* TableAnimationsProtocols.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TableAnimationsProtocols.swift; sourceTree = "<group>"; };
 		917B04DE27BF594E9A462B503DAB7FE6 /* NPTableAnimator.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = NPTableAnimator.xcconfig; sourceTree = "<group>"; };
-		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		93C832211AE4DAA0B666799BF23E804B /* NPTableAnimator.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = NPTableAnimator.modulemap; sourceTree = "<group>"; };
+		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		93C832211AE4DAA0B666799BF23E804B /* NPTableAnimator.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = NPTableAnimator.modulemap; sourceTree = "<group>"; };
 		A63F3894F996088C39CDD5AAEBD318EC /* Pods-NPTableAnimator_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-NPTableAnimator_Example.release.xcconfig"; sourceTree = "<group>"; };
 		AF9A0BD34D85B7BD8C6D3A21BCDE2217 /* Pods-NPTableAnimator_Example-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-NPTableAnimator_Example-umbrella.h"; sourceTree = "<group>"; };
 		B048EBFE9C9543129832011E40601C44 /* NPTableAnimator-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "NPTableAnimator-umbrella.h"; sourceTree = "<group>"; };
-		BDA23B0E89A37525BC7514B5426A3656 /* TableAnimatorInteractiveUpdates.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TableAnimatorInteractiveUpdates.swift; sourceTree = "<group>"; };
 		BF8E4DCE064C74ADAE20D10C3FCC5AA0 /* Pods-NPTableAnimator_Tests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-NPTableAnimator_Tests-resources.sh"; sourceTree = "<group>"; };
-		C516407CFF40D67A43916AE2C15108B4 /* Pods-NPTableAnimator_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-NPTableAnimator_Example.modulemap"; sourceTree = "<group>"; };
+		C516407CFF40D67A43916AE2C15108B4 /* Pods-NPTableAnimator_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-NPTableAnimator_Example.modulemap"; sourceTree = "<group>"; };
 		C763766A3B46AB680B9B8F1EB61C1084 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C7BF7BB3367E9307F8B2F99DAB617292 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CBB3DE36805AF21409EC968A9691732F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		E01152713AAE12437F685DFEC440638F /* Pods-NPTableAnimator_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-NPTableAnimator_Tests.debug.xcconfig"; sourceTree = "<group>"; };
-		E735FA3940A1AA2F1443DE5C0CF34601 /* TableAnimationsExcaptionable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TableAnimationsExcaptionable.swift; sourceTree = "<group>"; };
 		F533502E1114B1F3835494FF623E83CB /* NPTableAnimator-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "NPTableAnimator-prefix.pch"; sourceTree = "<group>"; };
 		F6D04D441B4626663B769DB1E89FFB4E /* Pods-NPTableAnimator_Tests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-NPTableAnimator_Tests-acknowledgements.markdown"; sourceTree = "<group>"; };
 		F97BBA50CF22AF7B4E3FDE5633AF439A /* Pods-NPTableAnimator_Example-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-NPTableAnimator_Example-acknowledgements.plist"; sourceTree = "<group>"; };
@@ -113,7 +109,6 @@
 			children = (
 				CA54ECAFABE7E1EC518B857C4D9A0AE3 /* Classes */,
 			);
-			name = NPTableAnimator;
 			path = NPTableAnimator;
 			sourceTree = "<group>";
 		};
@@ -209,12 +204,9 @@
 			isa = PBXGroup;
 			children = (
 				31F8D0DFB175B6F6DCFFDE40401E8D18 /* TableAnimations.swift */,
-				E735FA3940A1AA2F1443DE5C0CF34601 /* TableAnimationsExcaptionable.swift */,
 				909F1F05A8899746B14F882DF7933AC3 /* TableAnimationsProtocols.swift */,
 				594B96938B3C900F084C963E874892BB /* TableAnimator.swift */,
-				BDA23B0E89A37525BC7514B5426A3656 /* TableAnimatorInteractiveUpdates.swift */,
 			);
-			name = Classes;
 			path = Classes;
 			sourceTree = "<group>";
 		};
@@ -353,10 +345,8 @@
 			files = (
 				16F900438D569A9D362058F2EBFB16AC /* NPTableAnimator-dummy.m in Sources */,
 				76A592169096CCC11577FF1D6F6A20CE /* TableAnimations.swift in Sources */,
-				6951AA1AEBD0736DCF4E6E289EDAAE11 /* TableAnimationsExcaptionable.swift in Sources */,
 				09D81825D74284DBAE150E558214A0A4 /* TableAnimationsProtocols.swift in Sources */,
 				E5EAEC63E958BA89913C1F7E90BC83DD /* TableAnimator.swift in Sources */,
-				0025C5BE01C787400B5405D7A3DF9174 /* TableAnimatorInteractiveUpdates.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

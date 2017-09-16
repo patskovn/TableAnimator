@@ -18,24 +18,36 @@ public enum PreferredMoveDirection {
 }
 
 
-open class TableAnimator<Section: TableAnimatorSection> {
+public enum TableAnimatorError: Error {
+	
+	
+	/// This error happenes, when u have two equals entityes etc.
+	case incosistencyError
+	
+}
+
+
+open class TableAnimator<Section: TableAnimatorSection, InteractiveUpdate> {
+	
+	private let updatesRecognitionClosure: (_ from: Section.Cell, _ to: Section.Cell) -> [InteractiveUpdate]
 	
 	private let preferredMoveDirection: PreferredMoveDirection
 	
-	public init(preferredMoveDirection: PreferredMoveDirection = .top) {
+	public init(preferredMoveDirection: PreferredMoveDirection = .top, interactiveUpdatesRecognition: @escaping (_ from: Section.Cell, _ to: Section.Cell) -> [InteractiveUpdate]) {
+		self.updatesRecognitionClosure = interactiveUpdatesRecognition
 		self.preferredMoveDirection = preferredMoveDirection
 	}
 	
-	open func buildAnimations(from fromList: [Section], to toList: [Section]) -> (sections: SectionsAnimations, cells: CellsAnimations) {
+	open func buildAnimations(from fromList: [Section], to toList: [Section]) throws -> (sections: SectionsAnimations, cells: CellsAnimations<InteractiveUpdate>) {
 		
-		let sectionTransformResult = makeSectionTransformations(from: fromList, to: toList)
+		let sectionTransformResult = try makeSectionTransformations(from: fromList, to: toList)
 		
 		let sectionAnimations = SectionsAnimations(toInsert: sectionTransformResult.toAdd
 			, toDelete: sectionTransformResult.toRemove
 			, toMove: sectionTransformResult.toMove
 			, toUpdate: sectionTransformResult.toUpdate)
 		
-		var cellsAnimations = CellsAnimations(toInsert: [], toDelete: [], toMove: [], toUpdate: [])
+		var cellsAnimations = CellsAnimations<InteractiveUpdate>(toInsert: [], toDelete: [], toMove: [], toUpdate: [], toInteractiveUpdate: [])
 		
 		for index in 0 ..< sectionTransformResult.existedSectionFromList.count {
 			
@@ -47,7 +59,7 @@ open class TableAnimator<Section: TableAnimatorSection> {
 			
 			let cellTransforms = makeSingleSectionTransformation(from: fromSection, fromSectionIndex: fromIndex, to: toSection, toSectionIndex: toIndex)
 			
-			cellsAnimations.add(another: cellTransforms)
+			cellsAnimations = cellsAnimations + cellTransforms
 			
 		}
 		
@@ -57,7 +69,7 @@ open class TableAnimator<Section: TableAnimatorSection> {
 	
 	
 	
-	func makeSectionTransformations(from fromList: [Section], to toList: [Section]) -> SectionsTransformationResult {
+	private func makeSectionTransformations(from fromList: [Section], to toList: [Section]) throws -> SectionsTransformationResult {
 		
 		var toAdd = IndexSet()
 		var toRemove = IndexSet()
@@ -95,14 +107,15 @@ open class TableAnimator<Section: TableAnimatorSection> {
 			} else if section.updateField == section.updateField {
 				orderedExistedSectionsTo.append((index, section))
 				
-				let existedIndex = existedSectionIndecies.index{ $0.0 == section }!
+				guard let existedIndex = existedSectionIndecies.index(where: { $0.0 == section })
+					else { throw TableAnimatorError.incosistencyError }
 				
 				existedSectionIndecies[existedIndex].1.to = index
 			}
 		}
 		
 		
-		let toMove = recognizeSectionsMove(existedSectionIndecies: existedSectionIndecies, existedSectionsFrom: orderedExistedSectionsFrom, existedSectionsTo: orderedExistedSectionsTo)
+		let toMove = try recognizeSectionsMove(existedSectionIndecies: existedSectionIndecies, existedSectionsFrom: orderedExistedSectionsFrom, existedSectionsTo: orderedExistedSectionsTo)
 		
 		let result = SectionsTransformationResult(toAdd: toAdd
 			, toRemove: toRemove
@@ -118,7 +131,7 @@ open class TableAnimator<Section: TableAnimatorSection> {
 	
 	
 	
-	func recognizeSectionsMove(existedSectionIndecies: [(Section, (from: Int, to: Int))], existedSectionsFrom: [(index: Int, section: Section)], existedSectionsTo: [(index: Int, section: Section)]) -> [(from: Int, to: Int)] {
+	private func recognizeSectionsMove(existedSectionIndecies: [(Section, (from: Int, to: Int))], existedSectionsFrom: [(index: Int, section: Section)], existedSectionsTo: [(index: Int, section: Section)]) throws -> [(from: Int, to: Int)] {
 		
 		var toMove = [(from: Int, to: Int)]()
 		
@@ -147,9 +160,11 @@ open class TableAnimator<Section: TableAnimatorSection> {
 			let toSection = value.section
 			
 			let indexTo = toIndexCalculatingClosure(anIndex)
-			let indexFrom = existedSectionsFrom.index{ $0.section == toSection }!
 			
-			let existedSectionIndex = existedSectionIndecies.index{ $0.0 == toSection }!
+			guard let indexFrom = existedSectionsFrom.index(where: { $0.section == toSection })
+				, let existedSectionIndex = existedSectionIndecies.index(where: { $0.0 == toSection })
+				else { throw TableAnimatorError.incosistencyError }
+			
 			
 			
 			let (fromIndex, toIndex) = existedSectionIndecies[existedSectionIndex].1
@@ -191,13 +206,12 @@ open class TableAnimator<Section: TableAnimatorSection> {
 	
 	
 	
-	func makeSingleSectionTransformation(from fromSection: Section, fromSectionIndex: Int, to toSection: Section, toSectionIndex: Int) -> CellsAnimations {
+	private func makeSingleSectionTransformation(from fromSection: Section, fromSectionIndex: Int, to toSection: Section, toSectionIndex: Int) -> CellsAnimations<InteractiveUpdate> {
 		
 		var toAdd = [IndexPath]()
 		var toRemove = [IndexPath]()
 		var toUpdate = [IndexPath]()
-		
-		var toUpdateCells = Set<Section.Cell>()
+		var toInteractiveUpdate = [(IndexPath, [InteractiveUpdate])]()
 		
 		var existedCellIndecies: [Section.Cell : (from: Int, to: Int)] = [:]
 		var orderedExistedCellsFrom: [(index: Int, element: Section.Cell)] = []
@@ -206,7 +220,7 @@ open class TableAnimator<Section: TableAnimatorSection> {
 		
 		for (index, cell) in fromSection.cells.enumerated() {
 			
-			if let indexInToList = toSection.cells.index(of: cell) {
+			if toSection.cells.index(of: cell) != nil {
 				orderedExistedCellsFrom.append((index, cell))
 				existedCellIndecies[cell] = (index, 0)
 				
@@ -225,8 +239,17 @@ open class TableAnimator<Section: TableAnimatorSection> {
 				
 				let oldCell = fromSection.cells[indexInOldList]
 				
+				
 				if oldCell.updateField != cell.updateField {
-					toUpdate.append(path)
+					
+					let updates = updatesRecognitionClosure(oldCell, cell)
+					
+					if updates.isEmpty {
+						toUpdate.append(path)
+					} else {
+						toInteractiveUpdate.append((path, updates))
+					}
+					
 				}
 				
 				orderedExistedCellsTo.append((index, cell))
@@ -244,23 +267,26 @@ open class TableAnimator<Section: TableAnimatorSection> {
 			.map {
 				(from: IndexPath(row: $0.from, section: toSectionIndex)
 					, to: IndexPath(row: $0.to, section: toSectionIndex))
-			}
+		}
 		
-		let cellsTransformations = CellsAnimations(toInsert: toAdd
+		let cellsTransformations = CellsAnimations<InteractiveUpdate>(toInsert: toAdd
 			, toDelete: toRemove
 			, toMove: toMove
-			, toUpdate: toUpdate)
+			, toUpdate: toUpdate
+			, toInteractiveUpdate: toInteractiveUpdate)
 		
 		return cellsTransformations
 		
 	}
 	
+
 	
 	
 	
 	
 	
-	func recognizeCellsMove(existedElementsIndecies: [Section.Cell : (from: Int, to: Int)], existedElementsFrom: [(index: Int, element: Section.Cell)], existedElementsTo: [(index: Int, element: Section.Cell)]) -> [(from: Int, to: Int)] {
+	
+	private func recognizeCellsMove(existedElementsIndecies: [Section.Cell : (from: Int, to: Int)], existedElementsFrom: [(index: Int, element: Section.Cell)], existedElementsTo: [(index: Int, element: Section.Cell)]) -> [(from: Int, to: Int)] {
 		
 		var toMove = [(from: Int, to: Int)]()
 		
@@ -340,17 +366,6 @@ struct SectionsTransformationResult {
 	let existedSectionToList: [Int]
 	
 }
-
-
-struct SingleSectionTransformationResult {
-	
-	let toAdd: [IndexPath]
-	let toRemove: [IndexPath]
-	let toUpdate: [IndexPath]
-	let toMove: [(from: IndexPath, to: IndexPath)]
-	
-}
-
 
 
 

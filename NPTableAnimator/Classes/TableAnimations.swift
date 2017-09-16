@@ -9,7 +9,7 @@
 import Foundation
 
 
-public class SectionsAnimations {
+public struct SectionsAnimations {
 	
 	public let toInsert: IndexSet
 	
@@ -30,66 +30,31 @@ public class SectionsAnimations {
 
 
 
-public class CellsAnimations {
+public struct CellsAnimations<InteractiveUpdate> {
 	
-	public var toInsert: [IndexPath]
+	public let toInsert: [IndexPath]
 	
-	public var toDelete: [IndexPath]
+	public let toDelete: [IndexPath]
 	
-	public var toMove: [(from: IndexPath, to: IndexPath)]
+	public let toMove: [(from: IndexPath, to: IndexPath)]
 	
-	public var toUpdate: [IndexPath]
-	
-	
-	func add(another cells: CellsAnimations) {
-		
-		toInsert += cells.toInsert
-		
-		toDelete += cells.toDelete
-		
-		toMove += cells.toMove
-		
-		toUpdate += cells.toUpdate
-		
-		
-	}
-	
-	
-	init(toInsert: [IndexPath], toDelete: [IndexPath], toMove: [(from: IndexPath, to: IndexPath)], toUpdate: [IndexPath]) {
-		self.toInsert = toInsert
-		self.toDelete = toDelete
-		self.toMove = toMove
-		self.toUpdate = toUpdate
-	}
-	
-}
-
-
-public class CellsAnimationsInteractived<InteractiveUpdate>: CellsAnimations {
-	
+	public let toUpdate: [IndexPath]
 	
 	///Note: Interactive updates should used when you no need to change cell height. Possible usage: mark message as read, show checkmark image etc.
-	public var toInteractiveUpdate: [(IndexPath, [InteractiveUpdate])]
+	public let toInteractiveUpdate: [(IndexPath, [InteractiveUpdate])]
 	
-	init(toInsert: [IndexPath], toDelete: [IndexPath], toMove: [(from: IndexPath, to: IndexPath)], toUpdate: [IndexPath], toInteractiveUpdate: [(IndexPath, [InteractiveUpdate])]) {
-		self.toInteractiveUpdate = toInteractiveUpdate
-		super.init(toInsert: toInsert, toDelete: toDelete, toMove: toMove, toUpdate: toUpdate)
-	}
 	
-	func add(another cells: CellsAnimationsInteractived) {
+	static func +(left: CellsAnimations<InteractiveUpdate>, right: CellsAnimations<InteractiveUpdate>) -> CellsAnimations<InteractiveUpdate> {
 		
-		toInsert += cells.toInsert
-		
-		toDelete += cells.toDelete
-		
-		toMove += cells.toMove
-		
-		toUpdate += cells.toUpdate
-		
-		toInteractiveUpdate += toInteractiveUpdate
+		return CellsAnimations<InteractiveUpdate>(toInsert: left.toInsert + right.toInsert
+			, toDelete: left.toDelete + right.toDelete
+			, toMove: left.toMove + right.toMove
+			, toUpdate: left.toUpdate + right.toUpdate
+			, toInteractiveUpdate: left.toInteractiveUpdate + right.toInteractiveUpdate)
 	}
 	
 }
+
 
 
 

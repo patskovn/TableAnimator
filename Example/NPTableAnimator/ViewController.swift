@@ -114,7 +114,7 @@ class ViewController: UITableViewController {
 
 	var currentList: MySequence! = nil
 	
-	let animator = TableAnimator<MySection>(preferredMoveDirection: .bottom)
+	let animator = TableAnimator<MySection, Void>(preferredMoveDirection: .bottom) {_ in []}
 	
 	var animationCount = 0
 	
@@ -131,7 +131,7 @@ class ViewController: UITableViewController {
 		
 		animationCount += 1
 		
-		let animations = animator.buildAnimations(from: currentList.sections, to: toList.sections)
+		let animations = try! animator.buildAnimations(from: currentList.sections, to: toList.sections)
 		
 		tableView.beginUpdates()
 		
