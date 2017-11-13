@@ -89,7 +89,7 @@ public struct MySequenceIterator: IteratorProtocol {
 }
 
 
-public struct MySequence: TableAnimationSequence {
+public struct MySequence {
 	
 	typealias Iterator = MySequenceIterator
 	
@@ -114,7 +114,9 @@ class ViewController: UITableViewController {
 
 	var currentList: MySequence! = nil
 	
-	let animator = TableAnimator<MySection, Void>(preferredMoveDirection: .bottom) {_ in []}
+	private class UpdateRecognizer: TableAnimatorUpdateRecognizer<MySection.Cell, Void> {}
+	
+	let animator = TableAnimator<MySection, Void>()
 	
 	var animationCount = 0
 	

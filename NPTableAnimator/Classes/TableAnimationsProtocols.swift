@@ -16,6 +16,7 @@ public protocol TableAnimatorUpdatable {
 
 
 
+
 public protocol TableAnimatorCell: Hashable, TableAnimatorUpdatable {}
 
 
@@ -27,15 +28,5 @@ public protocol TableAnimatorSection: Equatable, TableAnimatorUpdatable {
 	var cells: [Cell] { get }
 	
 }
-
-
-
-public protocol TableAnimationSequence {
-	
-	associatedtype Section: TableAnimatorSection
-	
-	var sections: [Section] { get }
-}
-
 
 

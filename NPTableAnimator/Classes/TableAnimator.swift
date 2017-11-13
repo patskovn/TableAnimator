@@ -9,36 +9,52 @@
 import Foundation
 
 
-public enum PreferredMoveDirection {
-	
-	case top
-	
-	case bottom
-	
-}
-
 
 public enum TableAnimatorError: Error {
 	
 	
-	/// This error happenes, when u have two equals entityes etc.
-	case incosistencyError
-	
+	/// This error happens, when u have two equals entityes etc.
+	case inconsistencyError
+}
+
+
+public struct TableAnimatorConfiguration<Section: TableAnimatorSection, InteractiveUpdate> {
+	public let cellMoveCalculatingStrategy: MoveCalculatingStrategy<Section.Cell>
+	public let sectionMoveCalculatingStrategy: MoveCalculatingStrategy<Section>
+	public let updateCalculatingStrategy: UpdateCalculatingStrategy<Section.Cell, InteractiveUpdate>
+	public let isConsistencyValidationEnabled = true
 }
 
 
 open class TableAnimator<Section: TableAnimatorSection, InteractiveUpdate> {
 	
-	private let updatesRecognitionClosure: (_ from: Section.Cell, _ to: Section.Cell) -> [InteractiveUpdate]
+	private let cellMoveCalculatingStrategy: MoveCalculatingStrategy<Section.Cell>
+	private let sectionMoveCalculatingStrategy: MoveCalculatingStrategy<Section>
+	private let updateCalculatingStrategy: UpdateCalculatingStrategy<Section.Cell, InteractiveUpdate>
+	private let isConsistencyValidationEnabled: Bool
 	
-	private let preferredMoveDirection: PreferredMoveDirection
 	
-	public init(preferredMoveDirection: PreferredMoveDirection = .top, interactiveUpdatesRecognition: @escaping (_ from: Section.Cell, _ to: Section.Cell) -> [InteractiveUpdate]) {
-		self.updatesRecognitionClosure = interactiveUpdatesRecognition
-		self.preferredMoveDirection = preferredMoveDirection
+	public init(configuration: TableAnimatorConfiguration<Section, InteractiveUpdate>) {
+		self.cellMoveCalculatingStrategy = configuration.cellMoveCalculatingStrategy
+		self.sectionMoveCalculatingStrategy = configuration.sectionMoveCalculatingStrategy
+		self.updateCalculatingStrategy = configuration.updateCalculatingStrategy
+		self.isConsistencyValidationEnabled = configuration.isConsistencyValidationEnabled
 	}
 	
+	
+	public init() {
+		self.cellMoveCalculatingStrategy = .top
+		self.sectionMoveCalculatingStrategy = .top
+		self.updateCalculatingStrategy = .default
+		self.isConsistencyValidationEnabled = true
+	}
+	
+	
 	open func buildAnimations(from fromList: [Section], to toList: [Section]) throws -> (sections: SectionsAnimations, cells: CellsAnimations<InteractiveUpdate>) {
+		
+		if isConsistencyValidationEnabled {
+			try validateSectionsConsistency(fromList: fromList, toList: toList)
+		}
 		
 		let sectionTransformResult = try makeSectionTransformations(from: fromList, to: toList)
 		
@@ -47,7 +63,7 @@ open class TableAnimator<Section: TableAnimatorSection, InteractiveUpdate> {
 			, toMove: sectionTransformResult.toMove
 			, toUpdate: sectionTransformResult.toUpdate)
 		
-		var cellsAnimations = CellsAnimations<InteractiveUpdate>(toInsert: [], toDelete: [], toMove: [], toUpdate: [], toInteractiveUpdate: [])
+		var cellsAnimations = CellsAnimations<InteractiveUpdate>(toInsert: [], toDelete: [], toMove: [], toUpdate: [], toDeferredUpdate: [], toInteractiveUpdate: [])
 		
 		for index in 0 ..< sectionTransformResult.existedSectionFromList.count {
 			
@@ -63,10 +79,23 @@ open class TableAnimator<Section: TableAnimatorSection, InteractiveUpdate> {
 			
 		}
 		
-		
 		return (sections: sectionAnimations, cells: cellsAnimations)
 	}
+
 	
+	private func validateSectionsConsistency(fromList: [Section], toList: [Section]) throws {
+		
+		func validateSections(list: [Section]) throws {
+			let arrayElements = list.flatMap({ $0.cells })
+			
+			guard arrayElements.count == Set(arrayElements).count else {
+				throw TableAnimatorError.inconsistencyError
+			}
+		}
+		
+		try validateSections(list: fromList)
+		try validateSections(list: toList)
+	}
 	
 	
 	private func makeSectionTransformations(from fromList: [Section], to toList: [Section]) throws -> SectionsTransformationResult {
@@ -75,7 +104,7 @@ open class TableAnimator<Section: TableAnimatorSection, InteractiveUpdate> {
 		var toRemove = IndexSet()
 		var toUpdate = IndexSet()
 		
-		var existedSectionIndecies: [(Section, (from: Int, to: Int))] = []
+		var existedSectionIndexes: [(Section, (from: Int, to: Int))] = []
 		var orderedExistedSectionsFrom: [(index: Int, section: Section)] = []
 		var orderedExistedSectionsTo: [(index: Int, section: Section)] = []
 		
@@ -91,7 +120,7 @@ open class TableAnimator<Section: TableAnimatorSection, InteractiveUpdate> {
 					
 				} else {
 					orderedExistedSectionsFrom.append((index, section))
-					existedSectionIndecies.append((section, (index, 0)))
+					existedSectionIndexes.append((section, (index, 0)))
 				}
 				
 			} else {
@@ -107,15 +136,16 @@ open class TableAnimator<Section: TableAnimatorSection, InteractiveUpdate> {
 			} else if section.updateField == section.updateField {
 				orderedExistedSectionsTo.append((index, section))
 				
-				guard let existedIndex = existedSectionIndecies.index(where: { $0.0 == section })
-					else { throw TableAnimatorError.incosistencyError }
+				guard let existedIndex = existedSectionIndexes.index(where: { $0.0 == section })
+					else { throw TableAnimatorError.inconsistencyError
+				}
 				
-				existedSectionIndecies[existedIndex].1.to = index
+				existedSectionIndexes[existedIndex].1.to = index
 			}
 		}
 		
 		
-		let toMove = try recognizeSectionsMove(existedSectionIndecies: existedSectionIndecies, existedSectionsFrom: orderedExistedSectionsFrom, existedSectionsTo: orderedExistedSectionsTo)
+		let toMove = try recognizeSectionsMove(existedSectionIndexes: existedSectionIndexes, existedSectionsFrom: orderedExistedSectionsFrom, existedSectionsTo: orderedExistedSectionsTo)
 		
 		let result = SectionsTransformationResult(toAdd: toAdd
 			, toRemove: toRemove
@@ -125,77 +155,81 @@ open class TableAnimator<Section: TableAnimatorSection, InteractiveUpdate> {
 			, existedSectionToList: orderedExistedSectionsTo.map{ $0.index })
 		
 		return result
-		
 	}
 	
 	
 	
 	
-	private func recognizeSectionsMove(existedSectionIndecies: [(Section, (from: Int, to: Int))], existedSectionsFrom: [(index: Int, section: Section)], existedSectionsTo: [(index: Int, section: Section)]) throws -> [(from: Int, to: Int)] {
+	private func recognizeSectionsMove(existedSectionIndexes: [(Section, (from: Int, to: Int))], existedSectionsFrom: [(index: Int, section: Section)], existedSectionsTo: [(index: Int, section: Section)]) throws -> [(from: Int, to: Int)] {
 		
 		var toMove = [(from: Int, to: Int)]()
-		
-		var toMoveSections = [Section]()
-		
+		let toMoveSequence: [Section]
 		let toIndexCalculatingClosure: (Int) -> Int
 		let toEnumerateList: [(index: Int, section: Section)]
 		
+		func calculateToMoveElementsWithPreferredDirection() throws -> [Section] {
+			
+			var toMoveElements = [Section]()
+			
+			for (anIndex, value) in toEnumerateList.enumerated() {
+				
+				let toSection = value.section
+				
+				let indexTo = toIndexCalculatingClosure(anIndex)
+				
+				guard let indexFrom = existedSectionsFrom.index(where: { $0.section == toSection })
+					, let existedSectionIndex = existedSectionIndexes.index(where: { $0.0 == toSection })
+					else { throw TableAnimatorError.inconsistencyError }
+				
+				let (fromIndex, toIndex) = existedSectionIndexes[existedSectionIndex].1
+				
+				guard fromIndex != toIndex else { continue }
+				guard !toMoveElements.contains(toSection) else { continue }
+				
+				
+				let sectionsBeforeFrom = existedSectionsFrom[0 ..< indexFrom].map{ $0.section }
+				let sectionsAfterFrom = existedSectionsFrom[indexFrom + 1 ..< existedSectionsFrom.count].map{ $0.section }
+				
+				let sectionsBeforeTo = existedSectionsTo[0 ..< indexTo].map{ $0.section }
+				let sectionsAfterTo = existedSectionsTo[indexTo + 1 ..< existedSectionsTo.count].map{ $0.section }
+				
+				let moveFromTopToBottom = sectionsBeforeTo.filter{ !sectionsBeforeFrom.contains($0) }
+				let moveFromBottomToTop = sectionsAfterTo.filter{ !sectionsAfterFrom.contains($0) }
+				
+				for section in moveFromTopToBottom where !toMoveElements.contains(section) {
+					toMoveElements.append(section)
+				}
+				
+				for section in moveFromBottomToTop where !toMoveElements.contains(section) {
+					toMoveElements.append(section)
+				}
+			}
+			
+			return toMoveElements
+		}
 		
-		switch preferredMoveDirection {
+		
+		switch sectionMoveCalculatingStrategy {
 		case .top:
 			toEnumerateList = existedSectionsTo.reversed()
-			
 			toIndexCalculatingClosure = { existedSectionsTo.count - $0 - 1 }
+			toMoveSequence = try calculateToMoveElementsWithPreferredDirection()
 			
 		case .bottom:
 			toEnumerateList = existedSectionsTo
-			
 			toIndexCalculatingClosure = { $0 }
+			toMoveSequence = try calculateToMoveElementsWithPreferredDirection()
 			
+		case .directRecognition(let recognizer):
+			toMoveSequence = zip(existedSectionsFrom, existedSectionsTo)
+				.filter { recognizer.recognizeMove(from: $0.1, to: $1.1) }
+				.reduce(into: []) { if !$0.contains($1.1.section) { $0.append($1.1.section) } }
 		}
 		
 		
-		for (anIndex, value) in toEnumerateList.enumerated() {
-			
-			let toSection = value.section
-			
-			let indexTo = toIndexCalculatingClosure(anIndex)
-			
-			guard let indexFrom = existedSectionsFrom.index(where: { $0.section == toSection })
-				, let existedSectionIndex = existedSectionIndecies.index(where: { $0.0 == toSection })
-				else { throw TableAnimatorError.incosistencyError }
-			
-			
-			
-			let (fromIndex, toIndex) = existedSectionIndecies[existedSectionIndex].1
-			
-			
-			guard fromIndex != toIndex else { continue }
-			guard !toMoveSections.contains(toSection) else { continue }
-			
-			
-			let sectionsBeforeFrom = existedSectionsFrom[0 ..< indexFrom].map{ $0.section }
-			let sectionsAfterFrom = existedSectionsFrom[indexFrom + 1 ..< existedSectionsFrom.count].map{ $0.section }
-			
-			let sectionsBeforeTo = existedSectionsTo[0 ..< indexTo].map{ $0.section }
-			let sectionsAfterTo = existedSectionsTo[indexTo + 1 ..< existedSectionsTo.count].map{ $0.section }
-			
-			let moveFromTopToBottom = sectionsBeforeTo.filter{ !sectionsBeforeFrom.contains($0) }
-			let moveFromBottomToTop = sectionsAfterTo.filter{ !sectionsAfterFrom.contains($0) }
-			
-			for section in moveFromTopToBottom where !toMoveSections.contains(section) {
-				toMoveSections.append(section)
-			}
-			
-			for section in moveFromBottomToTop where !toMoveSections.contains(section) {
-				toMoveSections.append(section)
-			}
-		}
-		
-		
-		for section in toMoveSections {
-			let existedSectionIndex = existedSectionIndecies.index{ $0.0 == section }!
-			let indexes = existedSectionIndecies[existedSectionIndex].1
+		for section in toMoveSequence {
+			let existedSectionIndex = existedSectionIndexes.index{ $0.0 == section }!
+			let indexes = existedSectionIndexes[existedSectionIndex].1
 			
 			toMove.append(indexes)
 		}
@@ -210,24 +244,47 @@ open class TableAnimator<Section: TableAnimatorSection, InteractiveUpdate> {
 		
 		var toAdd = [IndexPath]()
 		var toRemove = [IndexPath]()
-		var toUpdate = [IndexPath]()
+		var toDeferredUpdate = [IndexPath]()
 		var toInteractiveUpdate = [(IndexPath, [InteractiveUpdate])]()
-		
-		var existedCellIndecies: [Section.Cell : (from: Int, to: Int)] = [:]
+		var toUpdate = [IndexPath]()
+
+		var existedCellIndexes: [Section.Cell : (from: Int, to: Int)] = [:]
 		var orderedExistedCellsFrom: [(index: Int, element: Section.Cell)] = []
 		var orderedExistedCellsTo: [(index: Int, element: Section.Cell)] = []
 		
 		
 		for (index, cell) in fromSection.cells.enumerated() {
-			
-			if toSection.cells.index(of: cell) != nil {
+
+			let path = IndexPath(row: index, section: fromSectionIndex)
+
+			if let indexInNewList = toSection.cells.index(of: cell) {
 				orderedExistedCellsFrom.append((index, cell))
-				existedCellIndecies[cell] = (index, 0)
+				existedCellIndexes[cell] = (index, 0)
+
+				let newCell = toSection.cells[indexInNewList]
+
+				let interactiveUpdates: [InteractiveUpdate]
 				
+				switch updateCalculatingStrategy {
+				case .default:
+					interactiveUpdates = []
+					
+				case .withInteractiveUpdateRecognition(let recognizer):
+					interactiveUpdates = recognizer.recognizeInteractiveUpdate(from: cell, to: newCell)
+				}
+
+				if !interactiveUpdates.isEmpty {
+					toInteractiveUpdate.append((path, interactiveUpdates))
+
+				} else if cell.updateField != newCell.updateField {
+					toUpdate.append(path)
+				}
+
 			} else {
 				let path = IndexPath(row: index, section: fromSectionIndex)
 				toRemove.append(path)
 			}
+
 		}
 		
 		
@@ -239,21 +296,12 @@ open class TableAnimator<Section: TableAnimatorSection, InteractiveUpdate> {
 				
 				let oldCell = fromSection.cells[indexInOldList]
 				
-				
 				if oldCell.updateField != cell.updateField {
-					
-					let updates = updatesRecognitionClosure(oldCell, cell)
-					
-					if updates.isEmpty {
-						toUpdate.append(path)
-					} else {
-						toInteractiveUpdate.append((path, updates))
-					}
-					
+					toDeferredUpdate.append(path)
 				}
 				
 				orderedExistedCellsTo.append((index, cell))
-				existedCellIndecies[cell]!.to = index
+				existedCellIndexes[cell]!.to = index
 				
 			} else {
 				toAdd.append(path)
@@ -261,86 +309,94 @@ open class TableAnimator<Section: TableAnimatorSection, InteractiveUpdate> {
 			
 		}
 		
-		let toMove = recognizeCellsMove(existedElementsIndecies: existedCellIndecies
+		let toMove = recognizeCellsMove(existedElementsIndexes: existedCellIndexes
 			, existedElementsFrom: orderedExistedCellsFrom
 			, existedElementsTo: orderedExistedCellsTo)
-			.map {
-				(from: IndexPath(row: $0.from, section: toSectionIndex)
-					, to: IndexPath(row: $0.to, section: toSectionIndex))
-		}
-		
-		let cellsTransformations = CellsAnimations<InteractiveUpdate>(toInsert: toAdd
+			.map { (from: IndexPath(row: $0.from, section: toSectionIndex) , to: IndexPath(row: $0.to, section: toSectionIndex)) }
+
+		toUpdate = toUpdate.filter{ toUpdateIndex in toMove.contains(where: { $0.from == toUpdateIndex }) }
+		toDeferredUpdate = toDeferredUpdate.filter { !toUpdate.contains($0) }
+
+		let cellsTransformations = CellsAnimations(toInsert: toAdd
 			, toDelete: toRemove
 			, toMove: toMove
 			, toUpdate: toUpdate
+			, toDeferredUpdate: toDeferredUpdate
 			, toInteractiveUpdate: toInteractiveUpdate)
 		
 		return cellsTransformations
 		
 	}
 	
-
 	
 	
 	
-	
-	
-	
-	private func recognizeCellsMove(existedElementsIndecies: [Section.Cell : (from: Int, to: Int)], existedElementsFrom: [(index: Int, element: Section.Cell)], existedElementsTo: [(index: Int, element: Section.Cell)]) -> [(from: Int, to: Int)] {
+	private func recognizeCellsMove(existedElementsIndexes: [Section.Cell : (from: Int, to: Int)], existedElementsFrom: [(index: Int, element: Section.Cell)], existedElementsTo: [(index: Int, element: Section.Cell)]) -> [(from: Int, to: Int)] {
 		
 		var toMove = [(from: Int, to: Int)]()
 		
-		var toMoveElements = Set<Section.Cell>()
-		
+		let toMoveSequence: Set<Section.Cell>
 		let toIndexCalculatingClosure: (Int) -> Int
 		let toEnumerateList: [(index: Int, element: Section.Cell)]
 		
 		
-		switch preferredMoveDirection {
+		func calculateToMoveElementsWithPreferredDirection() -> Set<Section.Cell> {
+			
+			var toMoveElements = Set<Section.Cell>()
+			
+			for (anIndex, value) in toEnumerateList.enumerated() {
+				
+				let toSection = value.element
+				
+				let indexTo = toIndexCalculatingClosure(anIndex)
+				let indexFrom = existedElementsFrom.index{ $0.element == toSection }!
+				
+				let (fromIndex, toIndex) = existedElementsIndexes[toSection]!
+				
+				
+				guard fromIndex != toIndex else { continue }
+				guard !toMoveElements.contains(toSection) else { continue }
+				
+				
+				let elementsBeforeFrom = Set<Section.Cell>(existedElementsFrom[0 ..< indexFrom].map{ $0.element })
+				let elementsAfterFrom = Set<Section.Cell>(existedElementsFrom[indexFrom + 1 ..< existedElementsFrom.count].map{ $0.element })
+				
+				let elementsBeforeTo = Set<Section.Cell>(existedElementsTo[0 ..< indexTo].map{ $0.element })
+				let elementsAfterTo = Set<Section.Cell>(existedElementsTo[indexTo + 1 ..< existedElementsTo.count].map{ $0.element })
+				
+				let moveFromTopToBottom = elementsBeforeTo.subtracting(elementsBeforeFrom)
+				let moveFromBottomToTop = elementsAfterTo.subtracting(elementsAfterFrom)
+				
+				
+				toMoveElements.formUnion(moveFromTopToBottom)
+				toMoveElements.formUnion(moveFromBottomToTop)
+			}
+			
+			return toMoveElements
+		}
+		
+		
+		switch cellMoveCalculatingStrategy {
 		case .top:
 			toEnumerateList = existedElementsTo.reversed()
-			
 			toIndexCalculatingClosure = { existedElementsTo.count - $0 - 1 }
+			toMoveSequence = calculateToMoveElementsWithPreferredDirection()
 			
 		case .bottom:
 			toEnumerateList = existedElementsTo
-			
 			toIndexCalculatingClosure = { $0 }
+			toMoveSequence = calculateToMoveElementsWithPreferredDirection()
 			
+		case .directRecognition(let recognizer):
+			toMoveSequence = zip(existedElementsFrom, existedElementsTo)
+				.filter { recognizer.recognizeMove(from: $0.1, to: $1.1) }
+				.reduce([]) { return $0.union([$1.1.element]) }
 		}
 		
 		
-		for (anIndex, value) in toEnumerateList.enumerated() {
-			
-			let toSection = value.element
-			
-			let indexTo = toIndexCalculatingClosure(anIndex)
-			let indexFrom = existedElementsFrom.index{ $0.element == toSection }!
-			
-			let (fromIndex, toIndex) = existedElementsIndecies[toSection]!
-			
-			
-			guard fromIndex != toIndex else { continue }
-			guard !toMoveElements.contains(toSection) else { continue }
-			
-			
-			let elementsBeforeFrom = Set<Section.Cell>(existedElementsFrom[0 ..< indexFrom].map{ $0.element })
-			let elementsAfterFrom = Set<Section.Cell>(existedElementsFrom[indexFrom + 1 ..< existedElementsFrom.count].map{ $0.element })
-			
-			let elementsBeforeTo = Set<Section.Cell>(existedElementsTo[0 ..< indexTo].map{ $0.element })
-			let elementsAfterTo = Set<Section.Cell>(existedElementsTo[indexTo + 1 ..< existedElementsTo.count].map{ $0.element })
-			
-			let moveFromTopToBottom = elementsBeforeTo.subtracting(elementsBeforeFrom)
-			let moveFromBottomToTop = elementsAfterTo.subtracting(elementsAfterFrom)
-			
-			
-			toMoveElements.formUnion(moveFromTopToBottom)
-			toMoveElements.formUnion(moveFromBottomToTop)
-		}
 		
-		
-		for element in toMoveElements {
-			let indexes = existedElementsIndecies[element]!
+		for element in toMoveSequence {
+			let indexes = existedElementsIndexes[element]!
 			
 			toMove.append(indexes)
 		}
@@ -354,7 +410,7 @@ open class TableAnimator<Section: TableAnimatorSection, InteractiveUpdate> {
 
 
 
-struct SectionsTransformationResult {
+private struct SectionsTransformationResult {
 	
 	let toAdd: IndexSet
 	let toRemove: IndexSet
@@ -364,7 +420,6 @@ struct SectionsTransformationResult {
 	//Количество элементов в массивах должно совпадать
 	let existedSectionFromList: [Int]
 	let existedSectionToList: [Int]
-	
 }
 
 

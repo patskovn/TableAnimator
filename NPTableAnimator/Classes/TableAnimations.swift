@@ -18,14 +18,6 @@ public struct SectionsAnimations {
 	public let toMove : [(from: Int, to: Int)]
 	
 	public let toUpdate: IndexSet
-	
-	init(toInsert: IndexSet, toDelete: IndexSet, toMove : [(from: Int, to: Int)], toUpdate: IndexSet) {
-		self.toInsert = toInsert
-		self.toDelete = toDelete
-		self.toMove = toMove
-		self.toUpdate = toUpdate
-	}
-	
 }
 
 
@@ -39,7 +31,9 @@ public struct CellsAnimations<InteractiveUpdate> {
 	public let toMove: [(from: IndexPath, to: IndexPath)]
 	
 	public let toUpdate: [IndexPath]
-	
+
+	public let toDeferredUpdate: [IndexPath]
+
 	///Note: Interactive updates should used when you no need to change cell height. Possible usage: mark message as read, show checkmark image etc.
 	public let toInteractiveUpdate: [(IndexPath, [InteractiveUpdate])]
 	
@@ -50,6 +44,7 @@ public struct CellsAnimations<InteractiveUpdate> {
 			, toDelete: left.toDelete + right.toDelete
 			, toMove: left.toMove + right.toMove
 			, toUpdate: left.toUpdate + right.toUpdate
+			, toDeferredUpdate: left.toDeferredUpdate + right.toDeferredUpdate
 			, toInteractiveUpdate: left.toInteractiveUpdate + right.toInteractiveUpdate)
 	}
 	
