@@ -19,6 +19,7 @@
 		76A592169096CCC11577FF1D6F6A20CE /* TableAnimations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31F8D0DFB175B6F6DCFFDE40401E8D18 /* TableAnimations.swift */; };
 		B5AD43B8AEEBA7C5097D5C1D7233DB3A /* Pods-NPTableAnimator_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B91FD0EBCB97DD332AF3C95830E9D60 /* Pods-NPTableAnimator_Tests-dummy.m */; };
 		E5EAEC63E958BA89913C1F7E90BC83DD /* TableAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594B96938B3C900F084C963E874892BB /* TableAnimator.swift */; };
+		FD3A37F01FBB55E900032077 /* TableAnimationApplier.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD3A37EF1FBB55E900032077 /* TableAnimationApplier.swift */; };
 		FD58FF9A1FBA0F7C000A1296 /* TableAnimatorConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD58FF991FBA0F7C000A1296 /* TableAnimatorConfiguration.swift */; };
 /* End PBXBuildFile section */
 
@@ -67,6 +68,9 @@
 		F533502E1114B1F3835494FF623E83CB /* NPTableAnimator-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "NPTableAnimator-prefix.pch"; sourceTree = "<group>"; };
 		F6D04D441B4626663B769DB1E89FFB4E /* Pods-NPTableAnimator_Tests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-NPTableAnimator_Tests-acknowledgements.markdown"; sourceTree = "<group>"; };
 		F97BBA50CF22AF7B4E3FDE5633AF439A /* Pods-NPTableAnimator_Example-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-NPTableAnimator_Example-acknowledgements.plist"; sourceTree = "<group>"; };
+		FD3A37EF1FBB55E900032077 /* TableAnimationApplier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableAnimationApplier.swift; sourceTree = "<group>"; };
+		FD3A37F81FBB630900032077 /* NPTableAnimator_Mac.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NPTableAnimator_Mac.h; sourceTree = "<group>"; };
+		FD3A37F91FBB630900032077 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FD58FF991FBA0F7C000A1296 /* TableAnimatorConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableAnimatorConfiguration.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -155,6 +159,7 @@
 			children = (
 				93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */,
 				0180DDE46D826782795C0787C5F353D2 /* Development Pods */,
+				FD3A37F71FBB630900032077 /* NPTableAnimator_Mac */,
 				BC3CA7F9E30CC8F7E2DD044DD34432FC /* Frameworks */,
 				C5EC5D33E5278A9AEC966A2ECA4DFD26 /* Products */,
 				BF95403F883A7D22510AE5D4E9A55001 /* Targets Support Files */,
@@ -209,6 +214,7 @@
 				909F1F05A8899746B14F882DF7933AC3 /* TableAnimationsProtocols.swift */,
 				594B96938B3C900F084C963E874892BB /* TableAnimator.swift */,
 				FD58FF991FBA0F7C000A1296 /* TableAnimatorConfiguration.swift */,
+				FD3A37EF1FBB55E900032077 /* TableAnimationApplier.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -229,6 +235,15 @@
 			);
 			name = "Pods-NPTableAnimator_Example";
 			path = "Target Support Files/Pods-NPTableAnimator_Example";
+			sourceTree = "<group>";
+		};
+		FD3A37F71FBB630900032077 /* NPTableAnimator_Mac */ = {
+			isa = PBXGroup;
+			children = (
+				FD3A37F81FBB630900032077 /* NPTableAnimator_Mac.h */,
+				FD3A37F91FBB630900032077 /* Info.plist */,
+			);
+			path = NPTableAnimator_Mac;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -352,6 +367,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				16F900438D569A9D362058F2EBFB16AC /* NPTableAnimator-dummy.m in Sources */,
+				FD3A37F01FBB55E900032077 /* TableAnimationApplier.swift in Sources */,
 				76A592169096CCC11577FF1D6F6A20CE /* TableAnimations.swift in Sources */,
 				09D81825D74284DBAE150E558214A0A4 /* TableAnimationsProtocols.swift in Sources */,
 				E5EAEC63E958BA89913C1F7E90BC83DD /* TableAnimator.swift in Sources */,

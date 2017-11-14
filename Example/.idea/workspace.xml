@@ -1,25 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e14af699-019c-4cfe-ae58-264e4fbcbc84" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/.name" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/Example.iml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/dictionaries/nikitapatskov.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/runConfigurations/NPTableAnimator_Example.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/xcode.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/NPTableAnimator.xcodeproj/project.pbxproj" afterPath="$PROJECT_DIR$/NPTableAnimator.xcodeproj/project.pbxproj" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/NPTableAnimator.xcodeproj/xcshareddata/xcschemes/NPTableAnimator-Example.xcscheme" afterPath="$PROJECT_DIR$/NPTableAnimator.xcodeproj/xcshareddata/xcschemes/NPTableAnimator-Example.xcscheme" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/NPTableAnimator/ViewController.swift" afterPath="$PROJECT_DIR$/NPTableAnimator/ViewController.swift" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/Pods.xcodeproj/project.pbxproj" afterPath="$PROJECT_DIR$/Pods/Pods.xcodeproj/project.pbxproj" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../NPTableAnimator.podspec" afterPath="$PROJECT_DIR$/../NPTableAnimator.podspec" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../NPTableAnimator/Classes/TableAnimations.swift" afterPath="$PROJECT_DIR$/../NPTableAnimator/Classes/TableAnimations.swift" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../NPTableAnimator/Classes/TableAnimationsProtocols.swift" afterPath="$PROJECT_DIR$/../NPTableAnimator/Classes/TableAnimationsProtocols.swift" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../NPTableAnimator/Classes/TableAnimator.swift" afterPath="$PROJECT_DIR$/../NPTableAnimator/Classes/TableAnimator.swift" />
-    </list>
+    <list default="true" id="e14af699-019c-4cfe-ae58-264e4fbcbc84" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -43,8 +25,8 @@
       <file leaf-file-name="TableAnimator.swift" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/../NPTableAnimator/Classes/TableAnimator.swift">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="539">
-              <caret line="55" column="38" lean-forward="false" selection-start-line="55" selection-start-column="16" selection-end-line="55" selection-end-column="38" />
+            <state relative-caret-position="314">
+              <caret line="40" column="27" lean-forward="true" selection-start-line="40" selection-start-column="27" selection-end-line="40" selection-end-column="27" />
               <folding />
             </state>
           </provider>
@@ -66,8 +48,12 @@
             <state relative-caret-position="-268">
               <caret line="91" column="24" lean-forward="false" selection-start-line="91" selection-start-column="24" selection-end-line="91" selection-end-column="24" />
               <folding>
-                <marker date="1510585108000" expanded="true" signature="1779:4099" ph="{...}" />
-                <marker date="1510585108000" expanded="true" signature="3503:3579" ph="{...}" />
+                <marker date="1510597241000" expanded="true" signature="1779:4145" ph="{...}" />
+                <marker date="1510597241000" expanded="true" signature="2038:2951" ph="{...}" />
+                <marker date="1510597241000" expanded="true" signature="2997:3144" ph="{...}" />
+                <marker date="1510597241000" expanded="true" signature="3186:3512" ph="{...}" />
+                <marker date="1510597241000" expanded="true" signature="3549:3625" ph="{...}" />
+                <marker date="1510597241000" expanded="true" signature="3999:4142" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -196,12 +182,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1510584578244</updated>
-      <workItem from="1510584580501" duration="1877000" />
+      <workItem from="1510584580501" duration="2411000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1877000" />
+    <option name="totallyTimeSpent" value="2411000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="28" width="1920" height="978" extended-state="6" />
@@ -250,8 +236,12 @@
         <state relative-caret-position="-268">
           <caret line="91" column="24" lean-forward="false" selection-start-line="91" selection-start-column="24" selection-end-line="91" selection-end-column="24" />
           <folding>
-            <marker date="1510585108000" expanded="true" signature="1779:4099" ph="{...}" />
-            <marker date="1510585108000" expanded="true" signature="3503:3579" ph="{...}" />
+            <marker date="1510597241000" expanded="true" signature="1779:4145" ph="{...}" />
+            <marker date="1510597241000" expanded="true" signature="2038:2951" ph="{...}" />
+            <marker date="1510597241000" expanded="true" signature="2997:3144" ph="{...}" />
+            <marker date="1510597241000" expanded="true" signature="3186:3512" ph="{...}" />
+            <marker date="1510597241000" expanded="true" signature="3549:3625" ph="{...}" />
+            <marker date="1510597241000" expanded="true" signature="3999:4142" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -274,8 +264,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/../NPTableAnimator/Classes/TableAnimator.swift">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="539">
-          <caret line="55" column="38" lean-forward="false" selection-start-line="55" selection-start-column="16" selection-end-line="55" selection-end-column="38" />
+        <state relative-caret-position="314">
+          <caret line="40" column="27" lean-forward="true" selection-start-line="40" selection-start-column="27" selection-end-line="40" selection-end-column="27" />
           <folding />
         </state>
       </provider>
