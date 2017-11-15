@@ -10,22 +10,90 @@ import Foundation
 
 
 
+/// Possible TableAnmator errors.
+///
+/// - inconsistencyError: This error happens, when u have two equals entityes etc.
 public enum TableAnimatorError: Error {
-	
 	
 	/// This error happens, when u have two equals entityes etc.
 	case inconsistencyError
 }
 
 
+/// Configuration, that TableAnimator will use for calculations.
 public struct TableAnimatorConfiguration<Section: TableAnimatorSection, InteractiveUpdate> {
+	
+	/// You may provide algorhytm for calculating cells move here. Details are described in **MoveCalculatingStrategy** description.
 	public let cellMoveCalculatingStrategy: MoveCalculatingStrategy<Section.Cell>
+	
+	/// You may provide algorhytm for calculating sections move here. Details are described in **MoveCalculatingStrategy** description.
 	public let sectionMoveCalculatingStrategy: MoveCalculatingStrategy<Section>
+	
+	
+	/// You may provide algorhytm for calculating cells move here. Details are described in **UpdateCalculatingStrategy** description.
 	public let updateCalculatingStrategy: UpdateCalculatingStrategy<Section.Cell, InteractiveUpdate>
+	
+	
+	
+	/** Flag for configuring feed consistency checking. Adds additional check to cells uniqueness.
+	Section like
+	
+		[0, 1, 2, 3]
+	will pass validation cause all elements in section are unique, but
+	
+		[0, 0, 1, 2]
+	will throw **TableAnimatorError.inconsistencyError**.
+	By setting this property to *false*, you guarantee that all cells are unique.
+	If you set this flag to *false* and pass not unique items, animator may return wrong calculations.
+	*/
 	public let isConsistencyValidationEnabled = true
 }
 
 
+private struct DefaultSection<Cell: TableAnimatorCell>: TableAnimatorSection {
+	
+	let updateField = 0
+	
+	var cells: [Cell]
+	
+	static func == (lhs: DefaultSection, rhs: DefaultSection) -> Bool {
+		return true
+	}
+	
+}
+
+
+
+/// Class, that should be used for calculate one section changes only.
+/// Details are described in **TableAnimator** description.
+open class SingleSectionTableAnimator<Cell: TableAnimatorCell, InteractiveUpdate>: TableAnimator<DefaultSection<Cell>, InteractiveUpdate> {
+	
+	
+	/// Function calculates animations between two lists.
+	///	- Note: This funcion only calculates animations, not applying them.
+	///
+	/// - Parameters:
+	///   - fromCells: initial cells.
+	///   - toCells: result cells.
+	/// - Returns: Calculated changes.
+	/// - Throws: *TableAnimatorError*
+	open func buildAnimations(fromCells: [Cell], toCells: [Cell]) throws -> CellsAnimations<InteractiveUpdate> {
+		let fromSection = DefaultSection(cells: fromCells)
+		let toSection = DefaultSection(cells: toCells)
+		
+		return try buildAnimations(from: [fromSection], to: [toSection]).cells
+	}
+	
+}
+
+
+
+/** **TableAnimator** takes to sequences and calcuate difference between them.
+
+- Note: Animator cant calculate difference, if you do not guarantee elements uniqueness inside sequence.
+	 	Details are described in **TableAnimatorConfiguration.isConsistencyValidationEnabled** description.
+- Note: If you do not want to use interactive updates in your calculations, you may mark InteractiveUpdate type as Void.
+*/
 open class TableAnimator<Section: TableAnimatorSection, InteractiveUpdate> {
 	
 	private let cellMoveCalculatingStrategy: MoveCalculatingStrategy<Section.Cell>
@@ -34,6 +102,9 @@ open class TableAnimator<Section: TableAnimatorSection, InteractiveUpdate> {
 	private let isConsistencyValidationEnabled: Bool
 	
 	
+	/// Use this init for perfect configuring animator behavior.
+	///
+	/// - Parameter configuration: Configuration, that TableAnimator will use for calculations.
 	public init(configuration: TableAnimatorConfiguration<Section, InteractiveUpdate>) {
 		self.cellMoveCalculatingStrategy = configuration.cellMoveCalculatingStrategy
 		self.sectionMoveCalculatingStrategy = configuration.sectionMoveCalculatingStrategy
@@ -42,6 +113,7 @@ open class TableAnimator<Section: TableAnimatorSection, InteractiveUpdate> {
 	}
 	
 	
+	/// Use this *init* for default and simpliest (not fastest) behavior.
 	public init() {
 		self.cellMoveCalculatingStrategy = .top
 		self.sectionMoveCalculatingStrategy = .top
@@ -50,6 +122,14 @@ open class TableAnimator<Section: TableAnimatorSection, InteractiveUpdate> {
 	}
 	
 	
+	/// Function calculates animations between two lists.
+	///	- Note: This funcion only calculates animations, not applying them.
+	///
+	/// - Parameters:
+	///   - fromList: initial list.
+	///   - toList: result list.
+	/// - Returns: Calculated changes.
+	/// - Throws: *TableAnimatorError*
 	open func buildAnimations(from fromList: [Section], to toList: [Section]) throws -> (sections: SectionsAnimations, cells: CellsAnimations<InteractiveUpdate>) {
 		
 		if isConsistencyValidationEnabled {

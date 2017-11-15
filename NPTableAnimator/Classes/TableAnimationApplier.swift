@@ -14,7 +14,16 @@ import Foundation
 	
 	extension UIKit.UITableView {
 		
-		public func apply<InteractiveUpdates>(animations: (cells: CellsAnimations<InteractiveUpdates>, sections: SectionsAnimations), setNewListBlock: () -> Void, applyAnimationsToCell: @escaping (UITableViewCell, [InteractiveUpdates]) -> Void, completion: (() -> Void)?, rowAnimation: UITableViewRowAnimation) {
+		/// Use this for applying changes for UITableView.
+		///
+		/// - Note: If you have no interactive updates, you may mark InteractiveUpdate type as Void and pass nil to applyAnimationsToCell closure.
+		/// - Parameters:
+		///   - animations: Changes, calculated by **TableAnimator**
+		///   - setNewListBlock: You should provide block, where you doing something like 'myItems = newItems'
+		///   - applyAnimationsToCell: If you have interactive updates, pass this closure for apply interactive animations for cells.
+		///   - completion: Completion block, that will be called when animation end.
+		///   - rowAnimation: UITableView animation style.
+		public func apply<InteractiveUpdates>(animations: (cells: CellsAnimations<InteractiveUpdates>, sections: SectionsAnimations), setNewListBlock: () -> Void, applyAnimationsToCell: ((UITableViewCell, [InteractiveUpdates]) -> Void)?, completion: (() -> Void)?, rowAnimation: UITableViewRowAnimation) {
 			
 			let setAnimationsClosure = {
 				self.insertSections(animations.sections.toInsert, with: rowAnimation)
@@ -35,7 +44,7 @@ import Foundation
 				
 				for (path, updates) in animations.cells.toInteractiveUpdate {
 					guard let cell = self.cellForRow(at: path) else { continue }
-					applyAnimationsToCell(cell, updates)
+					applyAnimationsToCell?(cell, updates)
 				}
 			}
 			
@@ -85,7 +94,15 @@ import Foundation
 	
 	extension UIKit.UICollectionView {
 		
-		public func apply<InteractiveUpdates>(animations: (cells: CellsAnimations<InteractiveUpdates>, sections: SectionsAnimations), setNewListBlock: () -> Void, applyAnimationsToCell: @escaping (UICollectionViewCell, [InteractiveUpdates]) -> Void, completion: (() -> Void)?) {
+		/// Use this for applying changes for UICollectionView.
+		///
+		/// - Note: If you have no interactive updates, you may mark InteractiveUpdate type as Void and pass nil to applyAnimationsToCell closure.
+		/// - Parameters:
+		///   - animations: Changes, calculated by **TableAnimator**
+		///   - setNewListBlock: You should provide block, where you doing something like 'myItems = newItems'
+		///   - applyAnimationsToCell: If you have interactive updates, pass this closure for apply interactive animations for cells.
+		///   - completion: Completion block, that will be called when animation end.
+		public func apply<InteractiveUpdates>(animations: (cells: CellsAnimations<InteractiveUpdates>, sections: SectionsAnimations), setNewListBlock: () -> Void, applyAnimationsToCell: ((UICollectionViewCell, [InteractiveUpdates]) -> Void)?, completion: (() -> Void)?) {
 			
 			self.performBatchUpdates({
 				setNewListBlock()
@@ -107,7 +124,7 @@ import Foundation
 				
 				for (path, updates) in animations.cells.toInteractiveUpdate {
 					guard let cell = self.cellForItem(at: path) else { continue }
-					applyAnimationsToCell(cell, updates)
+					applyAnimationsToCell?(cell, updates)
 				}
 			}, completion: { _ in
 				if animations.cells.toDeferredUpdate.isEmpty {
