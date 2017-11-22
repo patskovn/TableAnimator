@@ -35,7 +35,28 @@ public struct TableAnimatorConfiguration<Section: TableAnimatorSection, Interact
 	By setting this property to *false*, you guarantee that all cells are unique.
 	If you set this flag to *false* and pass not unique items, animator may return wrong calculations.
 	*/
-	public let isConsistencyValidationEnabled = true
+	public let isConsistencyValidationEnabled: Bool
+	
+	
+	public init(cellMoveCalculatingStrategy: MoveCalculatingStrategy<Section.Cell>,
+																  sectionMoveCalculatingStrategy: MoveCalculatingStrategy<Section>,
+																  updateCalculatingStrategy: UpdateCalculatingStrategy<Section.Cell, InteractiveUpdate>,
+																  isConsistencyValidationEnabled: Bool) {
+		self.cellMoveCalculatingStrategy = cellMoveCalculatingStrategy
+		self.sectionMoveCalculatingStrategy = sectionMoveCalculatingStrategy
+		self.updateCalculatingStrategy = updateCalculatingStrategy
+		self.isConsistencyValidationEnabled = isConsistencyValidationEnabled
+		
+	}
+	
+	
+	public init() {
+		self.cellMoveCalculatingStrategy = .top
+		self.sectionMoveCalculatingStrategy = .top
+		self.updateCalculatingStrategy = .default
+		self.isConsistencyValidationEnabled = true
+	}
+	
 }
 
 

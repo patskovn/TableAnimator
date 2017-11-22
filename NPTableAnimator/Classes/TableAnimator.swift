@@ -48,11 +48,8 @@ open class TableAnimator<Section: TableAnimatorSection, InteractiveUpdate> {
 	
 	
 	/// Use this *init* for default and simpliest (not fastest) behavior.
-	public init() {
-		self.cellMoveCalculatingStrategy = .top
-		self.sectionMoveCalculatingStrategy = .top
-		self.updateCalculatingStrategy = .default
-		self.isConsistencyValidationEnabled = true
+	public convenience init() {
+		self.init(configuration: .init())
 	}
 	
 	

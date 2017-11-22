@@ -134,6 +134,8 @@ class ViewController: UITableViewController {
 		animationCount += 1
 		
 		let animations = try! animator.buildAnimations(from: currentList.sections, to: toList.sections)
+		var conf = TableAnimatorConfiguration<MySection, Void>.init()
+		
 		
 		tableView.beginUpdates()
 		
