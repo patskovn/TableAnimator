@@ -347,14 +347,7 @@ open class TableAnimator<Section: TableAnimatorSection, InteractiveUpdate> {
 	
 	private func recognizeCellsMove(existedElementsIndexes: [Section.Cell : (from: Int, to: Int)], existedElementsFrom: [(index: Int, element: Section.Cell)], existedElementsTo: [(index: Int, element: Section.Cell)]) -> [(from: Int, to: Int)] {
 		
-		var toMove = [(from: Int, to: Int)]()
-		
-		let toMoveSequence: Set<Section.Cell>
-		let toIndexCalculatingClosure: (Int) -> Int
-		let toEnumerateList: [(index: Int, element: Section.Cell)]
-		
-		
-		func calculateToMoveElementsWithPreferredDirection() -> Set<Section.Cell> {
+		func calculateToMoveElementsWithPreferredDirection(toIndexCalculatingClosure: (Int) -> Int, toEnumerateList: [(index: Int, element: Section.Cell)]) -> Set<Section.Cell> {
 			
 			var toMoveElements = Set<Section.Cell>()
 			
@@ -406,7 +399,12 @@ open class TableAnimator<Section: TableAnimatorSection, InteractiveUpdate> {
 				.reduce([]) { return $0.union([$1.1.element]) }
 		}
 		
-		return toMoveSequence.reduce(into: [], { $0.append(existedElementsIndexes[$1]!) })
+		return toMoveSequence.reduce(into: []) {
+			let move = existedElementsIndexes[$1]!
+			if move.from != move.to {
+				$0.append(existedElementsIndexes[$1]!)
+			}
+		}
 	}
 	
 	
