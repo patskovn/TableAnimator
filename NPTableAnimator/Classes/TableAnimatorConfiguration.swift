@@ -9,6 +9,37 @@ import Foundation
 
 
 
+/// Configuration, that TableAnimator will use for calculations.
+public struct TableAnimatorConfiguration<Section: TableAnimatorSection, InteractiveUpdate> {
+	
+	/// You may provide algorhytm for calculating cells move here. Details are described in **MoveCalculatingStrategy** description.
+	public let cellMoveCalculatingStrategy: MoveCalculatingStrategy<Section.Cell>
+	
+	/// You may provide algorhytm for calculating sections move here. Details are described in **MoveCalculatingStrategy** description.
+	public let sectionMoveCalculatingStrategy: MoveCalculatingStrategy<Section>
+	
+	
+	/// You may provide algorhytm for calculating cells move here. Details are described in **UpdateCalculatingStrategy** description.
+	public let updateCalculatingStrategy: UpdateCalculatingStrategy<Section.Cell, InteractiveUpdate>
+	
+	
+	
+	/** Flag for configuring feed consistency checking. Adds additional check to cells uniqueness.
+	Section like
+	
+	[0, 1, 2, 3]
+	will pass validation cause all elements in section are unique, but
+	
+	[0, 0, 1, 2]
+	will throw **TableAnimatorError.inconsistencyError**.
+	By setting this property to *false*, you guarantee that all cells are unique.
+	If you set this flag to *false* and pass not unique items, animator may return wrong calculations.
+	*/
+	public let isConsistencyValidationEnabled = true
+}
+
+
+
 
 /// You should implement this if your sections or cells has special *sortKey*. Details are described in **MoveCalculatingStrategy** description.
 open class TableAnimatorMoveRecognizer<Element> {

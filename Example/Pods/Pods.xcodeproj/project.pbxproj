@@ -21,6 +21,7 @@
 		E5EAEC63E958BA89913C1F7E90BC83DD /* TableAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594B96938B3C900F084C963E874892BB /* TableAnimator.swift */; };
 		FD3A37F01FBB55E900032077 /* TableAnimationApplier.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD3A37EF1FBB55E900032077 /* TableAnimationApplier.swift */; };
 		FD58FF9A1FBA0F7C000A1296 /* TableAnimatorConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD58FF991FBA0F7C000A1296 /* TableAnimatorConfiguration.swift */; };
+		FD5AEC151FC16F1400DF9642 /* SingleSectionTableAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD5AEC141FC16F1400DF9642 /* SingleSectionTableAnimator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,6 +73,7 @@
 		FD3A37F81FBB630900032077 /* NPTableAnimator_Mac.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NPTableAnimator_Mac.h; sourceTree = "<group>"; };
 		FD3A37F91FBB630900032077 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FD58FF991FBA0F7C000A1296 /* TableAnimatorConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableAnimatorConfiguration.swift; sourceTree = "<group>"; };
+		FD5AEC141FC16F1400DF9642 /* SingleSectionTableAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleSectionTableAnimator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -213,6 +215,7 @@
 				31F8D0DFB175B6F6DCFFDE40401E8D18 /* TableAnimations.swift */,
 				909F1F05A8899746B14F882DF7933AC3 /* TableAnimationsProtocols.swift */,
 				594B96938B3C900F084C963E874892BB /* TableAnimator.swift */,
+				FD5AEC141FC16F1400DF9642 /* SingleSectionTableAnimator.swift */,
 				FD58FF991FBA0F7C000A1296 /* TableAnimatorConfiguration.swift */,
 				FD3A37EF1FBB55E900032077 /* TableAnimationApplier.swift */,
 			);
@@ -372,6 +375,7 @@
 				09D81825D74284DBAE150E558214A0A4 /* TableAnimationsProtocols.swift in Sources */,
 				E5EAEC63E958BA89913C1F7E90BC83DD /* TableAnimator.swift in Sources */,
 				FD58FF9A1FBA0F7C000A1296 /* TableAnimatorConfiguration.swift in Sources */,
+				FD5AEC151FC16F1400DF9642 /* SingleSectionTableAnimator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

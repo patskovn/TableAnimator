@@ -215,10 +215,12 @@
 				TargetAttributes = {
 					607FACCF1AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
+						DevelopmentTeam = TXT5Y2EP72;
 						LastSwiftMigration = 0910;
 					};
 					607FACE41AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
+						DevelopmentTeam = TXT5Y2EP72;
 						LastSwiftMigration = 0910;
 						TestTargetID = 607FACCF1AFB9204008FA782;
 					};
@@ -512,6 +514,7 @@
 			baseConfigurationReference = DE18D53D5CB997DE832D3A72 /* Pods-NPTableAnimator_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = TXT5Y2EP72;
 				INFOPLIST_FILE = NPTableAnimator/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
@@ -527,6 +530,7 @@
 			baseConfigurationReference = 4CF05F7E930583AF41F22CC1 /* Pods-NPTableAnimator_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = TXT5Y2EP72;
 				INFOPLIST_FILE = NPTableAnimator/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
@@ -541,6 +545,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9A6D78143581B5DA6DD6FA93 /* Pods-NPTableAnimator_Tests.debug.xcconfig */;
 			buildSettings = {
+				DEVELOPMENT_TEAM = TXT5Y2EP72;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -562,6 +567,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A35F24D00A0667E32C17BD68 /* Pods-NPTableAnimator_Tests.release.xcconfig */;
 			buildSettings = {
+				DEVELOPMENT_TEAM = TXT5Y2EP72;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",

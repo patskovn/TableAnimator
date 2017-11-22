@@ -26,6 +26,9 @@ public struct SectionsAnimations {
 }
 
 
+/// Cells animations without interactive updates
+public typealias DefaultCellsAnimations = CellsAnimations<Void>
+
 
 /// Structure contains information about cells change.
 public struct CellsAnimations<InteractiveUpdate> {

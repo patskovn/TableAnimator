@@ -20,72 +20,6 @@ public enum TableAnimatorError: Error {
 }
 
 
-/// Configuration, that TableAnimator will use for calculations.
-public struct TableAnimatorConfiguration<Section: TableAnimatorSection, InteractiveUpdate> {
-	
-	/// You may provide algorhytm for calculating cells move here. Details are described in **MoveCalculatingStrategy** description.
-	public let cellMoveCalculatingStrategy: MoveCalculatingStrategy<Section.Cell>
-	
-	/// You may provide algorhytm for calculating sections move here. Details are described in **MoveCalculatingStrategy** description.
-	public let sectionMoveCalculatingStrategy: MoveCalculatingStrategy<Section>
-	
-	
-	/// You may provide algorhytm for calculating cells move here. Details are described in **UpdateCalculatingStrategy** description.
-	public let updateCalculatingStrategy: UpdateCalculatingStrategy<Section.Cell, InteractiveUpdate>
-	
-	
-	
-	/** Flag for configuring feed consistency checking. Adds additional check to cells uniqueness.
-	Section like
-	
-		[0, 1, 2, 3]
-	will pass validation cause all elements in section are unique, but
-	
-		[0, 0, 1, 2]
-	will throw **TableAnimatorError.inconsistencyError**.
-	By setting this property to *false*, you guarantee that all cells are unique.
-	If you set this flag to *false* and pass not unique items, animator may return wrong calculations.
-	*/
-	public let isConsistencyValidationEnabled = true
-}
-
-
-private struct DefaultSection<Cell: TableAnimatorCell>: TableAnimatorSection {
-	
-	let updateField = 0
-	
-	var cells: [Cell]
-	
-	static func == (lhs: DefaultSection, rhs: DefaultSection) -> Bool {
-		return true
-	}
-	
-}
-
-
-
-/// Class, that should be used for calculate one section changes only.
-/// Details are described in **TableAnimator** description.
-open class SingleSectionTableAnimator<Cell: TableAnimatorCell, InteractiveUpdate>: TableAnimator<DefaultSection<Cell>, InteractiveUpdate> {
-	
-	
-	/// Function calculates animations between two lists.
-	///	- Note: This funcion only calculates animations, not applying them.
-	///
-	/// - Parameters:
-	///   - fromCells: initial cells.
-	///   - toCells: result cells.
-	/// - Returns: Calculated changes.
-	/// - Throws: *TableAnimatorError*
-	open func buildAnimations(fromCells: [Cell], toCells: [Cell]) throws -> CellsAnimations<InteractiveUpdate> {
-		let fromSection = DefaultSection(cells: fromCells)
-		let toSection = DefaultSection(cells: toCells)
-		
-		return try buildAnimations(from: [fromSection], to: [toSection]).cells
-	}
-	
-}
-
 
 
 /** **TableAnimator** takes to sequences and calcuate difference between them.
@@ -456,16 +390,15 @@ open class TableAnimator<Section: TableAnimatorSection, InteractiveUpdate> {
 		}
 		
 		
+		let toMoveSequence: Set<Section.Cell>
 		switch cellMoveCalculatingStrategy {
 		case .top:
-			toEnumerateList = existedElementsTo.reversed()
-			toIndexCalculatingClosure = { existedElementsTo.count - $0 - 1 }
-			toMoveSequence = calculateToMoveElementsWithPreferredDirection()
+			toMoveSequence = calculateToMoveElementsWithPreferredDirection(toIndexCalculatingClosure: { existedElementsTo.count - $0 - 1 },
+																		   toEnumerateList: existedElementsTo.reversed())
 			
 		case .bottom:
-			toEnumerateList = existedElementsTo
-			toIndexCalculatingClosure = { $0 }
-			toMoveSequence = calculateToMoveElementsWithPreferredDirection()
+			toMoveSequence = calculateToMoveElementsWithPreferredDirection(toIndexCalculatingClosure: { $0 },
+																		   toEnumerateList: existedElementsTo)
 			
 		case .directRecognition(let recognizer):
 			toMoveSequence = zip(existedElementsFrom, existedElementsTo)
@@ -473,16 +406,11 @@ open class TableAnimator<Section: TableAnimatorSection, InteractiveUpdate> {
 				.reduce([]) { return $0.union([$1.1.element]) }
 		}
 		
-		
-		
-		for element in toMoveSequence {
-			let indexes = existedElementsIndexes[element]!
-			
-			toMove.append(indexes)
-		}
-		
-		return toMove
+		return toMoveSequence.reduce(into: [], { $0.append(existedElementsIndexes[$1]!) })
 	}
+	
+	
+	
 	
 	
 }
