@@ -16,12 +16,12 @@ import Foundation
 		
 		/// Use this for applying changes for UITableView.
 		///
-		/// - Note: If you have no interactive updates, you may mark InteractiveUpdate type as Void and pass nil to applyAnimationsToCell closure.
+		/// - Note: If you don't have interactive updates, you may mark InteractiveUpdate type as Void and pass nil to applyAnimationsToCell closure.
 		/// - Parameters:
 		///   - animations: Changes, calculated by **TableAnimator**
-		///   - setNewListBlock: You should provide block, where you doing something like 'myItems = newItems'
-		///   - applyAnimationsToCell: If you have interactive updates, pass this closure for apply interactive animations for cells.
-		///   - completion: Completion block, that will be called when animation end.
+		///   - setNewListBlock: You should provide a block, every time you are doing something like 'myItems = newItems'
+		///   - applyAnimationsToCell: If you have interactive updates, pass this closure for applying interactive animations to cells.
+		///   - completion: Completion block, that will be called when the animation end.
 		///   - rowAnimation: UITableView animation style.
 		public func apply<InteractiveUpdates>(animations: (cells: CellsAnimations<InteractiveUpdates>, sections: SectionsAnimations), setNewListBlock: () -> Void, applyAnimationsToCell: ((UITableViewCell, [InteractiveUpdates]) -> Void)?, completion: (() -> Void)?, rowAnimation: UITableViewRowAnimation) {
 			
