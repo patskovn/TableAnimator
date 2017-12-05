@@ -11,32 +11,43 @@ import Foundation
 
 #if os(iOS)
 	
+
+	/// TableView rows animation style set.
+	public struct UITableViewRowAnimationSet {
+		let insert: UITableViewRowAnimation
+		let delete: UITableViewRowAnimation
+		let reload: UITableViewRowAnimation
+		public init(insert anInsert: UITableViewRowAnimation, delete aDelete: UITableViewRowAnimation, reload aReload: UITableViewRowAnimation) {
+			self.insert = anInsert
+			self.delete = aDelete
+			self.reload = aReload
+		}
+	}
 	
 	extension UIKit.UITableView {
-		
 		/// Use this for applying changes for UITableView.
 		///
-		/// - Note: If you don't have interactive updates, you may mark InteractiveUpdate type as Void and pass nil to applyAnimationsToCell closure.
+		/// - Note: If you have no interactive updates, you may mark InteractiveUpdate type as Void and pass nil to applyAnimationsToCell closure.
 		/// - Parameters:
 		///   - animations: Changes, calculated by **TableAnimator**
-		///   - setNewListBlock: You should provide a block, every time you are doing something like 'myItems = newItems'
-		///   - applyAnimationsToCell: If you have interactive updates, pass this closure for applying interactive animations to cells.
-		///   - completion: Completion block, that will be called when the animation end.
-		///   - rowAnimation: UITableView animation style.
-		public func apply<InteractiveUpdates>(animations: (cells: CellsAnimations<InteractiveUpdates>, sections: SectionsAnimations), setNewListBlock: () -> Void, applyAnimationsToCell: ((UITableViewCell, [InteractiveUpdates]) -> Void)?, completion: (() -> Void)?, rowAnimation: UITableViewRowAnimation) {
+		///   - setNewListBlock: You should provide block, where you doing something like 'myItems = newItems'
+		///   - applyAnimationsToCell: If you have interactive updates, pass this closure for apply interactive animations for cells.
+		///   - completion: Completion block, that will be called when animation end.
+		///   - rowAnimation: UITableView animations style for all animations like insert, delete and reload
+		public func apply<InteractiveUpdates>(animations: (cells: CellsAnimations<InteractiveUpdates>, sections: SectionsAnimations), setNewListBlock: () -> Void, applyAnimationsToCell: ((UITableViewCell, [InteractiveUpdates]) -> Void)?, completion: (() -> Void)?, rowAnimations: UITableViewRowAnimationSet) {
 			
 			let setAnimationsClosure = {
-				self.insertSections(animations.sections.toInsert, with: rowAnimation)
-				self.deleteSections(animations.sections.toDelete, with: rowAnimation)
-				self.reloadSections(animations.sections.toUpdate, with: rowAnimation)
+				self.insertSections(animations.sections.toInsert, with: rowAnimations.insert)
+				self.deleteSections(animations.sections.toDelete, with: rowAnimations.delete)
+				self.reloadSections(animations.sections.toUpdate, with: rowAnimations.reload)
 				
 				for (from, to) in animations.sections.toMove {
 					self.moveSection(from, toSection: to)
 				}
 				
-				self.insertRows(at: animations.cells.toInsert, with: rowAnimation)
-				self.deleteRows(at: animations.cells.toDelete, with: rowAnimation)
-				self.reloadRows(at: animations.cells.toUpdate, with: rowAnimation)
+				self.insertRows(at: animations.cells.toInsert, with: rowAnimations.insert)
+				self.deleteRows(at: animations.cells.toDelete, with: rowAnimations.delete)
+				self.reloadRows(at: animations.cells.toUpdate, with: rowAnimations.reload)
 				
 				for (from, to) in animations.cells.toMove {
 					self.moveRow(at: from, to: to)
@@ -61,7 +72,7 @@ import Foundation
 				
 				if !animations.cells.toDeferredUpdate.isEmpty {
 					self.performBatchUpdates({
-						self.reloadRows(at: animations.cells.toDeferredUpdate, with: rowAnimation)
+						self.reloadRows(at: animations.cells.toDeferredUpdate, with: rowAnimations.reload)
 					}, completion: { _ in completion?() })
 				}
 				
@@ -80,14 +91,28 @@ import Foundation
 				
 				if !animations.cells.toDeferredUpdate.isEmpty {
 					self.beginUpdates()
-					self.reloadRows(at: animations.cells.toDeferredUpdate, with: rowAnimation)
+					self.reloadRows(at: animations.cells.toDeferredUpdate, with: rowAnimations.reload)
 					self.endUpdates()
 				}
 				
 				CATransaction.commit()
 			}
-			
 		}
+		
+		
+		/// Use this for applying changes for UITableView.
+		///
+		/// - Note: If you have no interactive updates, you may mark InteractiveUpdate type as Void and pass nil to applyAnimationsToCell closure.
+		/// - Parameters:
+		///   - animations: Changes, calculated by **TableAnimator**
+		///   - setNewListBlock: You should provide block, where you doing something like 'myItems = newItems'
+		///   - applyAnimationsToCell: If you have interactive updates, pass this closure for apply interactive animations for cells.
+		///   - completion: Completion block, that will be called when animation end.
+		///   - rowAnimations: UITableView animations style for insert, delete and reload
+		public func apply<InteractiveUpdates>(animations: (cells: CellsAnimations<InteractiveUpdates>, sections: SectionsAnimations), setNewListBlock: () -> Void, applyAnimationsToCell: ((UITableViewCell, [InteractiveUpdates]) -> Void)?, completion: (() -> Void)?, rowAnimation: UITableViewRowAnimation) {
+			self.apply(animations: animations, setNewListBlock: setNewListBlock, applyAnimationsToCell: applyAnimationsToCell, completion: completion, rowAnimations: UITableViewRowAnimationSet(insert: rowAnimation, delete: rowAnimation, reload: rowAnimation))
+		}
+
 	}
 	
 	
