@@ -33,7 +33,7 @@ import Foundation
 		///   - setNewListBlock: You should provide block, where you doing something like 'myItems = newItems'
 		///   - applyAnimationsToCell: If you have interactive updates, pass this closure for apply interactive animations for cells.
 		///   - completion: Completion block, that will be called when animation end.
-		///   - rowAnimation: UITableView animations style for all animations like insert, delete and reload
+		///   - rowAnimations: UITableView animations style for insert, delete and reload
 		public func apply<InteractiveUpdates>(animations: (cells: CellsAnimations<InteractiveUpdates>, sections: SectionsAnimations), setNewListBlock: () -> Void, applyAnimationsToCell: ((UITableViewCell, [InteractiveUpdates]) -> Void)?, completion: (() -> Void)?, rowAnimations: UITableViewRowAnimationSet) {
 			
 			let setAnimationsClosure = {
@@ -107,8 +107,8 @@ import Foundation
 		///   - animations: Changes, calculated by **TableAnimator**
 		///   - setNewListBlock: You should provide block, where you doing something like 'myItems = newItems'
 		///   - applyAnimationsToCell: If you have interactive updates, pass this closure for apply interactive animations for cells.
-		///   - completion: Completion block, that will be called when animation end.
-		///   - rowAnimations: UITableView animations style for insert, delete and reload
+		///   - completion: Completion block, that will be called when animation end
+		///   - rowAnimation: UITableView animations style for all animations like insert, delete and reload
 		public func apply<InteractiveUpdates>(animations: (cells: CellsAnimations<InteractiveUpdates>, sections: SectionsAnimations), setNewListBlock: () -> Void, applyAnimationsToCell: ((UITableViewCell, [InteractiveUpdates]) -> Void)?, completion: (() -> Void)?, rowAnimation: UITableViewRowAnimation) {
 			self.apply(animations: animations, setNewListBlock: setNewListBlock, applyAnimationsToCell: applyAnimationsToCell, completion: completion, rowAnimations: UITableViewRowAnimationSet(insert: rowAnimation, delete: rowAnimation, reload: rowAnimation))
 		}
