@@ -102,6 +102,16 @@ open class TableAnimator<Section: TableAnimatorSection, InteractiveUpdate> {
 			guard arrayElements.count == Set(arrayElements).count else {
 				throw TableAnimatorError.inconsistencyError
 			}
+			
+			let uniqueSections: [Section] = list.reduce(into: []) {
+				if !$0.contains($1) {
+					$0.append($1)
+				}
+			}
+			
+			if uniqueSections.count != list.count {
+				throw TableAnimatorError.inconsistencyError
+			}
 		}
 		
 		try validateSections(list: fromList)
