@@ -114,9 +114,7 @@ class ViewController: UITableViewController {
 
 	var currentList: MySequence! = nil
 	
-	private class UpdateRecognizer: TableAnimatorUpdateRecognizer<MySection.Cell, Void> {}
-	
-	let animator = TableAnimator<MySection, Void>()
+	let animator = TableAnimator<MySection>()
 	
 	var animationCount = 0
 	
@@ -134,7 +132,7 @@ class ViewController: UITableViewController {
 		animationCount += 1
 		
 		let animations = try! animator.buildAnimations(from: currentList.sections, to: toList.sections)
-		var conf = TableAnimatorConfiguration<MySection, Void>.init()
+		var conf = TableAnimatorConfiguration<MySection>.init()
 		
 		
 		tableView.beginUpdates()

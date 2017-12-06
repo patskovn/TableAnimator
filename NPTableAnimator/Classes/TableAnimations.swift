@@ -26,12 +26,8 @@ public struct SectionsAnimations {
 }
 
 
-/// Cells animations without interactive updates
-public typealias DefaultCellsAnimations = CellsAnimations<Void>
-
-
 /// Structure contains information about cells change.
-public struct CellsAnimations<InteractiveUpdate> {
+public struct CellsAnimations {
 	
 	/// New cells indexes.
 	public let toInsert: [IndexPath]
@@ -48,23 +44,15 @@ public struct CellsAnimations<InteractiveUpdate> {
 	/// Updated cells indexes, which intersects with move indexes. UITableView can't perform *move* and *update*
 	/// at the same time, so we need to apply this updates during second update request.
 	public let toDeferredUpdate: [IndexPath]
-
-	/** Cells to interactive updates.
-	
-	- Note: Interactive updates should be used when you no need to change cell height. Possible usage: mark message as read, show checkmark image etc.
-	- Note: Interactive updates will never intersects with *toUpdate* or *toDeferredUpdate*, because *toUpdate* and *toDeferredUpdate* have higher priority in calculations.
-	*/
-	public let toInteractiveUpdate: [(IndexPath, [InteractiveUpdate])]
 	
 	
-	static func +(left: CellsAnimations<InteractiveUpdate>, right: CellsAnimations<InteractiveUpdate>) -> CellsAnimations<InteractiveUpdate> {
+	static func +(left: CellsAnimations, right: CellsAnimations) -> CellsAnimations {
 		
-		return CellsAnimations<InteractiveUpdate>(toInsert: left.toInsert + right.toInsert
+		return CellsAnimations(toInsert: left.toInsert + right.toInsert
 			, toDelete: left.toDelete + right.toDelete
 			, toMove: left.toMove + right.toMove
 			, toUpdate: left.toUpdate + right.toUpdate
-			, toDeferredUpdate: left.toDeferredUpdate + right.toDeferredUpdate
-			, toInteractiveUpdate: left.toInteractiveUpdate + right.toInteractiveUpdate)
+			, toDeferredUpdate: left.toDeferredUpdate + right.toDeferredUpdate)
 	}
 	
 }

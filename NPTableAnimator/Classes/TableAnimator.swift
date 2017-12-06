@@ -28,21 +28,19 @@ public enum TableAnimatorError: Error {
 	 	Details are described in **TableAnimatorConfiguration.isConsistencyValidationEnabled** description.
 - Note: If you do not want to use interactive updates in your calculations, you may mark InteractiveUpdate type as Void.
 */
-open class TableAnimator<Section: TableAnimatorSection, InteractiveUpdate> {
+open class TableAnimator<Section: TableAnimatorSection> {
 	
 	private let cellMoveCalculatingStrategy: MoveCalculatingStrategy<Section.Cell>
 	private let sectionMoveCalculatingStrategy: MoveCalculatingStrategy<Section>
-	private let updateCalculatingStrategy: UpdateCalculatingStrategy<Section.Cell, InteractiveUpdate>
 	private let isConsistencyValidationEnabled: Bool
 	
 	
 	/// Use this init for perfect configuring animator behavior.
 	///
 	/// - Parameter configuration: Configuration, that TableAnimator will use for calculations.
-	public init(configuration: TableAnimatorConfiguration<Section, InteractiveUpdate>) {
+	public init(configuration: TableAnimatorConfiguration<Section>) {
 		self.cellMoveCalculatingStrategy = configuration.cellMoveCalculatingStrategy
 		self.sectionMoveCalculatingStrategy = configuration.sectionMoveCalculatingStrategy
-		self.updateCalculatingStrategy = configuration.updateCalculatingStrategy
 		self.isConsistencyValidationEnabled = configuration.isConsistencyValidationEnabled
 	}
 	
@@ -61,7 +59,7 @@ open class TableAnimator<Section: TableAnimatorSection, InteractiveUpdate> {
 	///   - toList: result list.
 	/// - Returns: Calculated changes.
 	/// - Throws: *TableAnimatorError*
-	open func buildAnimations(from fromList: [Section], to toList: [Section]) throws -> (sections: SectionsAnimations, cells: CellsAnimations<InteractiveUpdate>) {
+	open func buildAnimations(from fromList: [Section], to toList: [Section]) throws -> (sections: SectionsAnimations, cells: CellsAnimations) {
 		
 		if isConsistencyValidationEnabled {
 			try validateSectionsConsistency(fromList: fromList, toList: toList)
@@ -74,7 +72,7 @@ open class TableAnimator<Section: TableAnimatorSection, InteractiveUpdate> {
 			, toMove: sectionTransformResult.toMove
 			, toUpdate: sectionTransformResult.toUpdate)
 		
-		var cellsAnimations = CellsAnimations<InteractiveUpdate>(toInsert: [], toDelete: [], toMove: [], toUpdate: [], toDeferredUpdate: [], toInteractiveUpdate: [])
+		var cellsAnimations = CellsAnimations(toInsert: [], toDelete: [], toMove: [], toUpdate: [], toDeferredUpdate: [])
 		
 		for index in 0 ..< sectionTransformResult.existedSectionFromList.count {
 			
@@ -261,12 +259,11 @@ open class TableAnimator<Section: TableAnimatorSection, InteractiveUpdate> {
 	
 	
 	
-	private func makeSingleSectionTransformation(from fromSection: Section, fromSectionIndex: Int, to toSection: Section, toSectionIndex: Int) -> CellsAnimations<InteractiveUpdate> {
+	private func makeSingleSectionTransformation(from fromSection: Section, fromSectionIndex: Int, to toSection: Section, toSectionIndex: Int) -> CellsAnimations {
 		
 		var toAdd = [IndexPath]()
 		var toRemove = [IndexPath]()
 		var toDeferredUpdate = [IndexPath]()
-		var toInteractiveUpdate = [(IndexPath, [InteractiveUpdate])]()
 		var toUpdate = [IndexPath]()
 
 		var existedCellIndexes: [Section.Cell : (from: Int, to: Int)] = [:]
@@ -281,23 +278,8 @@ open class TableAnimator<Section: TableAnimatorSection, InteractiveUpdate> {
 			if let indexInNewList = toSection.cells.index(of: cell) {
 				orderedExistedCellsFrom.append((index, cell))
 				existedCellIndexes[cell] = (index, 0)
-
-				let newCell = toSection.cells[indexInNewList]
-
-				let interactiveUpdates: [InteractiveUpdate]
 				
-				switch updateCalculatingStrategy {
-				case .default:
-					interactiveUpdates = []
-					
-				case .withInteractiveUpdateRecognition(let recognizer):
-					interactiveUpdates = recognizer.recognizeInteractiveUpdate(from: cell, to: newCell)
-				}
-
-				if !interactiveUpdates.isEmpty {
-					toInteractiveUpdate.append((path, interactiveUpdates))
-
-				} else if cell.updateField != newCell.updateField {
+				if cell.updateField != toSection.cells[indexInNewList].updateField {
 					toUpdate.append(path)
 				}
 
@@ -342,8 +324,7 @@ open class TableAnimator<Section: TableAnimatorSection, InteractiveUpdate> {
 			, toDelete: toRemove
 			, toMove: toMove
 			, toUpdate: toUpdate
-			, toDeferredUpdate: toDeferredUpdate
-			, toInteractiveUpdate: toInteractiveUpdate)
+			, toDeferredUpdate: toDeferredUpdate)
 		
 		return cellsTransformations
 		

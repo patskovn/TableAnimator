@@ -24,7 +24,7 @@ private struct DefaultSection<Cell: TableAnimatorCell>: TableAnimatorSection {
 
 /// Class, that should be used for calculate one section changes only.
 /// Details are described in **TableAnimator** description.
-open class SingleSectionTableAnimator<Cell: TableAnimatorCell, InteractiveUpdate>: TableAnimator<DefaultSection<Cell>, InteractiveUpdate> {
+open class SingleSectionTableAnimator<Cell: TableAnimatorCell>: TableAnimator<DefaultSection<Cell>> {
 	
 	
 	/// Function calculates animations between two lists.
@@ -35,7 +35,7 @@ open class SingleSectionTableAnimator<Cell: TableAnimatorCell, InteractiveUpdate
 	///   - toCells: result cells.
 	/// - Returns: Calculated changes.
 	/// - Throws: *TableAnimatorError*
-	open func buildAnimations(fromCells: [Cell], toCells: [Cell]) throws -> CellsAnimations<InteractiveUpdate> {
+	open func buildAnimations(fromCells: [Cell], toCells: [Cell]) throws -> CellsAnimations {
 		let fromSection = DefaultSection(cells: fromCells)
 		let toSection = DefaultSection(cells: toCells)
 		

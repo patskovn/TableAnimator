@@ -34,7 +34,7 @@ import Foundation
 		///   - applyAnimationsToCell: If you have interactive updates, pass this closure for apply interactive animations for cells.
 		///   - completion: Completion block, that will be called when animation end.
 		///   - rowAnimations: UITableView animations style for insert, delete and reload
-		public func apply<InteractiveUpdates>(animations: (cells: CellsAnimations<InteractiveUpdates>, sections: SectionsAnimations), setNewListBlock: () -> Void, applyAnimationsToCell: ((UITableViewCell, IndexPath, [InteractiveUpdates]) -> Void)?, completion: (() -> Void)?, rowAnimations: UITableViewRowAnimationSet) {
+		public func apply(animations: (cells: CellsAnimations, sections: SectionsAnimations), setNewListBlock: () -> Void, completion: (() -> Void)?, rowAnimations: UITableViewRowAnimationSet) {
 			
 			let setAnimationsClosure = {
 				self.insertSections(animations.sections.toInsert, with: rowAnimations.insert)
@@ -51,11 +51,6 @@ import Foundation
 				
 				for (from, to) in animations.cells.toMove {
 					self.moveRow(at: from, to: to)
-				}
-				
-				for (path, updates) in animations.cells.toInteractiveUpdate {
-					guard let cell = self.cellForRow(at: path) else { continue }
-					applyAnimationsToCell?(cell, path, updates)
 				}
 			}
 			
@@ -109,8 +104,8 @@ import Foundation
 		///   - applyAnimationsToCell: If you have interactive updates, pass this closure for apply interactive animations for cells.
 		///   - completion: Completion block, that will be called when animation end
 		///   - rowAnimation: UITableView animations style for all animations like insert, delete and reload
-		public func apply<InteractiveUpdates>(animations: (cells: CellsAnimations<InteractiveUpdates>, sections: SectionsAnimations), setNewListBlock: () -> Void, applyAnimationsToCell: ((UITableViewCell, IndexPath, [InteractiveUpdates]) -> Void)?, completion: (() -> Void)?, rowAnimation: UITableViewRowAnimation) {
-			self.apply(animations: animations, setNewListBlock: setNewListBlock, applyAnimationsToCell: applyAnimationsToCell, completion: completion, rowAnimations: UITableViewRowAnimationSet(insert: rowAnimation, delete: rowAnimation, reload: rowAnimation))
+		public func apply(animations: (cells: CellsAnimations, sections: SectionsAnimations), setNewListBlock: () -> Void, completion: (() -> Void)?, rowAnimation: UITableViewRowAnimation) {
+			self.apply(animations: animations, setNewListBlock: setNewListBlock, completion: completion, rowAnimations: UITableViewRowAnimationSet(insert: rowAnimation, delete: rowAnimation, reload: rowAnimation))
 		}
 
 	}
@@ -127,7 +122,7 @@ import Foundation
 		///   - setNewListBlock: You should provide block, where you doing something like 'myItems = newItems'
 		///   - applyAnimationsToCell: If you have interactive updates, pass this closure for apply interactive animations for cells.
 		///   - completion: Completion block, that will be called when animation end.
-		public func apply<InteractiveUpdates>(animations: (cells: CellsAnimations<InteractiveUpdates>, sections: SectionsAnimations), setNewListBlock: () -> Void, applyAnimationsToCell: ((UICollectionViewCell, IndexPath, [InteractiveUpdates]) -> Void)?, completion: (() -> Void)?) {
+		public func apply(animations: (cells: CellsAnimations, sections: SectionsAnimations), setNewListBlock: () -> Void, completion: (() -> Void)?) {
 			
 			self.performBatchUpdates({
 				setNewListBlock()
@@ -147,10 +142,6 @@ import Foundation
 					self.moveItem(at: from, to: to)
 				}
 				
-				for (path, updates) in animations.cells.toInteractiveUpdate {
-					guard let cell = self.cellForItem(at: path) else { continue }
-					applyAnimationsToCell?(cell, path, updates)
-				}
 			}, completion: { _ in
 				if animations.cells.toDeferredUpdate.isEmpty {
 					completion?()
