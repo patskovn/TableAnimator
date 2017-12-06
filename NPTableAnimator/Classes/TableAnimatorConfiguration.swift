@@ -65,6 +65,8 @@ public struct TableAnimatorConfiguration<Section: TableAnimatorSection, Interact
 /// You should implement this if your sections or cells has special *sortKey*. Details are described in **MoveCalculatingStrategy** description.
 open class TableAnimatorMoveRecognizer<Element> {
 	
+	public init() {}
+	
 	/// Animator asks your help to recognize, that element changed its position.
 	///
 	/// - Parameters:
@@ -81,6 +83,8 @@ open class TableAnimatorMoveRecognizer<Element> {
 
 /// You shold implement this if your sections or cells has interactive update behavior. Details are described in **UpdateCalculatingStrategy** description.
 open class TableAnimatorUpdateRecognizer<Element, InteractiveUpdate> {
+	
+	public init() {}
 	
 	/// Animator asks your help to recognize, that new element has only updates, that should not cause cell height change.
 	///
