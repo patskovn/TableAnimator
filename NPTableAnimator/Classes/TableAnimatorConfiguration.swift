@@ -20,7 +20,8 @@ public struct TableAnimatorConfiguration<Section: TableAnimatorSection> {
 	
 	
 	
-	/** Flag for configuring feed consistency checking. Adds additional check to cells uniqueness.
+	/** Flag for configuring feed consistency checking. Adds additional check to cells uniqueness. Default is true.
+	
 	Section like
 	
 	[0, 1, 2, 3]

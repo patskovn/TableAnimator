@@ -15,8 +15,12 @@ import Foundation
 /// - inconsistencyError: This error happens, when u have two equals entityes etc.
 public enum TableAnimatorError: Error {
 	
-	/// This error happens, when u have two equals entityes etc.
-	case inconsistencyError
+	/// This error happens, when u have two equals sections in list.
+	case sectionInconsistencyError
+	
+	/// This error happens, when u have two equals cells in one section. Pass the section in which elements doubles and doubled element.
+	/// If inconsistency found in "fromList", section and element picked from "fromList", picked from "toList" otherwise.
+	case cellInconsistencyError(Int, Any)
 }
 
 
@@ -95,20 +99,27 @@ open class TableAnimator<Section: TableAnimatorSection> {
 	private func validateSectionsConsistency(fromList: [Section], toList: [Section]) throws {
 		
 		func validateSections(list: [Section]) throws {
-			let arrayElements = list.flatMap({ $0.cells })
 			
-			guard arrayElements.count == Set(arrayElements).count else {
-				throw TableAnimatorError.inconsistencyError
-			}
+			var uniqueCells: Set<Section.Cell> = []
+			var uniqueSections: [Section] = []
 			
-			let uniqueSections: [Section] = list.reduce(into: []) {
-				if !$0.contains($1) {
-					$0.append($1)
+			for (index, section) in list.enumerated() {
+				
+				if !uniqueSections.contains(section) {
+					uniqueSections.append(section)
 				}
+				
+				for cell in section.cells {
+					if !uniqueCells.insert(cell).inserted {
+						throw TableAnimatorError.cellInconsistencyError(index, cell)
+					}
+				}
+				
+				uniqueCells.removeAll(keepingCapacity: true)
 			}
 			
 			if uniqueSections.count != list.count {
-				throw TableAnimatorError.inconsistencyError
+				throw TableAnimatorError.sectionInconsistencyError
 			}
 		}
 		
@@ -156,7 +167,7 @@ open class TableAnimator<Section: TableAnimatorSection> {
 				orderedExistedSectionsTo.append((index, section))
 				
 				guard let existedIndex = existedSectionIndexes.index(where: { $0.0 == section })
-					else { throw TableAnimatorError.inconsistencyError
+					else { throw TableAnimatorError.sectionInconsistencyError
 				}
 				
 				existedSectionIndexes[existedIndex].1.to = index
@@ -198,7 +209,7 @@ open class TableAnimator<Section: TableAnimatorSection> {
 				
 				guard let indexFrom = existedSectionsFrom.index(where: { $0.section == toSection })
 					, let existedSectionIndex = existedSectionIndexes.index(where: { $0.0 == toSection })
-					else { throw TableAnimatorError.inconsistencyError }
+					else { throw TableAnimatorError.sectionInconsistencyError }
 				
 				let (fromIndex, toIndex) = existedSectionIndexes[existedSectionIndex].1
 				
@@ -317,7 +328,7 @@ open class TableAnimator<Section: TableAnimatorSection> {
 			, existedElementsTo: orderedExistedCellsTo)
 			.map { (from: IndexPath(row: $0.from, section: toSectionIndex) , to: IndexPath(row: $0.to, section: toSectionIndex)) }
 
-		toUpdate = toUpdate.filter{ toUpdateIndex in !toMove.contains(where: { $0.from == toUpdateIndex }) }
+		toUpdate = toUpdate.filter{ toUpdateIndex in !toMove.contains(where: { $0.from == toUpdateIndex || $0.to == toUpdateIndex }) }
 		toDeferredUpdate = toDeferredUpdate.filter { !toUpdate.contains($0) }
 
 		let cellsTransformations = CellsAnimations(toInsert: toAdd

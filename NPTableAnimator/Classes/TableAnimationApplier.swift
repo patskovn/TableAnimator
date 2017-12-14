@@ -55,40 +55,49 @@ import Foundation
 			}
 			
 			if #available(iOS 11, *) {
-				
+
 				self.performBatchUpdates({
 					setNewListBlock()
 					setAnimationsClosure()
 				}, completion: { _ in
 					if animations.cells.toDeferredUpdate.isEmpty {
 						completion?()
+					} else {
+						self.performBatchUpdates({
+							self.reloadRows(at: animations.cells.toDeferredUpdate, with: rowAnimations.reload)
+						}, completion: { _ in completion?() })
 					}
 				})
-				
-				if !animations.cells.toDeferredUpdate.isEmpty {
-					self.performBatchUpdates({
-						self.reloadRows(at: animations.cells.toDeferredUpdate, with: rowAnimations.reload)
-					}, completion: { _ in completion?() })
-				}
-				
+
 			} else {
 				CATransaction.begin()
 				self.beginUpdates()
 				
 				if animations.cells.toDeferredUpdate.isEmpty {
 					CATransaction.setCompletionBlock(completion)
+				} else {
+					CATransaction.setCompletionBlock {
+						
+						// Visual bug while doing deferred updated without async on main queue.
+						DispatchQueue.main.async {
+							
+							CATransaction.begin()
+							CATransaction.setCompletionBlock(completion)
+							
+							self.beginUpdates()
+							self.reloadRows(at: animations.cells.toDeferredUpdate, with: rowAnimations.reload)
+							self.endUpdates()
+							
+							CATransaction.commit()
+						}
+						
+					}
 				}
 				
 				setNewListBlock()
 				setAnimationsClosure()
 				
 				self.endUpdates()
-				
-				if !animations.cells.toDeferredUpdate.isEmpty {
-					self.beginUpdates()
-					self.reloadRows(at: animations.cells.toDeferredUpdate, with: rowAnimations.reload)
-					self.endUpdates()
-				}
 				
 				CATransaction.commit()
 			}
