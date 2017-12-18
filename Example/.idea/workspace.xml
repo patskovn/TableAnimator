@@ -1,7 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e14af699-019c-4cfe-ae58-264e4fbcbc84" name="Default" comment="" />
+    <list default="true" id="e14af699-019c-4cfe-ae58-264e4fbcbc84" name="Default" comment="">
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/NPTableAnimator.xcodeproj/xcshareddata/xcbaselines/751301431FE7AECA004A5C3B.xcbaseline/D92DC722-282F-422B-9131-983F4BE02ACD.plist" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/NPTableAnimator.xcodeproj/xcshareddata/xcbaselines/751301431FE7AECA004A5C3B.xcbaseline/Info.plist" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/../NPTableAnimator/Classes/TableAnimationSafeApplier.swift" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/NPTableAnimator.xcodeproj/project.pbxproj" afterPath="$PROJECT_DIR$/NPTableAnimator.xcodeproj/project.pbxproj" />
+      <change beforePath="$PROJECT_DIR$/NPTableAnimator.xcodeproj/xcshareddata/xcschemes/NPTableAnimator-Example.xcscheme" afterPath="$PROJECT_DIR$/NPTableAnimator.xcodeproj/xcshareddata/xcschemes/NPTableAnimator-Example.xcscheme" />
+      <change beforePath="$PROJECT_DIR$/NPTableAnimator/ViewController.swift" afterPath="$PROJECT_DIR$/NPTableAnimator/ViewController.swift" />
+      <change beforePath="$PROJECT_DIR$/Podfile" afterPath="$PROJECT_DIR$/Podfile" />
+      <change beforePath="$PROJECT_DIR$/Podfile.lock" afterPath="$PROJECT_DIR$/Podfile.lock" />
+      <change beforePath="$PROJECT_DIR$/Pods/Local Podspecs/NPTableAnimator.podspec.json" afterPath="$PROJECT_DIR$/Pods/Local Podspecs/NPTableAnimator.podspec.json" />
+      <change beforePath="$PROJECT_DIR$/Pods/Manifest.lock" afterPath="$PROJECT_DIR$/Pods/Manifest.lock" />
+      <change beforePath="$PROJECT_DIR$/Pods/Pods.xcodeproj/project.pbxproj" afterPath="$PROJECT_DIR$/Pods/Pods.xcodeproj/project.pbxproj" />
+      <change beforePath="$PROJECT_DIR$/Pods/Target Support Files/NPTableAnimator/Info.plist" afterPath="$PROJECT_DIR$/Pods/Target Support Files/NPTableAnimator/Info.plist" />
+      <change beforePath="$PROJECT_DIR$/Pods/Target Support Files/Pods-NPTableAnimator_Example/Pods-NPTableAnimator_Example-frameworks.sh" afterPath="$PROJECT_DIR$/Pods/Target Support Files/Pods-NPTableAnimator_Example/Pods-NPTableAnimator_Example-frameworks.sh" />
+      <change beforePath="$PROJECT_DIR$/Pods/Target Support Files/Pods-NPTableAnimator_Example/Pods-NPTableAnimator_Example-resources.sh" afterPath="$PROJECT_DIR$/Pods/Target Support Files/Pods-NPTableAnimator_Example/Pods-NPTableAnimator_Example-resources.sh" />
+      <change beforePath="$PROJECT_DIR$/Pods/Target Support Files/Pods-NPTableAnimator_Example/Pods-NPTableAnimator_Example.debug.xcconfig" afterPath="$PROJECT_DIR$/Pods/Target Support Files/Pods-NPTableAnimator_Example/Pods-NPTableAnimator_Example.debug.xcconfig" />
+      <change beforePath="$PROJECT_DIR$/Pods/Target Support Files/Pods-NPTableAnimator_Example/Pods-NPTableAnimator_Example.release.xcconfig" afterPath="$PROJECT_DIR$/Pods/Target Support Files/Pods-NPTableAnimator_Example/Pods-NPTableAnimator_Example.release.xcconfig" />
+      <change beforePath="$PROJECT_DIR$/Pods/Target Support Files/Pods-NPTableAnimator_Tests/Info.plist" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/Pods/Target Support Files/Pods-NPTableAnimator_Tests/Pods-NPTableAnimator_Tests-acknowledgements.markdown" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/Pods/Target Support Files/Pods-NPTableAnimator_Tests/Pods-NPTableAnimator_Tests-acknowledgements.plist" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/Pods/Target Support Files/Pods-NPTableAnimator_Tests/Pods-NPTableAnimator_Tests-dummy.m" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/Pods/Target Support Files/Pods-NPTableAnimator_Tests/Pods-NPTableAnimator_Tests-frameworks.sh" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/Pods/Target Support Files/Pods-NPTableAnimator_Tests/Pods-NPTableAnimator_Tests-resources.sh" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/Pods/Target Support Files/Pods-NPTableAnimator_Tests/Pods-NPTableAnimator_Tests-umbrella.h" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/Pods/Target Support Files/Pods-NPTableAnimator_Tests/Pods-NPTableAnimator_Tests.debug.xcconfig" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/Pods/Target Support Files/Pods-NPTableAnimator_Tests/Pods-NPTableAnimator_Tests.modulemap" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/Pods/Target Support Files/Pods-NPTableAnimator_Tests/Pods-NPTableAnimator_Tests.release.xcconfig" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/Tests/Info.plist" afterPath="$PROJECT_DIR$/NPTableAnimator_ExampleTests/Info.plist" />
+      <change beforePath="$PROJECT_DIR$/Tests/Tests.swift" afterPath="$PROJECT_DIR$/NPTableAnimator_ExampleTests/NPTableAnimator_ExampleTests.swift" />
+      <change beforePath="$PROJECT_DIR$/../NPTableAnimator/Classes/TableAnimationApplier.swift" afterPath="$PROJECT_DIR$/../NPTableAnimator/Classes/TableAnimationApplier.swift" />
+      <change beforePath="$PROJECT_DIR$/../NPTableAnimator/Classes/TableAnimations.swift" afterPath="$PROJECT_DIR$/../NPTableAnimator/Classes/TableAnimations.swift" />
+      <change beforePath="$PROJECT_DIR$/../NPTableAnimator/Classes/TableAnimator.swift" afterPath="$PROJECT_DIR$/../NPTableAnimator/Classes/TableAnimator.swift" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -9,25 +44,58 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="iphonesimulator_4D7CC866-B398-4B1F-90CC-2EECAEC7BDA5" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="iphonesimulator_7999C6D3-9868-40B5-AADB-81A1D22E1CCF" />
   <component name="FileEditorManager">
-    <leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file leaf-file-name="TableAnimations.swift" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../NPTableAnimator/Classes/TableAnimations.swift">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="690">
-              <caret line="46" column="78" lean-forward="false" selection-start-line="46" selection-start-column="78" selection-end-line="46" selection-end-column="78" />
+            <state relative-caret-position="586">
+              <caret line="55" column="0" lean-forward="false" selection-start-line="55" selection-start-column="0" selection-end-line="55" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TableAnimator.swift" pinned="false" current-in-tab="true">
+      <file leaf-file-name="TableAnimatorConfiguration.swift" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../NPTableAnimator/Classes/TableAnimatorConfiguration.swift">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TableAnimator.swift" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../NPTableAnimator/Classes/TableAnimator.swift">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="314">
-              <caret line="40" column="27" lean-forward="true" selection-start-line="40" selection-start-column="27" selection-end-line="40" selection-end-column="27" />
+            <state relative-caret-position="4646">
+              <caret line="348" column="31" lean-forward="false" selection-start-line="348" selection-start-column="31" selection-end-line="348" selection-end-column="31" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TableAnimationApplier.swift" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../NPTableAnimator/Classes/TableAnimationApplier.swift">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="984">
+              <caret line="229" column="0" lean-forward="false" selection-start-line="229" selection-start-column="0" selection-end-line="229" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TableAnimationSafeApplier.swift" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../NPTableAnimator/Classes/TableAnimationSafeApplier.swift">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="661">
+              <caret line="53" column="96" lean-forward="false" selection-start-line="53" selection-start-column="96" selection-end-line="53" selection-end-column="96" />
+              <folding>
+                <element signature="e#48#65#0" expanded="true" />
+                <marker date="1513590576750" expanded="true" signature="118:2411" ph="{...}" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -35,26 +103,19 @@
       <file leaf-file-name="TableAnimationsProtocols.swift" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../NPTableAnimator/Classes/TableAnimationsProtocols.swift">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
+            <state relative-caret-position="272">
               <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ViewController.swift" pinned="false" current-in-tab="false">
+      <file leaf-file-name="ViewController.swift" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/NPTableAnimator/ViewController.swift">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-268">
-              <caret line="91" column="24" lean-forward="false" selection-start-line="91" selection-start-column="24" selection-end-line="91" selection-end-column="24" />
-              <folding>
-                <marker date="1510597241000" expanded="true" signature="1779:4145" ph="{...}" />
-                <marker date="1510597241000" expanded="true" signature="2038:2951" ph="{...}" />
-                <marker date="1510597241000" expanded="true" signature="2997:3144" ph="{...}" />
-                <marker date="1510597241000" expanded="true" signature="3186:3512" ph="{...}" />
-                <marker date="1510597241000" expanded="true" signature="3549:3625" ph="{...}" />
-                <marker date="1510597241000" expanded="true" signature="3999:4142" ph="{...}" />
-              </folding>
+            <state relative-caret-position="245">
+              <caret line="132" column="18" lean-forward="true" selection-start-line="132" selection-start-column="18" selection-end-line="132" selection-end-column="18" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -72,10 +133,12 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/NPTableAnimator/ViewController.swift" />
-        <option value="$PROJECT_DIR$/../NPTableAnimator/Classes/TableAnimations.swift" />
         <option value="$PROJECT_DIR$/../NPTableAnimator/Classes/TableAnimationsProtocols.swift" />
         <option value="$PROJECT_DIR$/../NPTableAnimator/Classes/TableAnimator.swift" />
+        <option value="$PROJECT_DIR$/../NPTableAnimator/Classes/TableAnimations.swift" />
+        <option value="$PROJECT_DIR$/../NPTableAnimator/Classes/TableAnimationSafeApplier.swift" />
+        <option value="$PROJECT_DIR$/../NPTableAnimator/Classes/TableAnimationApplier.swift" />
+        <option value="$PROJECT_DIR$/NPTableAnimator/ViewController.swift" />
       </list>
     </option>
   </component>
@@ -109,7 +172,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Cidr.FilesView" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -128,33 +190,20 @@
               <item name="Development Pods" type="fcab9f18:XcodeViewNode" />
               <item name="NPTableAnimator" type="fcab9f18:XcodeViewNode" />
             </path>
-            <path>
-              <item name="" type="efc3779f:XcodeRootNode" />
-              <item name="Pods" type="1d218c8b:XcodeProjectNode" />
-              <item name="Development Pods" type="fcab9f18:XcodeViewNode" />
-              <item name="NPTableAnimator" type="fcab9f18:XcodeViewNode" />
-              <item name="NPTableAnimator" type="fcab9f18:XcodeViewNode" />
-            </path>
-            <path>
-              <item name="" type="efc3779f:XcodeRootNode" />
-              <item name="Pods" type="1d218c8b:XcodeProjectNode" />
-              <item name="Development Pods" type="fcab9f18:XcodeViewNode" />
-              <item name="NPTableAnimator" type="fcab9f18:XcodeViewNode" />
-              <item name="NPTableAnimator" type="fcab9f18:XcodeViewNode" />
-              <item name="Classes" type="fcab9f18:XcodeViewNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Cidr.FilesView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="settings.editor.selected.configurable" value="configurable.group.appearance" />
+    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.Swift" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/NPTableAnimator.xcworkspace" />
     <property name="com.jetbrains.cidr.execution.build.XcodeMessageFilterConfiguration.NOTE" value="false" />
     <property name="com.jetbrains.cidr.execution.build.XcodeMessageFilterConfiguration.INFO" value="false" />
+    <property name="OBJC.PRESERVED_TARGET_SELECTION" value="NPTableAnimator,,,Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -168,7 +217,6 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.NPTableAnimator-Example" />
   <component name="ShelveChangesManager" show_recycled="false">
     <option name="remove_strategy" value="false" />
   </component>
@@ -183,41 +231,43 @@
       <option name="presentableId" value="Default" />
       <updated>1510584578244</updated>
       <workItem from="1510584580501" duration="2411000" />
+      <workItem from="1513583682581" duration="137000" />
+      <workItem from="1513584833256" duration="3901000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2411000" />
+    <option name="totallyTimeSpent" value="6449000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="28" width="1920" height="978" extended-state="6" />
+    <frame x="0" y="23" width="1920" height="991" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="DB Browser" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3289183" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="DB Execution Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="DB Browser" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32861805" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="DB Execution Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="FAQ Robot" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="FAQ Robot" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Project Explorer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Job Explorer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="MaxCompute Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Project Explorer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Job Explorer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="MaxCompute Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -231,41 +281,141 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/NPTableAnimator/ViewController.swift">
+    <entry file="file://$PROJECT_DIR$/../NPTableAnimator/Classes/TableAnimatorConfiguration.swift">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-268">
-          <caret line="91" column="24" lean-forward="false" selection-start-line="91" selection-start-column="24" selection-end-line="91" selection-end-column="24" />
-          <folding>
-            <marker date="1510597241000" expanded="true" signature="1779:4145" ph="{...}" />
-            <marker date="1510597241000" expanded="true" signature="2038:2951" ph="{...}" />
-            <marker date="1510597241000" expanded="true" signature="2997:3144" ph="{...}" />
-            <marker date="1510597241000" expanded="true" signature="3186:3512" ph="{...}" />
-            <marker date="1510597241000" expanded="true" signature="3549:3625" ph="{...}" />
-            <marker date="1510597241000" expanded="true" signature="3999:4142" ph="{...}" />
-          </folding>
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../NPTableAnimator/Classes/TableAnimations.swift">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="690">
-          <caret line="46" column="78" lean-forward="false" selection-start-line="46" selection-start-column="78" selection-end-line="46" selection-end-column="78" />
+        <state relative-caret-position="221">
+          <caret line="13" column="0" lean-forward="true" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../NPTableAnimator/Classes/TableAnimationApplier.swift">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2261">
+          <caret line="133" column="57" lean-forward="false" selection-start-line="133" selection-start-column="57" selection-end-line="133" selection-end-column="57" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../NPTableAnimator/Classes/TableAnimationsProtocols.swift">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
+        <state relative-caret-position="272">
           <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/NPTableAnimator/ViewController.swift">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1530">
+          <caret line="91" column="24" lean-forward="false" selection-start-line="91" selection-start-column="24" selection-end-line="91" selection-end-column="24" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../NPTableAnimator/Classes/TableAnimator.swift">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="314">
-          <caret line="40" column="27" lean-forward="true" selection-start-line="40" selection-start-column="27" selection-end-line="40" selection-end-column="27" />
+        <state relative-caret-position="5916">
+          <caret line="348" column="31" lean-forward="true" selection-start-line="348" selection-start-column="31" selection-end-line="348" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../NPTableAnimator/Classes/TableAnimations.swift">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="782">
+          <caret line="46" column="6" lean-forward="true" selection-start-line="46" selection-start-column="6" selection-end-line="46" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../NPTableAnimator/Classes/TableAnimationsProtocols.swift">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/NPTableAnimator/ViewController.swift">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1530">
+          <caret line="91" column="24" lean-forward="false" selection-start-line="91" selection-start-column="24" selection-end-line="91" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../NPTableAnimator/Classes/TableAnimator.swift">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="680">
+          <caret line="40" column="6" lean-forward="true" selection-start-line="40" selection-start-column="6" selection-end-line="40" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../NPTableAnimator/Classes/TableAnimatorConfiguration.swift">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../NPTableAnimator/Classes/TableAnimationsProtocols.swift">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../NPTableAnimator/Classes/TableAnimations.swift">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="586">
+          <caret line="55" column="0" lean-forward="false" selection-start-line="55" selection-start-column="0" selection-end-line="55" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../NPTableAnimator/Classes/TableAnimator.swift">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4646">
+          <caret line="348" column="31" lean-forward="false" selection-start-line="348" selection-start-column="31" selection-end-line="348" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../NPTableAnimator/Classes/TableAnimationSafeApplier.swift">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="661">
+          <caret line="53" column="96" lean-forward="false" selection-start-line="53" selection-start-column="96" selection-end-line="53" selection-end-column="96" />
+          <folding>
+            <element signature="e#48#65#0" expanded="true" />
+            <marker date="1513590576750" expanded="true" signature="118:2411" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../NPTableAnimator/Classes/TableAnimationApplier.swift">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="984">
+          <caret line="229" column="0" lean-forward="false" selection-start-line="229" selection-start-column="0" selection-end-line="229" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/NPTableAnimator/ViewController.swift">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="245">
+          <caret line="132" column="18" lean-forward="true" selection-start-line="132" selection-start-column="18" selection-end-line="132" selection-end-column="18" />
           <folding />
         </state>
       </provider>

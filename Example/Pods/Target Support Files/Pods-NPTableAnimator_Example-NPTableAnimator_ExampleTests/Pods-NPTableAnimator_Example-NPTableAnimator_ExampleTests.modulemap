@@ -1,0 +1,6 @@
+framework module Pods_NPTableAnimator_Example_NPTableAnimator_ExampleTests {
+  umbrella header "Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests-umbrella.h"
+
+  export *
+  module * { export * }
+}

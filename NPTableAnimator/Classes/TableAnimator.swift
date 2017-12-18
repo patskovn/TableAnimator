@@ -63,7 +63,7 @@ open class TableAnimator<Section: TableAnimatorSection> {
 	///   - toList: result list.
 	/// - Returns: Calculated changes.
 	/// - Throws: *TableAnimatorError*
-	open func buildAnimations(from fromList: [Section], to toList: [Section]) throws -> (sections: SectionsAnimations, cells: CellsAnimations) {
+	open func buildAnimations(from fromList: [Section], to toList: [Section]) throws -> TableAnimations {
 		
 		if isConsistencyValidationEnabled {
 			try validateSectionsConsistency(fromList: fromList, toList: toList)

@@ -9,6 +9,9 @@
 import Foundation
 
 
+public typealias TableAnimations = (cells: CellsAnimations, sections: SectionsAnimations)
+
+
 /// Structure contains information about sections change.
 public struct SectionsAnimations {
 	
@@ -23,6 +26,12 @@ public struct SectionsAnimations {
 	
 	/// Updated sections indexes.
 	public let toUpdate: IndexSet
+
+	/// Have no changes
+	public var isEmpty: Bool {
+		return toInsert.isEmpty && toDelete.isEmpty && toMove.isEmpty && toUpdate.isEmpty
+	}
+
 }
 
 
@@ -44,7 +53,12 @@ public struct CellsAnimations {
 	/// Updated cells indexes, which intersects with move indexes. UITableView can't perform *move* and *update*
 	/// at the same time, so we need to apply this updates during second update request.
 	public let toDeferredUpdate: [IndexPath]
-	
+
+	/// Have no changes
+	public var isEmpty: Bool {
+		return toInsert.isEmpty && toDelete.isEmpty && toMove.isEmpty && toUpdate.isEmpty && toDeferredUpdate.isEmpty
+	}
+
 	
 	static func +(left: CellsAnimations, right: CellsAnimations) -> CellsAnimations {
 		

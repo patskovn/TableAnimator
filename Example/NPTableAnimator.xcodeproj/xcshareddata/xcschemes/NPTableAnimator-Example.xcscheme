@@ -53,6 +53,16 @@
                ReferencedContainer = "container:NPTableAnimator.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "751301431FE7AECA004A5C3B"
+               BuildableName = "NPTableAnimator_ExampleTests.xctest"
+               BlueprintName = "NPTableAnimator_ExampleTests"
+               ReferencedContainer = "container:NPTableAnimator.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
