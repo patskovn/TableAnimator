@@ -38,6 +38,11 @@ import Foundation
 		///   - rowAnimations: UITableView animations style for insert, delete and reload
 		public func apply(animations: TableAnimations, setNewListBlock: @escaping () -> Bool, completion: (() -> Void)?, cancelBlock: (() -> Void)?, rowAnimations: UITableViewRowAnimationSet) {
 
+			guard !animations.cells.isEmpty && !animations.sections.isEmpty else {
+				cancelBlock?()
+				return
+			}
+			
 			let setAnimationsClosure: (UITableView) -> Void = { table in
 				table.insertSections(animations.sections.toInsert, with: rowAnimations.insert)
 				table.deleteSections(animations.sections.toDelete, with: rowAnimations.delete)
@@ -172,6 +177,10 @@ import Foundation
 		///   - cancelBlock: Called if list change was cancelled (You ask next apply before previous apply ended)
 		public func apply(animations: TableAnimations, setNewListBlock: @escaping () -> Bool, completion: (() -> Void)?, cancelBlock: (() -> Void)?) {
 
+			guard !animations.cells.isEmpty && !animations.sections.isEmpty else {
+				cancelBlock?()
+				return
+			}
 
 			let safeApplyClosure: (DispatchSemaphore) -> Bool = { [weak self] semaphore in
 				guard let strong = self else {
@@ -179,7 +188,6 @@ import Foundation
 					return false
 				}
 
-				
 				var didSetNewList = false
 				
 				strong.performBatchUpdates({
