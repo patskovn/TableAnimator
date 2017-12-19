@@ -323,17 +323,12 @@ open class TableAnimator<Section: TableAnimatorSection> {
 		}
 		
 		for (_, toCell) in toSection {
-			if let fromCell = fromSection[toCell.cell] {
-				orderedExistedCellsTo.append(fromCell)
+			if fromSection[toCell.cell] != nil {
+				orderedExistedCellsTo.append(toCell)
 			} else {
 				toAdd.append(toCell.index)
 			}
 		}
-		
-		print(orderedExistedCellsFrom)
-		orderedExistedCellsFrom.sort(by: { $0.index.row < $1.index.row })
-		print(orderedExistedCellsFrom)
-		orderedExistedCellsTo.sort(by: { $0.index.row < $1.index.row })
 		
 		let toMove = recognizeCellsMove(existedElementsIndexes: existedCellIndexes
 			, existedElementsFrom: orderedExistedCellsFrom
@@ -357,22 +352,23 @@ open class TableAnimator<Section: TableAnimatorSection> {
 	
 	private func recognizeCellsMove(existedElementsIndexes: [Section.Cell : (from: IndexPath, to: IndexPath)], existedElementsFrom: [IndexedCell<Section.Cell>], existedElementsTo: [IndexedCell<Section.Cell>]) -> [(from: IndexPath, to: IndexPath)] {
 		
-		func calculateToMoveElementsWithPreferredDirection(toEnumerateList: [IndexedCell<Section.Cell>]) -> Set<Section.Cell> {
+		
+		func calculateCellMove(orderedToSequence: [IndexedCell<Section.Cell>]) -> Set<Section.Cell> {
 			
 			var toMoveElements = Set<Section.Cell>()
 			
-			for value in toEnumerateList {
+			for value in orderedToSequence {
 				
 				let toCell = value.cell
-				
 				let (fromIndex, toIndex) = existedElementsIndexes[toCell]!
-				
 				
 				guard fromIndex != toIndex else { continue }
 				guard !toMoveElements.contains(toCell) else { continue }
 				
 				var elementsBeforeFrom: Set<Section.Cell> = []
 				var elementsAfterFrom: Set<Section.Cell> = []
+				var elementsBeforeTo: Set<Section.Cell> = []
+				var elementsAfterTo: Set<Section.Cell> = []
 				
 				for cell in existedElementsFrom where cell.cell != value.cell {
 					
@@ -383,28 +379,16 @@ open class TableAnimator<Section: TableAnimatorSection> {
 					}
 				}
 				
-				var elementsBeforeTo: Set<Section.Cell> = []
-				var elementsAfterTo: Set<Section.Cell> = []
-				
 				for cell in existedElementsTo where cell.cell != value.cell {
-					if cell.index.row > fromIndex.row {
+					if cell.index.row < toIndex.row {
 						elementsBeforeTo.insert(cell.cell)
-					} else if cell.index.row < fromIndex.row {
+					} else if cell.index.row > toIndex.row {
 						elementsAfterTo.insert(cell.cell)
 					}
 				}
 				
-				print(toCell)
-				
-				print(elementsBeforeFrom)
-				print(elementsBeforeTo)
-				
-				print(elementsAfterFrom)
-				print(elementsAfterTo)
-				
 				let moveFromTopToBottom = elementsBeforeTo.subtracting(elementsBeforeFrom)
 				let moveFromBottomToTop = elementsAfterTo.subtracting(elementsAfterFrom)
-				
 				
 				toMoveElements.formUnion(moveFromTopToBottom)
 				toMoveElements.formUnion(moveFromBottomToTop)
@@ -413,20 +397,28 @@ open class TableAnimator<Section: TableAnimatorSection> {
 			return toMoveElements
 		}
 		
-		print(existedElementsIndexes)
 		
 		let toMoveSequence: Set<Section.Cell>
 		switch cellMoveCalculatingStrategy {
 		case .top:
-			toMoveSequence = calculateToMoveElementsWithPreferredDirection(toEnumerateList: existedElementsTo.reversed())
+			toMoveSequence = calculateCellMove(orderedToSequence: existedElementsTo.sorted(by: { $0.index.row > $1.index.row }))
 			
 		case .bottom:
-			toMoveSequence = calculateToMoveElementsWithPreferredDirection(toEnumerateList: existedElementsTo)
+			toMoveSequence = calculateCellMove(orderedToSequence: existedElementsTo.sorted(by: { $0.index.row < $1.index.row }))
 			
 		case .directRecognition(let recognizer):
-			toMoveSequence = zip(existedElementsFrom, existedElementsTo)
-				.filter { recognizer.recognizeMove(from: $0.cell, to: $1.cell) }
-				.reduce([]) { return $0.union([$1.1.cell]) }
+			let sortedFrom = existedElementsFrom.sorted(by: { $0.index.row < $1.index.row })
+			let sortedTo = existedElementsTo.sorted(by: { $0.index.row < $1.index.row })
+			
+			var moved: Set<Section.Cell> = []
+			
+			for (fromElement, toElement) in zip(sortedFrom, sortedTo) {
+				if recognizer.recognizeMove(from: fromElement.cell, to: toElement.cell) {
+					moved.insert(fromElement.cell)
+				}
+			}
+			
+			toMoveSequence = moved
 		}
 		
 		return toMoveSequence.reduce(into: []) {
