@@ -38,7 +38,7 @@ import Foundation
 		///   - rowAnimations: UITableView animations style for insert, delete and reload
 		public func apply(animations: TableAnimations, setNewListBlock: @escaping () -> Bool, completion: (() -> Void)?, cancelBlock: (() -> Void)?, rowAnimations: UITableViewRowAnimationSet) {
 
-			guard !animations.cells.isEmpty && !animations.sections.isEmpty else {
+			guard !animations.cells.isEmpty || !animations.sections.isEmpty else {
 				cancelBlock?()
 				return
 			}
@@ -177,7 +177,7 @@ import Foundation
 		///   - cancelBlock: Called if list change was cancelled (You ask next apply before previous apply ended)
 		public func apply(animations: TableAnimations, setNewListBlock: @escaping () -> Bool, completion: (() -> Void)?, cancelBlock: (() -> Void)?) {
 
-			guard !animations.cells.isEmpty && !animations.sections.isEmpty else {
+			guard !animations.cells.isEmpty || !animations.sections.isEmpty else {
 				cancelBlock?()
 				return
 			}
