@@ -36,16 +36,18 @@ class NPTableAnimator_ExampleTests: XCTestCase {
 		
 		func generateFromList() -> [MySection] {
 			
+			let s1 = [MyCell.init(id: "123456", updateField: 0)]
+			
 			let fromList = ["762092_10001_7eb46772-48cf-4646-9867-1cccb77acd89", "762092_10001_20110216-02b4-4648-9817-3b7e0517eb0b", "762092_10001_78900e22-e010-4bc4-be69-3a296afe9d4f", "762092_10001_7616224a-ecbb-4a67-a88d-ec59a1df6ace"]
 			
 			let cells = fromList.enumerated().map{ MyCell(id: $0.element, updateField: 0) }
 			
-			return [MySection(id: 0, cells: cells)]
+			return [MySection.init(id: -1, cells: s1), MySection(id: 0, cells: cells)]
 		}
 		
 		
 		func generateToList() -> [MySection] {
-			let toList = generateFromList()[0].cells.map { $0.id }
+			let toList = generateFromList()[1].cells.map { $0.id }
 			
 			var cells = toList.enumerated().map{ MyCell(id: $0.element, updateField: 0) }
 			cells[0].updateField = 1

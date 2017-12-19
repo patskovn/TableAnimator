@@ -334,7 +334,7 @@ open class TableAnimator<Section: TableAnimatorSection> {
 			, existedElementsFrom: orderedExistedCellsFrom
 			, existedElementsTo: orderedExistedCellsTo)
 
-		toUpdate = toUpdate.filter{ toUpdateIndex in !toMove.contains(where: { $0.from == toUpdateIndex || $0.to == toUpdateIndex }) }
+		toUpdate = toUpdate.filter{ toUpdateIndex in !toMove.contains(where: { $0.from.item == toUpdateIndex.item || $0.to.item == toUpdateIndex.item }) }
 		toDeferredUpdate = toDeferredUpdate.filter { !toUpdate.contains($0) }
 
 		let cellsTransformations = CellsAnimations(toInsert: toAdd
