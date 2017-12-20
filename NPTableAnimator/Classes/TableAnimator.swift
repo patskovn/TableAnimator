@@ -301,8 +301,7 @@ open class TableAnimator<Section: TableAnimatorSection> {
 		
 		var toAdd = [IndexPath]()
 		var toRemove = [IndexPath]()
-		var toDeferredUpdate = [(from: IndexPath, to: IndexPath)]()
-		var toUpdate = [IndexPath]()
+		var toDeferredUpdate = [IndexPath]()
 		var toMove: [(from: IndexPath, to: IndexPath)] = []
 
 		var existedCellIndexes: [Section.Cell : (from: IndexPath, to: IndexPath)] = [:]
@@ -315,8 +314,7 @@ open class TableAnimator<Section: TableAnimatorSection> {
 				existedCellIndexes[fromCell.cell] = (fromCell.index, toCell.index)
 				
 				if fromCell.cell.updateField != toCell.cell.updateField {
-					toUpdate.append(fromCell.index)
-					toDeferredUpdate.append((fromCell.index, toCell.index))
+					toDeferredUpdate.append(toCell.index)
 				}
 				
 				if case .directRecognition(let moveRecognizer) = self.cellMoveCalculatingStrategy,
@@ -343,15 +341,11 @@ open class TableAnimator<Section: TableAnimatorSection> {
 				, existedElementsTo: orderedExistedCellsTo)
 		}
 
-		// UITableView crashes when updates intersected with from move index or to move index
-		toUpdate = toUpdate.filter{ toUpdateIndex in !toMove.contains(where: { $0.from.item == toUpdateIndex.item || $0.to.item == toUpdateIndex.item }) }
-		toDeferredUpdate = toDeferredUpdate.filter { toDeferredUpdateIndex in !toUpdate.contains(where: { toDeferredUpdateIndex.from == $0 }) }
-
 		let cellsTransformations = CellsAnimations(toInsert: toAdd
 			, toDelete: toRemove
 			, toMove: toMove
-			, toUpdate: toUpdate
-			, toDeferredUpdate: toDeferredUpdate.map({ $0.to }))
+			, toUpdate: []
+			, toDeferredUpdate: toDeferredUpdate)
 		
 		return cellsTransformations
 		
