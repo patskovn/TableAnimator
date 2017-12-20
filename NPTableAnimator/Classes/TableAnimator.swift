@@ -303,6 +303,7 @@ open class TableAnimator<Section: TableAnimatorSection> {
 		var toRemove = [IndexPath]()
 		var toDeferredUpdate = [IndexPath]()
 		var toUpdate = [IndexPath]()
+		var toMove: [(from: IndexPath, to: IndexPath)] = []
 
 		var existedCellIndexes: [Section.Cell : (from: IndexPath, to: IndexPath)] = [:]
 		var orderedExistedCellsFrom: [IndexedCell<Section.Cell>] = []
@@ -315,6 +316,11 @@ open class TableAnimator<Section: TableAnimatorSection> {
 				
 				if fromCell.cell.updateField != toCell.cell.updateField {
 					toUpdate.append(fromCell.index)
+				}
+				
+				if case .directRecognition(let moveRecognizer) = self.cellMoveCalculatingStrategy,
+					moveRecognizer.recognizeMove(from: fromCell.cell, to: toCell.cell) {
+					toMove.append((fromCell.index, toCell.index))
 				}
 				
 			} else {
@@ -330,10 +336,13 @@ open class TableAnimator<Section: TableAnimatorSection> {
 			}
 		}
 		
-		let toMove = recognizeCellsMove(existedElementsIndexes: existedCellIndexes
-			, existedElementsFrom: orderedExistedCellsFrom
-			, existedElementsTo: orderedExistedCellsTo)
+		if toMove.isEmpty {
+			toMove = recognizeCellsMove(existedElementsIndexes: existedCellIndexes
+				, existedElementsFrom: orderedExistedCellsFrom
+				, existedElementsTo: orderedExistedCellsTo)
+		}
 
+		// UITableView crashes when updates intersected with from move index or to move index
 		toUpdate = toUpdate.filter{ toUpdateIndex in !toMove.contains(where: { $0.from.item == toUpdateIndex.item || $0.to.item == toUpdateIndex.item }) }
 		toDeferredUpdate = toDeferredUpdate.filter { !toUpdate.contains($0) }
 
@@ -406,19 +415,9 @@ open class TableAnimator<Section: TableAnimatorSection> {
 		case .bottom:
 			toMoveSequence = calculateCellMove(orderedToSequence: existedElementsTo.sorted(by: { $0.index.row < $1.index.row }))
 			
-		case .directRecognition(let recognizer):
-			let sortedFrom = existedElementsFrom.sorted(by: { $0.index.row < $1.index.row })
-			let sortedTo = existedElementsTo.sorted(by: { $0.index.row < $1.index.row })
-			
-			var moved: Set<Section.Cell> = []
-			
-			for (fromElement, toElement) in zip(sortedFrom, sortedTo) {
-				if recognizer.recognizeMove(from: fromElement.cell, to: toElement.cell) {
-					moved.insert(fromElement.cell)
-				}
-			}
-			
-			toMoveSequence = moved
+		case .directRecognition:
+			// With direct recognition move recognizes with insertions and deletions
+			return []
 		}
 		
 		return toMoveSequence.reduce(into: []) {
