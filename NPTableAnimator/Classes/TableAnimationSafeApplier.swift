@@ -66,28 +66,34 @@ class SafeApplier {
 			
 			var didSetNewList = false
 			
-			DispatchQueue.main.async {
+			var didStartAnimations = false
+			
+			DispatchQueue.main.sync {
 				if let table = self.associatedTable {
 					silence(table)
+					didStartAnimations = true
 					didSetNewList = mainPerform(semaphore)
-				} else {
-					semaphore.signal()
 				}
 			}
 			
-			semaphore.wait()
+			if didStartAnimations {
+				_ = semaphore.wait(timeout: DispatchTime(uptimeNanoseconds: 400_000_000))
+			}
 			
 			if hasDeferredAnimations && didSetNewList {
-				DispatchQueue.main.async {
+				didStartAnimations = false
+				
+				DispatchQueue.main.sync {
 					if let table = self.associatedTable {
 						silence(table)
+						didStartAnimations = true
 						deferredPerform(semaphore)
-					} else {
-						semaphore.signal()
 					}
 				}
 				
-				semaphore.wait()
+				if didStartAnimations {
+					_ = semaphore.wait(timeout: DispatchTime(uptimeNanoseconds: 400_000_000))
+				}
 			}
 
 		}

@@ -63,7 +63,6 @@ import Foundation
 
 			let safeApplyClosure: (DispatchSemaphore) -> Bool = { [weak self] semaphore in
 				guard let strong = self else {
-					semaphore.signal()
 					return false
 				}
 
@@ -72,7 +71,7 @@ import Foundation
 				if #available(iOS 11, *) {
 
 					strong.performBatchUpdates({
-						 didSetNewList = setNewListBlock()
+						didSetNewList = setNewListBlock()
 						
 						if didSetNewList {
 							setAnimationsClosure(strong)
@@ -93,13 +92,18 @@ import Foundation
 
 					didSetNewList = setNewListBlock()
 					
-					if animations.cells.toDeferredUpdate.isEmpty || !didSetNewList {
-						CATransaction.setCompletionBlock(completion)
+					CATransaction.setCompletionBlock {
+						if animations.cells.toDeferredUpdate.isEmpty || !didSetNewList {
+							completion?()
+						}
+						
+						semaphore.signal()
 					}
-
+					
 					setAnimationsClosure(strong)
 
 					strong.endUpdates()
+					CATransaction.commit()
 				}
 				
 				return didSetNewList
@@ -108,7 +112,6 @@ import Foundation
 
 			let safeDeferredApplyClosure: (DispatchSemaphore) -> Void = { [weak self] semaphore in
 				guard let strong = self else {
-					semaphore.signal()
 					return
 				}
 
@@ -184,7 +187,6 @@ import Foundation
 
 			let safeApplyClosure: (DispatchSemaphore) -> Bool = { [weak self] semaphore in
 				guard let strong = self else {
-					semaphore.signal()
 					return false
 				}
 
@@ -225,13 +227,12 @@ import Foundation
 
 			let safeDeferredApplyClosure: (DispatchSemaphore) -> Void = { [weak self] semaphore in
 				guard let strong = self else {
-					semaphore.signal()
 					return
 				}
 
 				strong.performBatchUpdates({
 					strong.reloadItems(at: animations.cells.toDeferredUpdate)
-								   }, completion: { _ in
+				}, completion: { _ in
 					completion?()
 					semaphore.signal()
 				})
