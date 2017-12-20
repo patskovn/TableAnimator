@@ -316,6 +316,7 @@ open class TableAnimator<Section: TableAnimatorSection> {
 				
 				if fromCell.cell.updateField != toCell.cell.updateField {
 					toUpdate.append(fromCell.index)
+					toDeferredUpdate.append(toCell.index)
 				}
 				
 				if case .directRecognition(let moveRecognizer) = self.cellMoveCalculatingStrategy,
