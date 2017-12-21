@@ -57,7 +57,7 @@ class SafeApplier {
 
 		func silence(_ obj: AnyObject) {}
 		
-		applyQueue.cancelAllOperations()
+//		applyQueue.cancelAllOperations()
 		
 		let operation = UpdateTableOperation(cancelBlock: cancelBlock)
 		operation.addExecutionBlock {

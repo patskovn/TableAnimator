@@ -97,7 +97,7 @@ import Foundation
 							completion?()
 						}
 						
-						semaphore.signal()
+//						semaphore.signal()
 					}
 					
 					setAnimationsClosure(strong)
@@ -127,7 +127,7 @@ import Foundation
 					CATransaction.begin()
 					CATransaction.setCompletionBlock {
 						completion?()
-						semaphore.signal()
+//						semaphore.signal()
 					}
 
 					strong.beginUpdates()
@@ -139,10 +139,14 @@ import Foundation
 
 			}
 
-			SafeApplier.get(for: self).apply(hasDeferredAnimations: !animations.cells.toDeferredUpdate.isEmpty,
-								   mainPerform: safeApplyClosure,
-								   deferredPerform: safeDeferredApplyClosure,
-								   cancelBlock: cancelBlock)
+			let semaphore = DispatchSemaphore(value: 0)
+			_ = safeApplyClosure(semaphore)
+			safeDeferredApplyClosure(semaphore)
+			
+//			SafeApplier.get(for: self).apply(hasDeferredAnimations: !animations.cells.toDeferredUpdate.isEmpty,
+//								   mainPerform: safeApplyClosure,
+//								   deferredPerform: safeDeferredApplyClosure,
+//								   cancelBlock: cancelBlock)
 
 		}
 		
@@ -218,7 +222,7 @@ import Foundation
 						completion?()
 					}
 
-					semaphore.signal()
+//					semaphore.signal()
 				})
 				
 				return didSetNewList
@@ -234,15 +238,18 @@ import Foundation
 					strong.reloadItems(at: animations.cells.toDeferredUpdate)
 				}, completion: { _ in
 					completion?()
-					semaphore.signal()
+//					semaphore.signal()
 				})
 
 			}
 
-			SafeApplier.get(for: self).apply(hasDeferredAnimations: !animations.cells.toDeferredUpdate.isEmpty,
-								   mainPerform: safeApplyClosure,
-								   deferredPerform: safeDeferredApplyClosure,
-								   cancelBlock: cancelBlock)
+			let semaphore = DispatchSemaphore(value: 0)
+			_ = safeApplyClosure(semaphore)
+			safeDeferredApplyClosure(semaphore)
+//			SafeApplier.get(for: self).apply(hasDeferredAnimations: !animations.cells.toDeferredUpdate.isEmpty,
+//								   mainPerform: safeApplyClosure,
+//								   deferredPerform: safeDeferredApplyClosure,
+//								   cancelBlock: cancelBlock)
 
 		}
 		
