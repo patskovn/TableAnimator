@@ -301,7 +301,8 @@ open class TableAnimator<Section: TableAnimatorSection> {
 		
 		var toAdd = [IndexPath]()
 		var toRemove = [IndexPath]()
-		var toDeferredUpdate = [IndexPath]()
+		var toDeferredUpdate = [(from: IndexPath, to: IndexPath)]()
+		var toUpdate = [IndexPath]()
 		var toMove: [(from: IndexPath, to: IndexPath)] = []
 
 		var existedCellIndexes: [Section.Cell : (from: IndexPath, to: IndexPath)] = [:]
@@ -314,7 +315,7 @@ open class TableAnimator<Section: TableAnimatorSection> {
 				existedCellIndexes[fromCell.cell] = (fromCell.index, toCell.index)
 				
 				if fromCell.cell.updateField != toCell.cell.updateField {
-					toDeferredUpdate.append(toCell.index)
+					toDeferredUpdate.append((fromCell.index, toCell.index))
 				}
 				
 				if case .directRecognition(let moveRecognizer) = self.cellMoveCalculatingStrategy,
@@ -341,11 +342,17 @@ open class TableAnimator<Section: TableAnimatorSection> {
 				, existedElementsTo: orderedExistedCellsTo)
 		}
 
+		//If we have only updates, we may apply them in first update circle
+		if toAdd.isEmpty && toRemove.isEmpty && toMove.isEmpty {
+			toUpdate = toDeferredUpdate.map({ $0.from })
+			toDeferredUpdate.removeAll()
+		}
+
 		let cellsTransformations = CellsAnimations(toInsert: toAdd
 			, toDelete: toRemove
 			, toMove: toMove
-			, toUpdate: []
-			, toDeferredUpdate: toDeferredUpdate)
+			, toUpdate: toUpdate
+			, toDeferredUpdate: toDeferredUpdate.map({ $0.to }))
 		
 		return cellsTransformations
 		

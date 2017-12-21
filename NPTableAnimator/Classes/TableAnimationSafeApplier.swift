@@ -77,7 +77,7 @@ class SafeApplier {
 			}
 			
 			if didStartAnimations {
-				_ = semaphore.wait(timeout: DispatchTime(uptimeNanoseconds: 400_000_000))
+				_ = semaphore.wait(timeout: .now() + .seconds(1))
 			}
 			
 			if hasDeferredAnimations && didSetNewList {
@@ -92,7 +92,7 @@ class SafeApplier {
 				}
 				
 				if didStartAnimations {
-					_ = semaphore.wait(timeout: DispatchTime(uptimeNanoseconds: 400_000_000))
+					_ = semaphore.wait(timeout: .now() + .seconds(1))
 				}
 			}
 
