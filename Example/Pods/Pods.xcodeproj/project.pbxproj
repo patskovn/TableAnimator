@@ -15,6 +15,7 @@
 		63169D357B76B7D5B946A1141663058B /* Pods-NPTableAnimator_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = EDEE74D1D86C35E9D819681BA7340B9D /* Pods-NPTableAnimator_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6B28C29971B604A55CB90EB4C02B3536 /* NPTableAnimator-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 0479736FDBBCEE7842C6EE84E3E2217D /* NPTableAnimator-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6E577614ACDFC07DB1901DD19CD1DF2E /* NPTableAnimator-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 0378D13CCC75C56EC49489360CE308A0 /* NPTableAnimator-dummy.m */; };
+		7528B19C20219BCA00B536B8 /* TableAnimations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DE805FA31446B5CD522DF5E2E2F4D3 /* TableAnimations.swift */; };
 		7B9296AB2CC65912D94FB84E03AD9A5D /* TableAnimationApplier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DB4ECE9B61B6F8D3B49D7F121FFE42 /* TableAnimationApplier.swift */; };
 		8F60281721D486E77C17C9FD /* TableAnimationSafeApplier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F6023288D114064B2B5CCB2 /* TableAnimationSafeApplier.swift */; };
 		8F602D505BE3173768E591CC /* TableAnimationSafeApplier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F6023288D114064B2B5CCB2 /* TableAnimationSafeApplier.swift */; };
@@ -349,6 +350,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E354D5ED34ABFBE7E9DF2FC5A481DEBD /* Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests-dummy.m in Sources */,
+				7528B19C20219BCA00B536B8 /* TableAnimations.swift in Sources */,
 				8F602D505BE3173768E591CC /* TableAnimationSafeApplier.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

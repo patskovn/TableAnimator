@@ -4,19 +4,18 @@
 
 import Foundation
 import Dispatch
-import UIKit
-
-
 
 
 
 class SafeApplier {
-
+	
 	private static var applierStorage: [ObjectIdentifier: SafeApplier] = [:]
-
+	
 	static func get(for associatedTable: AnyObject) -> SafeApplier {
+		applierStorage = applierStorage.filter({$1.associatedTable != nil})
+		
 		let objectID = ObjectIdentifier(associatedTable)
-
+		
 		if let applier = applierStorage[objectID] {
 			return applier
 		} else {
@@ -25,98 +24,113 @@ class SafeApplier {
 			return applier
 		}
 	}
-
-
-	let applyQueue: OperationQueue
-	let semaphore: DispatchSemaphore = DispatchSemaphore(value: 0)
-	let objectID: ObjectIdentifier
-
-	weak var associatedTable: AnyObject? {
-		didSet {
-			if associatedTable == nil {
-				let objectID = self.objectID
-				DispatchQueue.main.async {
-					SafeApplier.applierStorage.removeValue(forKey: objectID)
-				}
-			}
+	
+	
+	static func prepare(for associatedTable: AnyObject, operationQueue: OperationQueue) -> Bool {
+		
+		let objectID = ObjectIdentifier(associatedTable)
+		
+		if applierStorage[objectID] == nil {
+			let applier = SafeApplier(associatedTable: associatedTable, operationQueue: operationQueue)
+			applierStorage[objectID] = applier
+			return true
+		} else {
+			return false
 		}
 	}
-
-	init(associatedTable: AnyObject) {
-		self.objectID = ObjectIdentifier(associatedTable)
-		self.associatedTable = associatedTable
-		self.applyQueue = OperationQueue()
-		self.applyQueue.qualityOfService = .userInteractive
-		applyQueue.maxConcurrentOperationCount = 1
+	
+	
+	let applyQueue: OperationQueue
+	private let semaphore: DispatchSemaphore = DispatchSemaphore(value: 0)
+	
+	weak var associatedTable: AnyObject?
+	
+	
+	convenience init(associatedTable: AnyObject) {
+		let applyQueue = OperationQueue()
+		
+		self.init(associatedTable: associatedTable, operationQueue: applyQueue)
 	}
-
-
-	func apply(hasDeferredAnimations: Bool, mainPerform: @escaping (DispatchSemaphore) -> Bool, deferredPerform: @escaping (DispatchSemaphore) -> Void, cancelBlock: (() -> Void)?) {
-
+	
+	
+	init(associatedTable: AnyObject, operationQueue: OperationQueue) {
+		self.associatedTable = associatedTable
+		self.applyQueue = operationQueue
+		
+		self.applyQueue.qualityOfService = .userInteractive
+		self.applyQueue.maxConcurrentOperationCount = 1
+	}
+	
+	
+	func apply<T>(newList: [T], getCurrentListBlock: @escaping () -> [T]?, calculateChanges: @escaping (_ from: [T], _ to: [T]) throws -> TableAnimations?, mainPerform: @escaping (DispatchSemaphore, TableAnimations) -> Bool, deferredPerform: @escaping (DispatchSemaphore, [IndexPath]) -> Void, onAnimationsError: @escaping (Error) -> Void) {
+		
 		let semaphore = self.semaphore
-
-		func silence(_ obj: AnyObject) {}
 		
-//		applyQueue.cancelAllOperations()
+		let operation = BlockOperation()
 		
-		let operation = UpdateTableOperation(cancelBlock: cancelBlock)
+		// Synchronize animations. We cant use semaphores on main thread, so we waiting for animations completion in specific serialized queue
 		operation.addExecutionBlock {
-			guard let table = self.associatedTable else { return }
-			silence(table)
-			
-			var didSetNewList = false
-			
-			var didStartAnimations = false
+			guard let table = self.associatedTable else {
+				return
+			}
+			silence(obj: table)
+			var possibleCurrentList: [T]?
 			
 			DispatchQueue.main.sync {
 				if let table = self.associatedTable {
-					silence(table)
-					didStartAnimations = true
-					didSetNewList = mainPerform(semaphore)
+					silence(obj: table)
+					possibleCurrentList = getCurrentListBlock()
 				}
 			}
 			
-			if didStartAnimations {
-				_ = semaphore.wait(timeout: .now() + .seconds(1))
-			}
+			guard let currentList = possibleCurrentList else { return }
 			
-			if hasDeferredAnimations && didSetNewList {
-				didStartAnimations = false
+			do {
+				guard let animations = try calculateChanges(currentList, newList) else {
+					return
+				}
 				
+				var didSetNewList = false
+				
+				var didStartAnimations = false
 				DispatchQueue.main.sync {
 					if let table = self.associatedTable {
-						silence(table)
+						silence(obj: table)
 						didStartAnimations = true
-						deferredPerform(semaphore)
+						didSetNewList = mainPerform(semaphore, animations)
 					}
 				}
 				
 				if didStartAnimations {
-					_ = semaphore.wait(timeout: .now() + .seconds(1))
+					_ = semaphore.wait()
+				}
+				
+				if !animations.cells.toDeferredUpdate.isEmpty && didSetNewList {
+					didStartAnimations = false
+					
+					DispatchQueue.main.sync {
+						if let table = self.associatedTable {
+							silence(obj: table)
+							didStartAnimations = true
+							deferredPerform(semaphore, animations.cells.toDeferredUpdate)
+						}
+					}
+					
+					if didStartAnimations {
+						_ = semaphore.wait()
+					}
+				}
+				
+			} catch {
+				DispatchQueue.main.sync {
+					onAnimationsError(error)
 				}
 			}
-
 		}
 		
 		self.applyQueue.addOperation(operation)
 	}
-
-
 }
 
 
 
-private class UpdateTableOperation: BlockOperation {
-	
-	private let cancelBlock: (() -> Void)?
-	
-	init(cancelBlock: (() -> Void)?) {
-		self.cancelBlock = cancelBlock
-	}
-	
-	override func cancel() {
-		super.cancel()
-		cancelBlock?()
-	}
-	
-}
