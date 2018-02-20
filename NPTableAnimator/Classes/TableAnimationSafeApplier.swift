@@ -9,36 +9,6 @@ import Dispatch
 
 class SafeApplier {
 	
-	private static var applierStorage: [ObjectIdentifier: SafeApplier] = [:]
-	
-	static func get(for associatedTable: AnyObject) -> SafeApplier {
-		applierStorage = applierStorage.filter({$1.associatedTable != nil})
-		
-		let objectID = ObjectIdentifier(associatedTable)
-		
-		if let applier = applierStorage[objectID] {
-			return applier
-		} else {
-			let applier = SafeApplier(associatedTable: associatedTable)
-			applierStorage[objectID] = applier
-			return applier
-		}
-	}
-	
-	
-	static func prepare(for associatedTable: AnyObject, operationQueue: OperationQueue) -> Bool {
-		
-		let objectID = ObjectIdentifier(associatedTable)
-		
-		if applierStorage[objectID] == nil {
-			let applier = SafeApplier(associatedTable: associatedTable, operationQueue: operationQueue)
-			applierStorage[objectID] = applier
-			return true
-		} else {
-			return false
-		}
-	}
-	
 	
 	let applyQueue: OperationQueue
 	private let semaphore: DispatchSemaphore = DispatchSemaphore(value: 0)
@@ -62,39 +32,31 @@ class SafeApplier {
 	}
 	
 	
-	func apply<T>(newList: [T], getCurrentListBlock: @escaping () -> [T]?, calculateChanges: @escaping (_ from: [T], _ to: [T]) throws -> TableAnimations?, mainPerform: @escaping (DispatchSemaphore, TableAnimations) -> Bool, deferredPerform: @escaping (DispatchSemaphore, [IndexPath]) -> Void, onAnimationsError: @escaping (Error) -> Void) {
+	func apply<T>(newList: [T], animator: TableAnimator<T>, getCurrentListBlock: @escaping () -> [T]?, mainPerform: @escaping (DispatchSemaphore, TableAnimations) -> Bool, deferredPerform: @escaping (DispatchSemaphore, [IndexPath]) -> Void, onAnimationsError: @escaping (Error) -> Void) {
+		
+		func silence(obj: AnyObject) {}
 		
 		let semaphore = self.semaphore
 		
 		let operation = BlockOperation()
 		
 		// Synchronize animations. We cant use semaphores on main thread, so we waiting for animations completion in specific serialized queue
-		operation.addExecutionBlock {
-			guard let table = self.associatedTable else {
+		operation.addExecutionBlock { [weak self] in
+			
+			guard let strong = self, strong.associatedTable != nil else {
 				return
 			}
-			silence(obj: table)
-			var possibleCurrentList: [T]?
 			
-			DispatchQueue.main.sync {
-				if let table = self.associatedTable {
-					silence(obj: table)
-					possibleCurrentList = getCurrentListBlock()
-				}
-			}
-			
-			guard let currentList = possibleCurrentList else { return }
+			guard let currentList = DispatchQueue.main.sync(execute: getCurrentListBlock) else { return }
 			
 			do {
-				guard let animations = try calculateChanges(currentList, newList) else {
-					return
-				}
+				let animations = try animator.buildAnimations(from: currentList, to: newList)
 				
 				var didSetNewList = false
 				
 				var didStartAnimations = false
 				DispatchQueue.main.sync {
-					if let table = self.associatedTable {
+					if let table = strong.associatedTable {
 						silence(obj: table)
 						didStartAnimations = true
 						didSetNewList = mainPerform(semaphore, animations)
@@ -109,7 +71,7 @@ class SafeApplier {
 					didStartAnimations = false
 					
 					DispatchQueue.main.sync {
-						if let table = self.associatedTable {
+						if let table = strong.associatedTable {
 							silence(obj: table)
 							didStartAnimations = true
 							deferredPerform(semaphore, animations.cells.toDeferredUpdate)
@@ -130,6 +92,9 @@ class SafeApplier {
 		
 		self.applyQueue.addOperation(operation)
 	}
+
+	
+
 }
 
 

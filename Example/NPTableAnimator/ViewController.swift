@@ -139,48 +139,26 @@ class ViewController: UITableViewController {
 		
 //		'attempt to perform an insert and a move to the same index path (<NSIndexPath: 0xc000000000000116> {length = 2, path = 1 - 0})'
 		
-		let animations = try! animator.buildAnimations(from: currentList.sections, to: toList.sections)
 		
-		tableView.apply(animations: animations,
-						setNewListBlock: { [weak self] in
-							if let strong = self {
-								strong.currentList = toList
-								return true
-							} else {
-								return false
-							}
-						},
-						completion: nil,
-						cancelBlock: nil,
-						rowAnimation: .fade)
-		
-		let toList2: MySequence
-		
-		if animationCount % 2 == 0 {
-			toList2 = generateToList()
-			
-		} else {
-			toList2 = generateFromList()
+		let getCurrentListBlock: () -> [MySection]? = { [weak self] in
+			guard let strong = self else { return nil }
+			return strong.currentList.sections
 		}
 		
-//		animationCount += 1
+		let setNewListBlock: ([MySection]) -> Bool = { [weak self] toList in
+			guard let strong = self else { return false }
+			strong.currentList = MySequence(sections: toList)
+			return true
+		}
 		
-		//		'attempt to perform an insert and a move to the same index path (<NSIndexPath: 0xc000000000000116> {length = 2, path = 1 - 0})'
+		tableView.apply(newList: toList.sections,
+				    animator: animator,
+				    getCurrentListBlock: getCurrentListBlock,
+				    setNewListBlock: setNewListBlock,
+				    rowAnimation: .fade,
+				    completion: nil,
+				    error: { _ in })
 		
-//		let animations2 = try! animator.buildAnimations(from: currentList.sections, to: toList2.sections)
-//
-//		tableView.apply(animations: animations2,
-//						setNewListBlock: { [weak self] in
-//							if let strong = self {
-//								strong.currentList = toList2
-//								return true
-//							} else {
-//								return false
-//							}
-//			},
-//						completion: nil,
-//						cancelBlock: nil,
-//						rowAnimation: .fade)
 	}
 	
 	

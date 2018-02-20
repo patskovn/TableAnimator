@@ -12,11 +12,17 @@ import Foundation
 #if os(iOS)
 	
 	
+	private var tableAssociatedObjectHandle: UInt8 = 0
+	private var collectionAssociatedObjectHandle: UInt8 = 0
+	private let monitor = NSObject()
+	
+	
 	/// TableView rows animation style set.
 	public struct UITableViewRowAnimationSet {
 		let insert: UIKit.UITableViewRowAnimation
 		let delete: UIKit.UITableViewRowAnimation
 		let reload: UIKit.UITableViewRowAnimation
+		
 		public init(insert anInsert: UIKit.UITableViewRowAnimation, delete aDelete: UIKit.UITableViewRowAnimation, reload aReload: UIKit.UITableViewRowAnimation) {
 			self.insert = anInsert
 			self.delete = aDelete
@@ -26,6 +32,27 @@ import Foundation
 	
 	extension UIKit.UITableView {
 		
+		
+		var safeApplier: SafeApplier {
+			get {
+				objc_sync_enter(monitor)
+				defer { objc_sync_exit(monitor) }
+				
+				if let applier = objc_getAssociatedObject(self, &tableAssociatedObjectHandle) as? SafeApplier {
+					return applier
+				} else {
+					let applier = SafeApplier(associatedTable: self)
+					objc_setAssociatedObject(self, &tableAssociatedObjectHandle, applier, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+					return applier
+				}
+			}
+			
+			set {
+				objc_sync_enter(monitor)
+				defer { objc_sync_exit(monitor) }
+				objc_setAssociatedObject(self, &tableAssociatedObjectHandle, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+			}
+		}
 		
 		
 		/// Use this for applying changes for UITableView.
@@ -41,7 +68,7 @@ import Foundation
 		///   - completion: Block for capturing animation completion. Called from main thread.
 		///   - error: Block for capturing error during changes calculation. When we got error in changes, we call *setNewListBlock* and *tableView.reloadData()*, then error block called
 		///   - tableError: TableAnimatorError
-		public func apply<T>(newList: [T], getCurrentListBlock: @escaping () -> [T]?, calculateChanges: @escaping (_ from: [T], _ to: [T]) throws -> TableAnimations?, setNewListBlock: @escaping (_ newList: [T]) -> Bool, rowAnimations: UITableViewRowAnimationSet, completion: (() -> Void)?, error: @escaping (_ tableError: Error) -> Void) {
+		public func apply<T>(newList: [T], animator: TableAnimator<T>, getCurrentListBlock: @escaping () -> [T]?, setNewListBlock: @escaping (_ newList: [T]) -> Bool, rowAnimations: UITableViewRowAnimationSet, completion: (() -> Void)?, error: @escaping (_ tableError: Error) -> Void) {
 			
 			let setAnimationsClosure: (UITableView, TableAnimations) -> Void = { table, animations in
 				table.insertSections(animations.sections.toInsert, with: rowAnimations.insert)
@@ -62,11 +89,9 @@ import Foundation
 			}
 			
 			let safeApplyClosure: (DispatchSemaphore, TableAnimations) -> Bool = { [weak self] semaphore, animations in
-				// If dataSource died, tableView.endUpdates() will throw fatal error.
-				guard let strong = self, let dataSource = strong.dataSource else {
+				guard let strong = self, strong.dataSource != nil else {
 					return false
 				}
-				silence(obj: dataSource)
 				
 				var didSetNewList = false
 				
@@ -113,11 +138,9 @@ import Foundation
 			
 			
 			let safeDeferredApplyClosure: (DispatchSemaphore, [IndexPath]) -> Void = { [weak self] semaphore, toDeferredUpdate in
-				// If dataSource died, tableView.endUpdates() will throw fatal error.
-				guard let strong = self, let dataSource = strong.dataSource else {
+				guard let strong = self, strong.dataSource != nil else {
 					return
 				}
-				silence(obj: dataSource)
 				
 				if #available(iOS 11, *) {
 					strong.performBatchUpdates({
@@ -152,13 +175,12 @@ import Foundation
 			}
 			
 			
-			SafeApplier.get(for: self).apply(newList: newList,
-								   getCurrentListBlock: getCurrentListBlock,
-								   calculateChanges: calculateChanges,
-								   mainPerform: safeApplyClosure,
-								   deferredPerform: safeDeferredApplyClosure,
-								   onAnimationsError: onAnimationsError)
-			
+			safeApplier.apply(newList: newList,
+						animator: animator,
+						getCurrentListBlock: getCurrentListBlock,
+						mainPerform: safeApplyClosure,
+						deferredPerform: safeDeferredApplyClosure,
+						onAnimationsError: onAnimationsError)
 		}
 		
 		
@@ -175,10 +197,10 @@ import Foundation
 		///   - completion: Block for capturing animation completion. Called from main thread.
 		///   - error: Block for capturing error during changes calculation. When we got error in changes, we call *setNewListBlock* and *tableView.reloadData()*, then error block called
 		///   - tableError: TableAnimatorError
-		public func apply<T>(newList: [T], getCurrentListBlock: @escaping () -> [T]?, calculateChanges: @escaping (_ from: [T], _ to: [T]) throws -> TableAnimations?, setNewListBlock: @escaping (_ newList: [T]) -> Bool, rowAnimation: UIKit.UITableViewRowAnimation, completion: (() -> Void)?, error: @escaping (_ tableError: Error) -> Void) {
+		public func apply<T>(newList: [T], animator: TableAnimator<T>, getCurrentListBlock: @escaping () -> [T]?, setNewListBlock: @escaping (_ newList: [T]) -> Bool, rowAnimation: UIKit.UITableViewRowAnimation, completion: (() -> Void)?, error: @escaping (_ tableError: Error) -> Void) {
 			
 			let animationSet = UITableViewRowAnimationSet(insert: rowAnimation, delete: rowAnimation, reload: rowAnimation)
-			self.apply(newList: newList, getCurrentListBlock: getCurrentListBlock, calculateChanges: calculateChanges, setNewListBlock: setNewListBlock, rowAnimations: animationSet, completion: completion, error: error)
+			self.apply(newList: newList, animator: animator, getCurrentListBlock: getCurrentListBlock, setNewListBlock: setNewListBlock, rowAnimations: animationSet, completion: completion, error: error)
 		}
 		
 		
@@ -186,7 +208,7 @@ import Foundation
 		///
 		/// - Returns: Queue that used for animations synchronizing.
 		public func getApplyQueue() -> OperationQueue {
-			return SafeApplier.get(for: self).applyQueue
+			return safeApplier.applyQueue
 		}
 		
 		
@@ -196,123 +218,20 @@ import Foundation
 		/// - Parameter operationQueue: Operation queue that will be used for animatino synchronizing.
 		/// - Returns: *true* if queue was successfully set, *false* if table already have queue for animations.
 		public func provideApplyQueue(_ operationQueue: OperationQueue) -> Bool {
-			return SafeApplier.prepare(for: self, operationQueue: operationQueue)
-		}
-		
-		
-		
-		
-		/// Use this for applying changes for UITableView.
-		///
-		/// - Note: If you have no interactive updates, you may mark InteractiveUpdate type as Void and pass nil to applyAnimationsToCell closure.
-		/// - Note: Owner of screen list in *setNewListBlock* should be weakly referenced!
-		/// - Parameters:
-		///   - animations: Changes, calculated by **TableAnimator**
-		///   - setNewListBlock: You should provide block, where you doing something like 'myItems = newItems'
-		///   - applyAnimationsToCell: If you have interactive updates, pass this closure for apply interactive animations for cells.
-		///   - completion: Completion block, that will be called when animation end.
-		///   - cancelBlock: Called if list change was cancelled (You ask next apply before previous apply ended)
-		///   - rowAnimations: UITableView animations style for insert, delete and reload
-		public func apply(animations: TableAnimations, setNewListBlock: @escaping () -> Bool, completion: (() -> Void)?, cancelBlock: (() -> Void)?, rowAnimations: UITableViewRowAnimationSet) {
+			objc_sync_enter(monitor)
+			defer { objc_sync_exit(monitor) }
 			
-			guard !animations.cells.isEmpty || !animations.sections.isEmpty else {
-				cancelBlock?()
-				return
-			}
-			
-			let setAnimationsClosure: (UITableView) -> Void = { table in
-				table.insertSections(animations.sections.toInsert, with: rowAnimations.insert)
-				table.deleteSections(animations.sections.toDelete, with: rowAnimations.delete)
-				table.reloadSections(animations.sections.toUpdate, with: rowAnimations.reload)
-				
-				for (from, to) in animations.sections.toMove {
-					table.moveSection(from, toSection: to)
-				}
-				
-				table.insertRows(at: animations.cells.toInsert, with: rowAnimations.insert)
-				table.deleteRows(at: animations.cells.toDelete, with: rowAnimations.delete)
-				table.reloadRows(at: animations.cells.toUpdate, with: rowAnimations.reload)
-				
-				for (from, to) in animations.cells.toMove {
-					table.moveRow(at: from, to: to)
-				}
-			}
-			
-			if self.dataSource == nil {
-				fatalError("UITableView is alive, but its data source are dead! That should never happen! Look closer at your memory management.")
-			}
-			
-			var didSetNewList = false
-			
-			if #available(iOS 11, *) {
-				self.performBatchUpdates({
-					didSetNewList = setNewListBlock()
-					
-					if didSetNewList {
-						setAnimationsClosure(self)
-					}
-					
-				}, completion: { _ in
-					
-					if animations.cells.toDeferredUpdate.isEmpty || !didSetNewList {
-						completion?()
-					}
-				})
-				
+			if (objc_getAssociatedObject(self, &tableAssociatedObjectHandle) as? SafeApplier) != nil {
+				return false
 			} else {
-				CATransaction.begin()
-				self.beginUpdates()
-				
-				didSetNewList = setNewListBlock()
-				
-				CATransaction.setCompletionBlock {
-					if animations.cells.toDeferredUpdate.isEmpty || !didSetNewList {
-						completion?()
-					}
-				}
-				
-				setAnimationsClosure(self)
-				
-				self.endUpdates()
-				CATransaction.commit()
-			}
-			
-			if #available(iOS 11, *) {
-				self.performBatchUpdates({
-					self.reloadRows(at: animations.cells.toDeferredUpdate, with: rowAnimations.reload)
-				}, completion: { _ in
-					completion?()
-				})
-				
-			} else {
-				CATransaction.begin()
-				CATransaction.setCompletionBlock {
-					completion?()
-				}
-				
-				self.beginUpdates()
-				self.reloadRows(at: animations.cells.toDeferredUpdate, with: rowAnimations.reload)
-				self.endUpdates()
-				
-				CATransaction.commit()
+				let applier = SafeApplier(associatedTable: self, operationQueue: operationQueue)
+				objc_setAssociatedObject(self, &tableAssociatedObjectHandle, applier, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+				return true
 			}
 		}
 		
 		
-		/// Use this for applying changes for UITableView.
-		///
-		/// - Note: If you have no interactive updates, you may mark InteractiveUpdate type as Void and pass nil to applyAnimationsToCell closure.
-		/// - Note: Owner of screen list in *setNewListBlock* should be weakly referenced!
-		/// - Parameters:
-		///   - animations: Changes, calculated by **TableAnimator**
-		///   - setNewListBlock: You should provide block, where you doing something like 'myItems = newItems'
-		///   - applyAnimationsToCell: If you have interactive updates, pass this closure for apply interactive animations for cells.
-		///   - completion: Completion block, that will be called when animation end
-		///   - cancelBlock: Called if list change was cancelled (You ask next apply before previous apply ended)
-		///   - rowAnimation: UITableView animations style for all animations like insert, delete and reload
-		public func apply(animations: TableAnimations, setNewListBlock: @escaping () -> Bool, completion: (() -> Void)?, cancelBlock: (() -> Void)?, rowAnimation: UITableViewRowAnimation) {
-			self.apply(animations: animations, setNewListBlock: setNewListBlock, completion: completion, cancelBlock: cancelBlock, rowAnimations: UITableViewRowAnimationSet(insert: rowAnimation, delete: rowAnimation, reload: rowAnimation))
-		}
+		
 		
 	}
 	
@@ -320,6 +239,26 @@ import Foundation
 	
 	extension UIKit.UICollectionView {
 		
+		var safeApplier: SafeApplier {
+			get {
+				objc_sync_enter(monitor)
+				defer { objc_sync_exit(monitor) }
+				
+				if let applier = objc_getAssociatedObject(self, &collectionAssociatedObjectHandle) as? SafeApplier {
+					return applier
+				} else {
+					let applier = SafeApplier(associatedTable: self)
+					objc_setAssociatedObject(self, &collectionAssociatedObjectHandle, applier, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+					return applier
+				}
+			}
+			
+			set {
+				objc_sync_enter(monitor)
+				defer { objc_sync_exit(monitor) }
+				objc_setAssociatedObject(self, &collectionAssociatedObjectHandle, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+			}
+		}
 		
 		
 		/// Use this for applying changes for UICollectionView.
@@ -334,15 +273,13 @@ import Foundation
 		///   - completion: Block for capturing animation completion. Called from main thread.
 		///   - error: Block for capturing error during changes calculation. When we got error in changes, we call *setNewListBlock* and *collectionView.reloadData()*, then error block called
 		///   - tableError: TableAnimatorError
-		public func apply<T>(newList: [T], getCurrentListBlock: @escaping () -> [T]?, calculateChanges: @escaping (_ from: [T], _ to: [T]) throws -> TableAnimations?, setNewListBlock: @escaping (_ newList: [T]) -> Bool, completion: (() -> Void)?, error: @escaping (_ tableError: Error) -> Void) {
+		public func apply<T>(newList: [T], animator: TableAnimator<T>, getCurrentListBlock: @escaping () -> [T]?, setNewListBlock: @escaping (_ newList: [T]) -> Bool, completion: (() -> Void)?, error: @escaping (_ tableError: Error) -> Void) {
 			
 			
 			let safeApplyClosure: (DispatchSemaphore, TableAnimations) -> Bool = { [weak self] semaphore, animations in
-				// If dataSource died, tableView.endUpdates() will throw fatal error.
-				guard let strong = self, let dataSource = strong.dataSource else {
+				guard let strong = self, strong.dataSource != nil else {
 					return false
 				}
-				silence(obj: dataSource)
 				
 				var didSetNewList = false
 				
@@ -380,11 +317,9 @@ import Foundation
 			
 			
 			let safeDeferredApplyClosure: (DispatchSemaphore, [IndexPath]) -> Void = { [weak self] semaphore, toDeferredUpdate in
-				// If dataSource died, tableView.endUpdates() will throw fatal error.
-				guard let strong = self, let dataSource = strong.dataSource else {
+				guard let strong = self, strong.dataSource != nil else {
 					return
 				}
-				silence(obj: dataSource)
 				
 				strong.performBatchUpdates({
 					strong.reloadItems(at: toDeferredUpdate)
@@ -401,20 +336,19 @@ import Foundation
 				self?.reloadData()
 				
 				if let strong = self, strong.dataSource == nil {
-					fatalError("UITableView is alive, but its data source are dead! That should never happen! Look closer at your memory management.")
+					return
 				}
 				
 				error(anError)
 			}
 			
 			
-			SafeApplier.get(for: self).apply(newList: newList,
-								   getCurrentListBlock: getCurrentListBlock,
-								   calculateChanges: calculateChanges,
-								   mainPerform: safeApplyClosure,
-								   deferredPerform: safeDeferredApplyClosure,
-								   onAnimationsError: onAnimationsError)
-			
+			safeApplier.apply(newList: newList,
+						animator: animator,
+						getCurrentListBlock: getCurrentListBlock,
+						mainPerform: safeApplyClosure,
+						deferredPerform: safeDeferredApplyClosure,
+						onAnimationsError: onAnimationsError)
 		}
 		
 		
@@ -422,7 +356,7 @@ import Foundation
 		///
 		/// - Returns: Queue that used for animations synchronizing.
 		public func getApplyQueue() -> OperationQueue {
-			return SafeApplier.get(for: self).applyQueue
+			return safeApplier.applyQueue
 		}
 		
 		
@@ -432,70 +366,20 @@ import Foundation
 		/// - Parameter operationQueue: Operation queue that will be used for animatino synchronizing.
 		/// - Returns: *true* if queue was successfully set, *false* if table already have queue for animations.
 		public func provideApplyQueue(_ operationQueue: OperationQueue) -> Bool {
-			return SafeApplier.prepare(for: self, operationQueue: operationQueue)
-		}
-		
-		
-		
-		/// Use this for applying changes for UICollectionView.
-		///
-		/// - Note: If you have no interactive updates, you may mark InteractiveUpdate type as Void and pass nil to applyAnimationsToCell closure.
-		/// - Note: Owner of screen list in *setNewListBlock* should be weakly referenced!
-		/// - Parameters:
-		///   - animations: Changes, calculated by **TableAnimator**
-		///   - setNewListBlock: You should provide block, where you doing something like 'myItems = newItems'
-		///   - applyAnimationsToCell: If you have interactive updates, pass this closure for apply interactive animations for cells.
-		///   - completion: Completion block, that will be called when animation end.
-		///   - cancelBlock: Called if list change was cancelled (You ask next apply before previous apply ended)
-		public func apply(animations: TableAnimations, setNewListBlock: @escaping () -> Bool, completion: (() -> Void)?, cancelBlock: (() -> Void)?) {
+			objc_sync_enter(monitor)
+			defer { objc_sync_exit(monitor) }
 			
-			guard (!animations.cells.isEmpty || !animations.sections.isEmpty) && dataSource != nil else {
-				cancelBlock?()
-				return
+			if (objc_getAssociatedObject(self, &tableAssociatedObjectHandle) as? SafeApplier) != nil {
+				return false
+			} else {
+				let applier = SafeApplier(associatedTable: self, operationQueue: operationQueue)
+				objc_setAssociatedObject(self, &tableAssociatedObjectHandle, applier, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+				return true
 			}
-			
-			var didSetNewList = false
-			
-			self.performBatchUpdates({
-				didSetNewList = setNewListBlock()
-				
-				if didSetNewList {
-					self.insertSections(animations.sections.toInsert)
-					self.deleteSections(animations.sections.toDelete)
-					self.reloadSections(animations.sections.toUpdate)
-					
-					for (from, to) in animations.sections.toMove {
-						self.moveSection(from, toSection: to)
-					}
-					
-					self.insertItems(at: animations.cells.toInsert)
-					self.deleteItems(at: animations.cells.toDelete)
-					self.reloadItems(at: animations.cells.toUpdate)
-					
-					for (from, to) in animations.cells.toMove {
-						self.moveItem(at: from, to: to)
-					}
-				}
-				
-			}, completion: { _ in
-				if animations.cells.toDeferredUpdate.isEmpty || !didSetNewList {
-					completion?()
-				}
-			})
-			
-			self.performBatchUpdates({
-				self.reloadItems(at: animations.cells.toDeferredUpdate)
-			}, completion: { _ in
-				completion?()
-			})
 		}
-		
 	}
-	
-	// For warnings disable
-	func silence(obj: AnyObject) {}
-	
-	
+		
+		
 #endif
 
 
