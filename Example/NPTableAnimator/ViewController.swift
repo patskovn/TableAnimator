@@ -115,11 +115,18 @@ class ViewController: UITableViewController {
 		
 		let toList: MySequence
 		
-		if animationCount % 2 == 0 {
-			toList = generateToList()
+		switch animationCount % 4 {
+		case 0:
+			toList = generateList2()
 			
-		} else {
-			toList = generateFromList()
+		case 1:
+			toList = generateList3()
+			
+		case 2:
+			toList = generateList4()
+			
+		default:
+			toList = generateList1()
 		}
 		
 		animationCount += 1
@@ -147,7 +154,7 @@ class ViewController: UITableViewController {
 	
 	
 	
-	func generateFromList() -> MySequence {
+	func generateList1() -> MySequence {
 		let cells = [MyCell(id: "Lorem", updateField: "1513766375.251"), MyCell(id: "ipsum", updateField: "1513765277.575"), MyCell(id: "dolor", updateField: "1513761009.891"), MyCell(id: "sit", updateField: "1513760850.515"), MyCell(id: "amet", updateField: "1513760822.751"), MyCell(id: "consectetur", updateField: "1513757906.778"), MyCell(id: "adipiscing", updateField: "1513757303.262"), MyCell(id: "elit", updateField: "1513759397.366"), MyCell(id: "sed", updateField: "1513756789.611"), MyCell(id: "eiusmod", updateField: "1513756791.426"), MyCell(id: "tempor", updateField: "1513756443.792"), MyCell(id: "incididunt", updateField: "1513756032.948"), MyCell(id: "labore", updateField: "1513753540.683"), MyCell(id: "dolore", updateField: "1513753648.081"), MyCell(id: "magna", updateField: "1513753646.2"), MyCell(id: "enim", updateField: "1513753643.751"), MyCell(id: "aliqua", updateField: "1513752177.573"), MyCell(id: "minim", updateField: "1513752175.253"), MyCell(id: "veniam", updateField: "1513752194.75"), MyCell(id: "quis", updateField: "1513752195.705")]
 
 		
@@ -165,9 +172,9 @@ class ViewController: UITableViewController {
 	}
 	
 	
-	func generateToList() -> MySequence {
+	func generateList2() -> MySequence {
 		
-		var cells = generateFromList().sections[0].cells
+		var cells = generateList1().sections[0].cells
 		cells.swapAt(2, 3)
 		cells.remove(at: 0)
 		cells.insert(.init(id: "Hello", updateField: "0"), at: 5)
@@ -179,10 +186,44 @@ class ViewController: UITableViewController {
 	}
 	
 	
+	func generateList3() -> MySequence {
+		
+		var cells = generateList2().sections[0].cells
+		cells.swapAt(5, 3)
+		cells.remove(at: 3)
+		cells.insert(.init(id: "World", updateField: "0"), at: 5)
+		cells.remove(at: 6)
+		
+		let sections = MySection(id: 0, cells: cells)
+		
+		return MySequence(sections: [sections])
+	}
+	
+	
+	func generateList4() -> MySequence {
+		
+		var cells = generateList3().sections[0].cells
+		cells.swapAt(5, 3)
+		cells.remove(at: 3)
+		cells.remove(at: 5)
+		cells.remove(at: 4)
+		cells.remove(at: 6)
+		
+		let sections = MySection(id: 0, cells: cells)
+		
+		return MySequence(sections: [sections])
+	}
+	
     override func viewDidLoad() {
         super.viewDidLoad()
-		
-		currentList = generateFromList()
+	
+	for i in 0...10 {
+		DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + DispatchTimeInterval.seconds(i + 1)) {
+			self.animate(UIBarButtonItem())
+		}
+	}
+	
+		currentList = generateList1()
 		
     }
 
