@@ -36,7 +36,7 @@ struct MyViewModel: TableAnimatorCell {
 For proper and fast animation calculating your view model should adopt to Equatable and Hashable protocols. 
 So you tell to animator how to calculate changes between cells, but tables have sections too, so you had to provide that information to animator. Your section should adopt to **TableAnimatorSection** protocol.
 
-&bull; *Note: if you have only one section, you had to provide section too. Just set default value for updateField and pass **true** in coparing function.*
+&bull; *Note: even if you have only one section, you had to provide section too. Just set default value for updateField and pass **true** in coparing function.*
 ```swift
 struct MySection: TableAnimatorSection {
 
@@ -90,7 +90,7 @@ tableView.reloadRows(animations.cells.toDeferredUpdate, with: .fade)
 tableView.endUpdates()
 ```
 
-For your comfort animator may calculate and apply list. If you use code described above, you will see strange blink updates animations. Its not fatal but not cool. So animator may apply changes properly to your table. For that purposes you may use that code:
+For your comfort animator may calculate and apply list. If you use code described above, you will see strange blink during update animation. Its not fatal but not cool. So animator may apply changes properly to your table. For that purposes you may use that code:
 ```swift
 
 // We capturing `self` weakly cause of @escaping block. Each table has its onwn OperationQueue for animations synchronizing.
@@ -105,7 +105,7 @@ let setNewListBlock: ([MySection]) -> Bool = { [weak self] newList in
     return true
 }
 
-// Note: - currentList **not** changed to newList instantly. That functions only start applying and 
+// Note: - currentList **not** changed to newList instantly. That function only start applying and 
 // adding request for change to newList into a queue.
 tableView.apply(newList: newList,
                 animator: animator,
