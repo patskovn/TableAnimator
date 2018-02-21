@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="rhf-HH-9aQ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="rhf-HH-9aQ">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Animations-->
         <scene sceneID="DSR-e1-Iu7">
             <objects>
                 <tableViewController id="y5v-J6-pyT" customClass="ViewController" customModule="NPTableAnimator_Example" customModuleProvider="target" sceneMemberID="viewController">
@@ -22,8 +22,8 @@
                             <outlet property="delegate" destination="y5v-J6-pyT" id="P5p-mZ-oOV"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="rqH-vF-n64">
-                        <barButtonItem key="rightBarButtonItem" title="Animate!" id="sZv-EE-Wvc">
+                    <navigationItem key="navigationItem" title="Animations" id="rqH-vF-n64">
+                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="play" id="sZv-EE-Wvc">
                             <connections>
                                 <action selector="animate:" destination="y5v-J6-pyT" id="tpR-DV-xdJ"/>
                             </connections>
@@ -40,7 +40,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="rhf-HH-9aQ" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="h5j-sE-fsl">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="20" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>

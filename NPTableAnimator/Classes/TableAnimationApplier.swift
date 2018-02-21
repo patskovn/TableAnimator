@@ -60,7 +60,7 @@ import Foundation
 		/// - Parameters:
 		///   - newList: New list that should be presented in collection view.
 		///   - getCurrentListBlock: Block for getting current screen list. Called from main thread.
-		///   - calculateChanges: Block for getting changes. Called from **background** serialized queue. You can get that queue by call *tableView.getApplyQueue()*.
+		///   - animator: Instance of TableAnimator for calculating changes.
 		///   - from: Initial list, which we got from *getCurrentListBlock()*.
 		///   - to: New list to set, which you pass in *newList*.
 		///   - setNewListBlock: Block for changing current screen list to passed *newList*. Called from main thread.
@@ -189,7 +189,7 @@ import Foundation
 		/// - Parameters:
 		///   - newList: New list that should be presented in collection view.
 		///   - getCurrentListBlock: Block for getting current screen list. Called from main thread.
-		///   - calculateChanges: Block for getting changes. Called from **background** serialized queue. You can get that queue by call *tableView.getApplyQueue()*.
+		///   - animator: Instance of TableAnimator for calculating changes.
 		///   - from: Initial list, which we got from *getCurrentListBlock()*.
 		///   - to: New list to set, which you pass in *newList*.
 		///   - setNewListBlock: Block for changing current screen list to passed *newList*. Called from main thread.
@@ -266,7 +266,7 @@ import Foundation
 		/// - Parameters:
 		///   - newList: New list that should be presented in collection view.
 		///   - getCurrentListBlock: Block for getting current screen list. Called from main thread.
-		///   - calculateChanges: Block for getting changes. Called from **background** serialized queue. You can get that queue by call *collectionView.getApplyQueue()*.
+		///   - animator: Instance of TableAnimator for calculating changes.
 		///   - from: Initial list, which we got from *getCurrentListBlock()*.
 		///   - to: New list to set, which you pass in *newList*.
 		///   - setNewListBlock: Block for changing current screen list to passed *newList*. Called from main thread.
