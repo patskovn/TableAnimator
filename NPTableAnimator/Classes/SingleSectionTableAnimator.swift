@@ -8,13 +8,13 @@
 import Foundation
 
 
-private struct DefaultSection<Cell: TableAnimatorCell>: TableAnimatorSection {
+public struct DefaultSection<Cell: TableAnimatorCell>: TableAnimatorSection {
 	
-	let updateField = 0
+	public let updateField = 0
 	
-	var cells: [Cell]
+	public var cells: [Cell]
 	
-	static func == (lhs: DefaultSection, rhs: DefaultSection) -> Bool {
+	public static func == (lhs: DefaultSection, rhs: DefaultSection) -> Bool {
 		return true
 	}
 	
