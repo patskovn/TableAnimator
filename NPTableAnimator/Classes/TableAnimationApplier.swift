@@ -58,9 +58,11 @@ import Foundation
 		/// Use this for applying changes for UITableView.
 		///
 		/// - Parameters:
+		///   - owner: Apply moves to Operation queue, so you need to pass owner for capturing.
 		///   - newList: New list that should be presented in collection view.
 		///   - getCurrentListBlock: Block for getting current screen list. Called from main thread.
 		///   - animator: Instance of TableAnimator for calculating changes.
+		///   - animated: If you dont want to animate changes, just pass *false*, otherwise, pass *true*.
 		///   - from: Initial list, which we got from *getCurrentListBlock()*.
 		///   - to: New list to set, which you pass in *newList*.
 		///   - setNewListBlock: Block for changing current screen list to passed *newList*. Called from main thread.
@@ -68,7 +70,18 @@ import Foundation
 		///   - completion: Block for capturing animation completion. Called from main thread.
 		///   - error: Block for capturing error during changes calculation. When we got error in changes, we call *setNewListBlock* and *tableView.reloadData()*, then error block called
 		///   - tableError: TableAnimatorError
-		public func apply<T>(newList: [T], animator: TableAnimator<T>, getCurrentListBlock: @escaping () -> [T]?, setNewListBlock: @escaping (_ newList: [T]) -> Bool, rowAnimations: UITableViewRowAnimationSet, completion: (() -> Void)?, error: @escaping (_ tableError: Error) -> Void) {
+		public func apply<T, O: AnyObject>(owner: O, newList: [T], animator: TableAnimator<T>, animated: Bool, getCurrentListBlock: @escaping (_ owner: O) -> [T], setNewListBlock: @escaping ((owner: O, newList: [T])) -> Void, rowAnimations: UITableViewRowAnimationSet, completion: (() -> Void)?, error: ((_ tableError: Error) -> Void)?) {
+			
+			guard animated else {
+				self.getApplyQueue().addOperation {
+					DispatchQueue.main.sync { [weak owner, weak self] in
+						guard let strongO = owner, let strong = self else { return }
+						setNewListBlock((strongO, newList))
+						strong.reloadData()
+					}
+				}
+				return
+			}
 			
 			let setAnimationsClosure: (UITableView, TableAnimations) -> Void = { table, animations in
 				table.insertSections(animations.sections.toInsert, with: rowAnimations.insert)
@@ -88,25 +101,19 @@ import Foundation
 				}
 			}
 			
-			let safeApplyClosure: (DispatchSemaphore, TableAnimations) -> Bool = { [weak self] semaphore, animations in
+			let safeApplyClosure: (O, DispatchSemaphore, TableAnimations) -> Void = { [weak self] anOwner, semaphore, animations in
 				guard let strong = self, strong.dataSource != nil else {
-					return false
+					return
 				}
-				
-				var didSetNewList = false
 				
 				if #available(iOS 11, *) {
 					
 					strong.performBatchUpdates({
-						didSetNewList = setNewListBlock(newList)
-						
-						if didSetNewList {
-							setAnimationsClosure(strong, animations)
-						}
+						setNewListBlock((anOwner, newList))
+						setAnimationsClosure(strong, animations)
 						
 					}, completion: { _ in
-						
-						if animations.cells.toDeferredUpdate.isEmpty || !didSetNewList {
+						if animations.cells.toDeferredUpdate.isEmpty {
 							completion?()
 						}
 						
@@ -117,10 +124,10 @@ import Foundation
 					CATransaction.begin()
 					strong.beginUpdates()
 					
-					didSetNewList = setNewListBlock(newList)
+					setNewListBlock((anOwner, newList))
 					
 					CATransaction.setCompletionBlock {
-						if animations.cells.toDeferredUpdate.isEmpty || !didSetNewList {
+						if animations.cells.toDeferredUpdate.isEmpty {
 							completion?()
 						}
 						
@@ -132,12 +139,10 @@ import Foundation
 					strong.endUpdates()
 					CATransaction.commit()
 				}
-				
-				return didSetNewList
 			}
 			
 			
-			let safeDeferredApplyClosure: (DispatchSemaphore, [IndexPath]) -> Void = { [weak self] semaphore, toDeferredUpdate in
+			let safeDeferredApplyClosure: (O, DispatchSemaphore, [IndexPath]) -> Void = { [weak self] _, semaphore, toDeferredUpdate in
 				guard let strong = self, strong.dataSource != nil else {
 					return
 				}
@@ -167,29 +172,31 @@ import Foundation
 			}
 			
 			
-			let onAnimationsError: (Error) -> Void = { [weak self] anError in
-				_ = setNewListBlock(newList)
+			let onAnimationsError: (O, Error) -> Void = { [weak self] owner, anError in
+				setNewListBlock((owner, newList))
 				self?.reloadData()
 				
-				error(anError)
+				error?(anError)
 			}
 			
-			
-			safeApplier.apply(newList: newList,
-						animator: animator,
-						getCurrentListBlock: getCurrentListBlock,
-						mainPerform: safeApplyClosure,
-						deferredPerform: safeDeferredApplyClosure,
-						onAnimationsError: onAnimationsError)
+			safeApplier.apply(owner: owner,
+							  newList: newList,
+							  animator: animator,
+							  getCurrentListBlock: getCurrentListBlock,
+							  mainPerform: safeApplyClosure,
+							  deferredPerform: safeDeferredApplyClosure,
+							  onAnimationsError: onAnimationsError)
 		}
 		
 		
 		/// Use this for applying changes for UITableView.
 		///
 		/// - Parameters:
+		///   - owner: Apply moves to Operation queue, so you need to pass owner for capturing.
 		///   - newList: New list that should be presented in collection view.
 		///   - getCurrentListBlock: Block for getting current screen list. Called from main thread.
 		///   - animator: Instance of TableAnimator for calculating changes.
+		///   - animated: If you dont want to animate changes, just pass *false*, otherwise, pass *true*.
 		///   - from: Initial list, which we got from *getCurrentListBlock()*.
 		///   - to: New list to set, which you pass in *newList*.
 		///   - setNewListBlock: Block for changing current screen list to passed *newList*. Called from main thread.
@@ -197,10 +204,10 @@ import Foundation
 		///   - completion: Block for capturing animation completion. Called from main thread.
 		///   - error: Block for capturing error during changes calculation. When we got error in changes, we call *setNewListBlock* and *tableView.reloadData()*, then error block called
 		///   - tableError: TableAnimatorError
-		public func apply<T>(newList: [T], animator: TableAnimator<T>, getCurrentListBlock: @escaping () -> [T]?, setNewListBlock: @escaping (_ newList: [T]) -> Bool, rowAnimation: UIKit.UITableViewRowAnimation, completion: (() -> Void)?, error: @escaping (_ tableError: Error) -> Void) {
+		public func apply<T, O: AnyObject>(owner: O, newList: [T], animator: TableAnimator<T>, animated: Bool, getCurrentListBlock: @escaping (_ owner: O) -> [T], setNewListBlock: @escaping ((owner: O, newList: [T])) -> Void, rowAnimation: UIKit.UITableViewRowAnimation, completion: (() -> Void)?, error: ((_ tableError: Error) -> Void)?) {
 			
 			let animationSet = UITableViewRowAnimationSet(insert: rowAnimation, delete: rowAnimation, reload: rowAnimation)
-			self.apply(newList: newList, animator: animator, getCurrentListBlock: getCurrentListBlock, setNewListBlock: setNewListBlock, rowAnimations: animationSet, completion: completion, error: error)
+			self.apply(owner: owner, newList: newList, animator: animator, animated: animated, getCurrentListBlock: getCurrentListBlock, setNewListBlock: setNewListBlock, rowAnimations: animationSet, completion: completion, error: error)
 		}
 		
 		
@@ -264,59 +271,65 @@ import Foundation
 		/// Use this for applying changes for UICollectionView.
 		///
 		/// - Parameters:
+		///   - owner: Apply moves to Operation queue, so you need to pass owner for capturing.
 		///   - newList: New list that should be presented in collection view.
 		///   - getCurrentListBlock: Block for getting current screen list. Called from main thread.
 		///   - animator: Instance of TableAnimator for calculating changes.
+		///   - animated: If you dont want to animate changes, just pass *false*, otherwise, pass *true*.
 		///   - from: Initial list, which we got from *getCurrentListBlock()*.
 		///   - to: New list to set, which you pass in *newList*.
 		///   - setNewListBlock: Block for changing current screen list to passed *newList*. Called from main thread.
 		///   - completion: Block for capturing animation completion. Called from main thread.
 		///   - error: Block for capturing error during changes calculation. When we got error in changes, we call *setNewListBlock* and *collectionView.reloadData()*, then error block called
 		///   - tableError: TableAnimatorError
-		public func apply<T>(newList: [T], animator: TableAnimator<T>, getCurrentListBlock: @escaping () -> [T]?, setNewListBlock: @escaping (_ newList: [T]) -> Bool, completion: (() -> Void)?, error: @escaping (_ tableError: Error) -> Void) {
+		public func apply<T, O: AnyObject>(owner: O, newList: [T], animator: TableAnimator<T>, animated: Bool, getCurrentListBlock: @escaping (_ owner: O) -> [T], setNewListBlock: @escaping ((owner: O, newList: [T])) -> Void, completion: (() -> Void)?, error: ((_ tableError: Error) -> Void)?) {
 			
+			guard animated else {
+				self.getApplyQueue().addOperation {
+					DispatchQueue.main.sync { [weak owner, weak self] in
+						guard let strongO = owner, let strong = self else { return }
+						setNewListBlock((strongO, newList))
+						strong.reloadData()
+					}
+				}
+				return
+			}
 			
-			let safeApplyClosure: (DispatchSemaphore, TableAnimations) -> Bool = { [weak self] semaphore, animations in
+			let safeApplyClosure: (O, DispatchSemaphore, TableAnimations) -> Void = { [weak self] anOwner, semaphore, animations in
 				guard let strong = self, strong.dataSource != nil else {
-					return false
+					return
 				}
 				
-				var didSetNewList = false
-				
 				strong.performBatchUpdates({
-					didSetNewList = setNewListBlock(newList)
+					setNewListBlock((anOwner, newList))
 					
-					if didSetNewList {
-						strong.insertSections(animations.sections.toInsert)
-						strong.deleteSections(animations.sections.toDelete)
-						strong.reloadSections(animations.sections.toUpdate)
-						
-						for (from, to) in animations.sections.toMove {
-							strong.moveSection(from, toSection: to)
-						}
-						
-						strong.insertItems(at: animations.cells.toInsert)
-						strong.deleteItems(at: animations.cells.toDelete)
-						strong.reloadItems(at: animations.cells.toUpdate)
-						
-						for (from, to) in animations.cells.toMove {
-							strong.moveItem(at: from, to: to)
-						}
+					strong.insertSections(animations.sections.toInsert)
+					strong.deleteSections(animations.sections.toDelete)
+					strong.reloadSections(animations.sections.toUpdate)
+					
+					for (from, to) in animations.sections.toMove {
+						strong.moveSection(from, toSection: to)
+					}
+					
+					strong.insertItems(at: animations.cells.toInsert)
+					strong.deleteItems(at: animations.cells.toDelete)
+					strong.reloadItems(at: animations.cells.toUpdate)
+					
+					for (from, to) in animations.cells.toMove {
+						strong.moveItem(at: from, to: to)
 					}
 					
 				}, completion: { _ in
-					if animations.cells.toDeferredUpdate.isEmpty || !didSetNewList {
+					if animations.cells.toDeferredUpdate.isEmpty {
 						completion?()
 					}
 					
 					semaphore.signal()
 				})
-				
-				return didSetNewList
 			}
 			
 			
-			let safeDeferredApplyClosure: (DispatchSemaphore, [IndexPath]) -> Void = { [weak self] semaphore, toDeferredUpdate in
+			let safeDeferredApplyClosure: (O, DispatchSemaphore, [IndexPath]) -> Void = { [weak self] _, semaphore, toDeferredUpdate in
 				guard let strong = self, strong.dataSource != nil else {
 					return
 				}
@@ -327,28 +340,28 @@ import Foundation
 					completion?()
 					semaphore.signal()
 				})
-				
 			}
 			
 			
-			let onAnimationsError: (Error) -> Void = { [weak self] anError in
-				_ = setNewListBlock(newList)
+			let onAnimationsError: (O, Error) -> Void = { [weak self] anOwner, anError in
+				setNewListBlock((anOwner, newList))
 				self?.reloadData()
 				
 				if let strong = self, strong.dataSource == nil {
 					return
 				}
 				
-				error(anError)
+				error?(anError)
 			}
 			
 			
-			safeApplier.apply(newList: newList,
-						animator: animator,
-						getCurrentListBlock: getCurrentListBlock,
-						mainPerform: safeApplyClosure,
-						deferredPerform: safeDeferredApplyClosure,
-						onAnimationsError: onAnimationsError)
+			safeApplier.apply(owner: owner,
+							  newList: newList,
+							  animator: animator,
+							  getCurrentListBlock: getCurrentListBlock,
+							  mainPerform: safeApplyClosure,
+							  deferredPerform: safeDeferredApplyClosure,
+							  onAnimationsError: onAnimationsError)
 		}
 		
 		

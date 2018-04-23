@@ -131,25 +131,15 @@ class ViewController: UITableViewController {
 		
 		animationCount += 1
 		
-		let getCurrentListBlock: () -> [MySection]? = { [weak self] in
-			guard let strong = self else { return nil }
-			return strong.currentList.sections
-		}
-		
-		let setNewListBlock: ([MySection]) -> Bool = { [weak self] toList in
-			guard let strong = self else { return false }
-			strong.currentList = MySequence(sections: toList)
-			return true
-		}
-		
-		tableView.apply(newList: toList.sections,
-				    animator: animator,
-				    getCurrentListBlock: getCurrentListBlock,
-				    setNewListBlock: setNewListBlock,
-				    rowAnimation: .fade,
-				    completion: { print("Animation finished") },
-				    error: { error in print("Oops, we have an error: \(error)") })
-		
+		tableView.apply(owner: self,
+						newList: toList.sections,
+						animator: animator,
+						animated: true,
+						getCurrentListBlock: { $0.currentList.sections },
+						setNewListBlock: { $0.owner.currentList = toList },
+						rowAnimation: .fade,
+						completion: nil,
+						error: nil)
 	}
 	
 	

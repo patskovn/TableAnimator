@@ -32,7 +32,7 @@ class SafeApplier {
 	}
 	
 	
-	func apply<T>(newList: [T], animator: TableAnimator<T>, getCurrentListBlock: @escaping () -> [T]?, mainPerform: @escaping (DispatchSemaphore, TableAnimations) -> Bool, deferredPerform: @escaping (DispatchSemaphore, [IndexPath]) -> Void, onAnimationsError: @escaping (Error) -> Void) {
+	func apply<T, O: AnyObject>(owner: O, newList: [T], animator: TableAnimator<T>, getCurrentListBlock: @escaping (O) -> [T], mainPerform: @escaping (O, DispatchSemaphore, TableAnimations) -> Void, deferredPerform: @escaping (O, DispatchSemaphore, [IndexPath]) -> Void, onAnimationsError: @escaping (O, Error) -> Void) {
 		
 		func silence(obj: AnyObject) {}
 		
@@ -41,25 +41,28 @@ class SafeApplier {
 		let operation = BlockOperation()
 		
 		// Synchronize animations. We cant use semaphores on main thread, so we waiting for animations completion in specific serialized queue
-		operation.addExecutionBlock { [weak self] in
+		operation.addExecutionBlock { [weak self, weak owner] in
 			
-			guard let strong = self, strong.associatedTable != nil else {
+			guard let strong = self, owner != nil, strong.associatedTable != nil else {
 				return
 			}
 			
-			guard let currentList = DispatchQueue.main.sync(execute: getCurrentListBlock) else { return }
+			let privateGetCurrentListBlock: () -> [T]? = { [weak owner] in
+				guard let strongO = owner else { return nil }
+				return getCurrentListBlock(strongO)
+			}
+			
+			guard let currentList = DispatchQueue.main.sync(execute: privateGetCurrentListBlock) else { return }
 			
 			do {
 				let animations = try animator.buildAnimations(from: currentList, to: newList)
 				
-				var didSetNewList = false
-				
 				var didStartAnimations = false
-				DispatchQueue.main.sync {
-					if let table = strong.associatedTable {
+				DispatchQueue.main.sync { [weak owner] in
+					if let table = strong.associatedTable, let strongO = owner {
 						silence(obj: table)
 						didStartAnimations = true
-						didSetNewList = mainPerform(semaphore, animations)
+						mainPerform(strongO, semaphore, animations)
 					}
 				}
 				
@@ -67,14 +70,14 @@ class SafeApplier {
 					_ = semaphore.wait()
 				}
 				
-				if !animations.cells.toDeferredUpdate.isEmpty && didSetNewList {
+				if !animations.cells.toDeferredUpdate.isEmpty && didStartAnimations {
 					didStartAnimations = false
 					
-					DispatchQueue.main.sync {
-						if let table = strong.associatedTable {
+					DispatchQueue.main.sync { [weak owner] in
+						if let table = strong.associatedTable, let strongO = owner {
 							silence(obj: table)
 							didStartAnimations = true
-							deferredPerform(semaphore, animations.cells.toDeferredUpdate)
+							deferredPerform(strongO, semaphore, animations.cells.toDeferredUpdate)
 						}
 					}
 					
@@ -84,8 +87,9 @@ class SafeApplier {
 				}
 				
 			} catch {
-				DispatchQueue.main.sync {
-					onAnimationsError(error)
+				DispatchQueue.main.sync { [weak owner] in
+					guard let strongO = owner else { return }
+					onAnimationsError(strongO, error)
 				}
 			}
 		}
