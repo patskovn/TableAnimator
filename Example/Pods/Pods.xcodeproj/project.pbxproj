@@ -17,6 +17,8 @@
 		6E577614ACDFC07DB1901DD19CD1DF2E /* NPTableAnimator-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 0378D13CCC75C56EC49489360CE308A0 /* NPTableAnimator-dummy.m */; };
 		7528B19C20219BCA00B536B8 /* TableAnimations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DE805FA31446B5CD522DF5E2E2F4D3 /* TableAnimations.swift */; };
 		7B9296AB2CC65912D94FB84E03AD9A5D /* TableAnimationApplier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DB4ECE9B61B6F8D3B49D7F121FFE42 /* TableAnimationApplier.swift */; };
+		84C7AB0F20F73DAB00DD8648 /* ApplyAnimationOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C7AB0E20F73DAB00DD8648 /* ApplyAnimationOptions.swift */; };
+		84C7AB1120F73DC900DD8648 /* ApplyHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C7AB1020F73DC900DD8648 /* ApplyHelpers.swift */; };
 		8F60281721D486E77C17C9FD /* TableAnimationSafeApplier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F6023288D114064B2B5CCB2 /* TableAnimationSafeApplier.swift */; };
 		8F602D505BE3173768E591CC /* TableAnimationSafeApplier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F6023288D114064B2B5CCB2 /* TableAnimationSafeApplier.swift */; };
 		AB9DAD74544E271D64C8A5CC0FD17326 /* Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = F0014404BF69D9798C5C7ABD9DE3C5C8 /* Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -63,6 +65,8 @@
 		6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		75AB9EE0A1E2F6A20044DD396F0985D4 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7DD1714FDD9AE06869DE6FEF127B6990 /* NPTableAnimator.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = NPTableAnimator.modulemap; sourceTree = "<group>"; };
+		84C7AB0E20F73DAB00DD8648 /* ApplyAnimationOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplyAnimationOptions.swift; sourceTree = "<group>"; };
+		84C7AB1020F73DC900DD8648 /* ApplyHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplyHelpers.swift; sourceTree = "<group>"; };
 		8F6023288D114064B2B5CCB2 /* TableAnimationSafeApplier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TableAnimationSafeApplier.swift; path = NPTableAnimator/Classes/TableAnimationSafeApplier.swift; sourceTree = "<group>"; };
 		9043854C87DDCA9DCC7A5F5A00013947 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
@@ -184,6 +188,8 @@
 				3F9152267377527061C1F28B4012B94F /* TableAnimatorConfiguration.swift */,
 				A04718B40B25556F1C52DBB05A15839F /* Support Files */,
 				8F6023288D114064B2B5CCB2 /* TableAnimationSafeApplier.swift */,
+				84C7AB0E20F73DAB00DD8648 /* ApplyAnimationOptions.swift */,
+				84C7AB1020F73DC900DD8648 /* ApplyHelpers.swift */,
 			);
 			name = NPTableAnimator;
 			path = ../..;
@@ -359,8 +365,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84C7AB0F20F73DAB00DD8648 /* ApplyAnimationOptions.swift in Sources */,
 				6E577614ACDFC07DB1901DD19CD1DF2E /* NPTableAnimator-dummy.m in Sources */,
 				4DE39977F0BC50C14D2D0B80C4670B55 /* SingleSectionTableAnimator.swift in Sources */,
+				84C7AB1120F73DC900DD8648 /* ApplyHelpers.swift in Sources */,
 				7B9296AB2CC65912D94FB84E03AD9A5D /* TableAnimationApplier.swift in Sources */,
 				C132D1354B9470A47656E3820DCC1D3A /* TableAnimations.swift in Sources */,
 				C4FBE448A9A81ACAE72BC7C4D08EE1D0 /* TableAnimationsProtocols.swift in Sources */,

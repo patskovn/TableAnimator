@@ -92,28 +92,17 @@ tableView.endUpdates()
 
 For your comfort animator may calculate and apply list. If you use code described above, you will see strange blink during update animation. Its not fatal but not cool. So animator may apply changes properly to your table. For that purposes you may use that code:
 ```swift
-
-// We capturing `self` weakly cause of @escaping block. Each table has its onwn OperationQueue for animations synchronizing.
-let getCurrentListBlock: () -> [MySection]? = { [weak self] in
-    guard let strong = self else { return nil }
-    return strong.currentList.sections
-}
-		
-let setNewListBlock: ([MySection]) -> Bool = { [weak self] newList in
-    guard let strong = self else { return false }
-    strong.currentList = newList
-    return true
-}
+var currentList = [MySection]()
 
 // Note: - currentList **not** changed to newList instantly. That function only start applying and 
 // adding request for change to newList into a queue.
-tableView.apply(newList: newList,
+tableView.apply(owner: self,
+                newList: newList,
                 animator: animator,
-                getCurrentListBlock: getCurrentListBlock,
-                setNewListBlock: setNewListBlock,
-                rowAnimation: .fade,
-                completion: { print("Animation finished") },
-                error: { error in print("Oops, we have an error: \(error)") })
+                animated: true,
+                getCurrentListBlock: { $0.currentList },
+                setNewListBlock: { $0.currentList = $1 },
+                rowAnimation: .fade)
 ```
 
 

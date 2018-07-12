@@ -32,7 +32,7 @@ class SafeApplier {
 	}
 	
 	
-	func apply<T, O: AnyObject>(owner: O, newList: [T], animator: TableAnimator<T>, getCurrentListBlock: @escaping (O) -> [T], mainPerform: @escaping (O, DispatchSemaphore, TableAnimations) -> Void, deferredPerform: @escaping (O, DispatchSemaphore, [IndexPath]) -> Void, onAnimationsError: @escaping (O, Error) -> Void) {
+	func apply<T, O: AnyObject>(owner: O, newList: [T], options: ApplyAnimationOptions, animator: TableAnimator<T>, getCurrentListBlock: @escaping (O) -> [T], mainPerform: @escaping (O, DispatchSemaphore, TableAnimations) -> Void, deferredPerform: @escaping (O, DispatchSemaphore, [IndexPath]) -> Void, onAnimationsError: @escaping (O, Error) -> Void) {
 		
 		func silence(obj: AnyObject) {}
 		

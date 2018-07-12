@@ -25,7 +25,7 @@ public struct SectionsAnimations {
 	public let toMove : [(from: Int, to: Int)]
 	
 	/// Updated sections indexes.
-	public let toUpdate: IndexSet
+	public var toUpdate: IndexSet
 
 	/// Have no changes
 	public var isEmpty: Bool {
@@ -48,11 +48,11 @@ public struct CellsAnimations {
 	public let toMove: [(from: IndexPath, to: IndexPath)]
 	
 	/// Updated cells indexes.
-	public let toUpdate: [IndexPath]
+	public var toUpdate: [IndexPath]
 
 	/// Updated cells indexes, which intersects with move indexes. UITableView can't perform *move* and *update*
 	/// at the same time, so we need to apply this updates during second update request.
-	public let toDeferredUpdate: [IndexPath]
+	public var toDeferredUpdate: [IndexPath]
 
 	/// Have no changes
 	public var isEmpty: Bool {

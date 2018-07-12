@@ -23,37 +23,20 @@ import Foundation
 		let delete: UIKit.UITableViewRowAnimation
 		let reload: UIKit.UITableViewRowAnimation
 		
-		public init(insert anInsert: UIKit.UITableViewRowAnimation, delete aDelete: UIKit.UITableViewRowAnimation, reload aReload: UIKit.UITableViewRowAnimation) {
-			self.insert = anInsert
-			self.delete = aDelete
-			self.reload = aReload
+		public init(insert: UIKit.UITableViewRowAnimation, delete: UIKit.UITableViewRowAnimation, reload: UIKit.UITableViewRowAnimation) {
+			self.insert = insert
+			self.delete = delete
+			self.reload = reload
 		}
 	}
 	
-	extension UIKit.UITableView {
+    extension UIKit.UITableView: EmptyCheckableSequence {
 		
-		
-		var safeApplier: SafeApplier {
-			get {
-				objc_sync_enter(monitor)
-				defer { objc_sync_exit(monitor) }
-				
-				if let applier = objc_getAssociatedObject(self, &tableAssociatedObjectHandle) as? SafeApplier {
-					return applier
-				} else {
-					let applier = SafeApplier(associatedTable: self)
-					objc_setAssociatedObject(self, &tableAssociatedObjectHandle, applier, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
-					return applier
-				}
-			}
-			
-			set {
-				objc_sync_enter(monitor)
-				defer { objc_sync_exit(monitor) }
-				objc_setAssociatedObject(self, &tableAssociatedObjectHandle, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
-			}
-		}
-		
+        var isEmpty: Bool {
+            let rowsCount = (0 ..< numberOfSections)
+                .reduce(into: 0) { $0 += numberOfRows(inSection: $1) }
+            return rowsCount == 0
+        }
 		
 		/// Use this for applying changes for UITableView.
 		///
@@ -63,6 +46,7 @@ import Foundation
 		///   - getCurrentListBlock: Block for getting current screen list. Called from main thread.
 		///   - animator: Instance of TableAnimator for calculating changes.
 		///   - animated: If you dont want to animate changes, just pass *false*, otherwise, pass *true*.
+        ///   - options: Additional options for animations applying.
 		///   - from: Initial list, which we got from *getCurrentListBlock()*.
 		///   - to: New list to set, which you pass in *newList*.
 		///   - setNewListBlock: Block for changing current screen list to passed *newList*. Called from main thread.
@@ -70,20 +54,34 @@ import Foundation
 		///   - completion: Block for capturing animation completion. Called from main thread.
 		///   - error: Block for capturing error during changes calculation. When we got error in changes, we call *setNewListBlock* and *tableView.reloadData()*, then error block called
 		///   - tableError: TableAnimatorError
-		public func apply<T, O: AnyObject>(owner: O, newList: [T], animator: TableAnimator<T>, animated: Bool, getCurrentListBlock: @escaping (_ owner: O) -> [T], setNewListBlock: @escaping ((owner: O, newList: [T])) -> Void, rowAnimations: UITableViewRowAnimationSet, completion: (() -> Void)?, error: ((_ tableError: Error) -> Void)?) {
+        public func apply<T, O: AnyObject>(owner: O, newList: [T], animator: TableAnimator<T>, animated: Bool, options: ApplyAnimationOptions = [], getCurrentListBlock: @escaping (_ owner: O) -> [T], setNewListBlock: @escaping ((owner: O, newList: [T])) -> Void, rowAnimations: UITableViewRowAnimationSet, completion: (() -> Void)?, error: ((_ tableError: Error) -> Void)?) {
 			
-			guard animated else {
-				self.getApplyQueue().addOperation {
-					DispatchQueue.main.sync { [weak owner, weak self] in
-						guard let strongO = owner, let strong = self else { return }
-						setNewListBlock((strongO, newList))
-						strong.reloadData()
-					}
-				}
-				return
-			}
+            if options.contains(.cancelPreviousAddedOperations) {
+                self.getApplyQueue().cancelAllOperations()
+            }
+            
+            if options.contains(.withoutActuallyRefreshTable) {
+                self.getApplyQueue().addOperation {
+                    DispatchQueue.main.sync { [weak owner] in
+                        guard let strongO = owner else { return }
+                        setNewListBlock((strongO, newList))
+                    }
+                }
+                return
+                
+            } else if !animated || (self.isEmpty && options.contains(.withoutAnimationForEmptyTable)) {
+                self.getApplyQueue().addOperation {
+                    DispatchQueue.main.sync { [weak owner, weak self] in
+                        guard let strongO = owner, let strong = self else { return }
+                        setNewListBlock((strongO, newList))
+                        strong.reloadData()
+                    }
+                }
+                return
+            }
 			
 			let setAnimationsClosure: (UITableView, TableAnimations) -> Void = { table, animations in
+                let animations = table.applyOptions(options: options, to: animations)
 				table.insertSections(animations.sections.toInsert, with: rowAnimations.insert)
 				table.deleteSections(animations.sections.toDelete, with: rowAnimations.delete)
 				table.reloadSections(animations.sections.toUpdate, with: rowAnimations.reload)
@@ -146,6 +144,7 @@ import Foundation
 				guard let strong = self, strong.dataSource != nil else {
 					return
 				}
+                let toDeferredUpdate = strong.applyOptions(options: options, toDeferredUpdatePaths: toDeferredUpdate)
 				
 				if #available(iOS 11, *) {
 					strong.performBatchUpdates({
@@ -181,6 +180,7 @@ import Foundation
 			
 			safeApplier.apply(owner: owner,
 							  newList: newList,
+                              options: options,
 							  animator: animator,
 							  getCurrentListBlock: getCurrentListBlock,
 							  mainPerform: safeApplyClosure,
@@ -197,6 +197,7 @@ import Foundation
 		///   - getCurrentListBlock: Block for getting current screen list. Called from main thread.
 		///   - animator: Instance of TableAnimator for calculating changes.
 		///   - animated: If you dont want to animate changes, just pass *false*, otherwise, pass *true*.
+        ///   - options: Additional options for animations applying.
 		///   - from: Initial list, which we got from *getCurrentListBlock()*.
 		///   - to: New list to set, which you pass in *newList*.
 		///   - setNewListBlock: Block for changing current screen list to passed *newList*. Called from main thread.
@@ -204,10 +205,10 @@ import Foundation
 		///   - completion: Block for capturing animation completion. Called from main thread.
 		///   - error: Block for capturing error during changes calculation. When we got error in changes, we call *setNewListBlock* and *tableView.reloadData()*, then error block called
 		///   - tableError: TableAnimatorError
-		public func apply<T, O: AnyObject>(owner: O, newList: [T], animator: TableAnimator<T>, animated: Bool, getCurrentListBlock: @escaping (_ owner: O) -> [T], setNewListBlock: @escaping ((owner: O, newList: [T])) -> Void, rowAnimation: UIKit.UITableViewRowAnimation, completion: (() -> Void)?, error: ((_ tableError: Error) -> Void)?) {
+		public func apply<T, O: AnyObject>(owner: O, newList: [T], animator: TableAnimator<T>, animated: Bool, options: ApplyAnimationOptions = [], getCurrentListBlock: @escaping (_ owner: O) -> [T], setNewListBlock: @escaping ((owner: O, newList: [T])) -> Void, rowAnimation: UIKit.UITableViewRowAnimation, completion: (() -> Void)? = nil, error: ((_ tableError: Error) -> Void)? = nil) {
 			
 			let animationSet = UITableViewRowAnimationSet(insert: rowAnimation, delete: rowAnimation, reload: rowAnimation)
-			self.apply(owner: owner, newList: newList, animator: animator, animated: animated, getCurrentListBlock: getCurrentListBlock, setNewListBlock: setNewListBlock, rowAnimations: animationSet, completion: completion, error: error)
+            self.apply(owner: owner, newList: newList, animator: animator, animated: animated, options: options, getCurrentListBlock: getCurrentListBlock, setNewListBlock: setNewListBlock, rowAnimations: animationSet, completion: completion, error: error)
 		}
 		
 		
@@ -238,14 +239,72 @@ import Foundation
 		}
 		
 		
+        
+        private var safeApplier: SafeApplier {
+            get {
+                objc_sync_enter(monitor)
+                defer { objc_sync_exit(monitor) }
+                
+                if let applier = objc_getAssociatedObject(self, &tableAssociatedObjectHandle) as? SafeApplier {
+                    return applier
+                } else {
+                    let applier = SafeApplier(associatedTable: self)
+                    objc_setAssociatedObject(self, &tableAssociatedObjectHandle, applier, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+                    return applier
+                }
+            }
+            
+            set {
+                objc_sync_enter(monitor)
+                defer { objc_sync_exit(monitor) }
+                objc_setAssociatedObject(self, &tableAssociatedObjectHandle, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            }
+        }
+        
+        
+        private func applyOptions(options: ApplyAnimationOptions, to animations: (cells: CellsAnimations, sections: SectionsAnimations)) -> (cells: CellsAnimations, sections: SectionsAnimations) {
+            var animations = animations
+            
+            if let visibleRows = self.indexPathsForVisibleRows,
+                let firstResponderIndex = visibleRows.first(where: { self.cellForRow(at: $0)?.isActuallyResponder == true }) {
+                
+                
+                if options.contains(.excludeFirstResponderCellFromReload) {
+                    animations.cells.toUpdate = animations.cells.toUpdate.filter({ $0 != firstResponderIndex })
+                }
+                
+                if options.contains(.excludeFirstResponderSectionFromReload) {
+                    animations.sections.toUpdate.remove(firstResponderIndex.section)
+                }
+            }
+            
+            return animations
+        }
+        
+        private func applyOptions(options: ApplyAnimationOptions, toDeferredUpdatePaths: [IndexPath]) -> [IndexPath] {
+            
+            if let visibleRows = self.indexPathsForVisibleRows,
+                let firstResponderIndex = visibleRows.first(where: { self.cellForRow(at: $0)?.isActuallyResponder == true }),
+                options.contains(.excludeFirstResponderCellFromReload) {
+                return toDeferredUpdatePaths.filter({ $0 != firstResponderIndex })
+            }
+            
+            return toDeferredUpdatePaths
+        }
 		
 		
 	}
 	
 	
 	
-	extension UIKit.UICollectionView {
+    extension UIKit.UICollectionView: EmptyCheckableSequence {
 		
+        var isEmpty: Bool {
+            let rowsCount = (0 ..< numberOfSections)
+                .reduce(into: 0) { $0 += numberOfItems(inSection: $1) }
+            return rowsCount == 0
+        }
+        
 		var safeApplier: SafeApplier {
 			get {
 				objc_sync_enter(monitor)
@@ -267,6 +326,31 @@ import Foundation
 			}
 		}
 		
+        func applyOptions(options: ApplyAnimationOptions, to animations: (cells: CellsAnimations, sections: SectionsAnimations)) -> (cells: CellsAnimations, sections: SectionsAnimations) {
+            var animations = animations
+            
+            if let firstResponderIndex = indexPathsForVisibleItems.first(where: { self.cellForItem(at: $0)?.isActuallyResponder == true }) {
+                if options.contains(.excludeFirstResponderCellFromReload) {
+                    animations.cells.toUpdate = animations.cells.toUpdate.filter({ $0 != firstResponderIndex })
+                }
+                
+                if options.contains(.excludeFirstResponderSectionFromReload) {
+                    animations.sections.toUpdate.remove(firstResponderIndex.section)
+                }
+            }
+            
+            return animations
+        }
+        
+        func applyOptions(options: ApplyAnimationOptions, toDeferredUpdatePaths: [IndexPath]) -> [IndexPath] {
+            
+            if let firstResponderIndex = indexPathsForVisibleItems.first(where: { self.cellForItem(at: $0)?.isActuallyResponder == true }),
+                options.contains(.excludeFirstResponderCellFromReload) {
+                return toDeferredUpdatePaths.filter({ $0 != firstResponderIndex })
+            }
+            
+            return toDeferredUpdatePaths
+        }
 		
 		/// Use this for applying changes for UICollectionView.
 		///
@@ -276,29 +360,44 @@ import Foundation
 		///   - getCurrentListBlock: Block for getting current screen list. Called from main thread.
 		///   - animator: Instance of TableAnimator for calculating changes.
 		///   - animated: If you dont want to animate changes, just pass *false*, otherwise, pass *true*.
+        ///   - options: Additional options for animations applying.
 		///   - from: Initial list, which we got from *getCurrentListBlock()*.
 		///   - to: New list to set, which you pass in *newList*.
 		///   - setNewListBlock: Block for changing current screen list to passed *newList*. Called from main thread.
 		///   - completion: Block for capturing animation completion. Called from main thread.
 		///   - error: Block for capturing error during changes calculation. When we got error in changes, we call *setNewListBlock* and *collectionView.reloadData()*, then error block called
 		///   - tableError: TableAnimatorError
-		public func apply<T, O: AnyObject>(owner: O, newList: [T], animator: TableAnimator<T>, animated: Bool, getCurrentListBlock: @escaping (_ owner: O) -> [T], setNewListBlock: @escaping ((owner: O, newList: [T])) -> Void, completion: (() -> Void)?, error: ((_ tableError: Error) -> Void)?) {
+		public func apply<T, O: AnyObject>(owner: O, newList: [T], animator: TableAnimator<T>, animated: Bool, options: ApplyAnimationOptions = [], getCurrentListBlock: @escaping (_ owner: O) -> [T], setNewListBlock: @escaping ((owner: O, newList: [T])) -> Void, completion: (() -> Void)? = nil, error: ((_ tableError: Error) -> Void)? = nil) {
 			
-			guard animated else {
-				self.getApplyQueue().addOperation {
-					DispatchQueue.main.sync { [weak owner, weak self] in
-						guard let strongO = owner, let strong = self else { return }
-						setNewListBlock((strongO, newList))
-						strong.reloadData()
-					}
-				}
-				return
-			}
+            if options.contains(.cancelPreviousAddedOperations) {
+                self.getApplyQueue().cancelAllOperations()
+            }
+            
+            if options.contains(.withoutActuallyRefreshTable) {
+                self.getApplyQueue().addOperation {
+                    DispatchQueue.main.sync { [weak owner] in
+                        guard let strongO = owner else { return }
+                        setNewListBlock((strongO, newList))
+                    }
+                }
+                return
+                
+            } else if !animated || (self.isEmpty && options.contains(.withoutAnimationForEmptyTable)) {
+                self.getApplyQueue().addOperation {
+                    DispatchQueue.main.sync { [weak owner, weak self] in
+                        guard let strongO = owner, let strong = self else { return }
+                        setNewListBlock((strongO, newList))
+                        strong.reloadData()
+                    }
+                }
+                return
+            }
 			
 			let safeApplyClosure: (O, DispatchSemaphore, TableAnimations) -> Void = { [weak self] anOwner, semaphore, animations in
 				guard let strong = self, strong.dataSource != nil else {
 					return
 				}
+                let animations = strong.applyOptions(options: options, to: animations)
 				
 				strong.performBatchUpdates({
 					setNewListBlock((anOwner, newList))
@@ -333,6 +432,7 @@ import Foundation
 				guard let strong = self, strong.dataSource != nil else {
 					return
 				}
+                let toDeferredUpdate = strong.applyOptions(options: options, toDeferredUpdatePaths: toDeferredUpdate)
 				
 				strong.performBatchUpdates({
 					strong.reloadItems(at: toDeferredUpdate)
@@ -357,6 +457,7 @@ import Foundation
 			
 			safeApplier.apply(owner: owner,
 							  newList: newList,
+                              options: options,
 							  animator: animator,
 							  getCurrentListBlock: getCurrentListBlock,
 							  mainPerform: safeApplyClosure,
