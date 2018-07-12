@@ -165,7 +165,6 @@
 				607FACCD1AFB9204008FA782 /* Frameworks */,
 				607FACCE1AFB9204008FA782 /* Resources */,
 				4610703514BDDAF566F237B7 /* [CP] Embed Pods Frameworks */,
-				AD97C0046B949B68E3525B3A /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -185,7 +184,6 @@
 				751301411FE7AECA004A5C3B /* Frameworks */,
 				751301421FE7AECA004A5C3B /* Resources */,
 				C6DBE31345C20210414FC2EF /* [CP] Embed Pods Frameworks */,
-				BB1F505CB8DB1153F5352F07 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -312,36 +310,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-NPTableAnimator_Example/Pods-NPTableAnimator_Example-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		AD97C0046B949B68E3525B3A /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-NPTableAnimator_Example/Pods-NPTableAnimator_Example-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		BB1F505CB8DB1153F5352F07 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests/Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		C6DBE31345C20210414FC2EF /* [CP] Embed Pods Frameworks */ = {

@@ -1,16 +1,16 @@
 PODS:
-  - NPTableAnimator (2.1.3)
+  - NPTableAnimator (4.1.0)
 
 DEPENDENCIES:
   - NPTableAnimator (from `../`)
 
 EXTERNAL SOURCES:
   NPTableAnimator:
-    :path: ../
+    :path: "../"
 
 SPEC CHECKSUMS:
-  NPTableAnimator: 9698ad2bddc5de26d485f9f3c6f1591942ab1362
+  NPTableAnimator: 49f0b950663461e722e44cd62489fd384dd54325
 
 PODFILE CHECKSUM: c0fcd6f85c94c2bd08e11e4fc5e695e326aa1cf4
 
-COCOAPODS: 1.3.1
+COCOAPODS: 1.5.2

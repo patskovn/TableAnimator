@@ -8,25 +8,23 @@
 
 /* Begin PBXBuildFile section */
 		07810F0B0555E4D74AD0E7599780AAA3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
-		1FC68627D699F07EDB53FF488AE5C14D /* Pods-NPTableAnimator_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = ED99206B35707820E6504488F5C03861 /* Pods-NPTableAnimator_Example-dummy.m */; };
-		2A0D032B9978A182574D72FCD0B1E33F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
-		4DE39977F0BC50C14D2D0B80C4670B55 /* SingleSectionTableAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0CCD18307FC86B5D05689670787E65 /* SingleSectionTableAnimator.swift */; };
+		0F691EC4DCAD3D4CDA907C85EA483ABB /* NPTableAnimator-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F1F61FFA4C8DB1D6EC7386D9547192 /* NPTableAnimator-dummy.m */; };
+		10488F4D1CD72CCB61BF01E85B1AC584 /* ApplyHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AB25B267C7E21D09791467ADDE543AF /* ApplyHelpers.swift */; };
+		11A55AAE34FB04E21F362791801E31E2 /* ApplyAnimationOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769BD7F8926F3BF87D8A7CAFF0F0CFDC /* ApplyAnimationOptions.swift */; };
+		1FC68627D699F07EDB53FF488AE5C14D /* Pods-NPTableAnimator_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FC2F32F35AC0FB1EB5AD98CE96D746 /* Pods-NPTableAnimator_Example-dummy.m */; };
+		39BDD4FFB2F217DA0A4D30C982974428 /* TableAnimations.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6E4001728AE5B8AC7188FED2C09540E /* TableAnimations.swift */; };
+		3C2CCA39884693F81A9ED3AADAD9B10E /* TableAnimationSafeApplier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F816803730F7EF7F87BD1A89C1415C /* TableAnimationSafeApplier.swift */; };
 		583277B9CD7A0322EB9B133E7A9B8CF5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
-		63169D357B76B7D5B946A1141663058B /* Pods-NPTableAnimator_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = EDEE74D1D86C35E9D819681BA7340B9D /* Pods-NPTableAnimator_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		6B28C29971B604A55CB90EB4C02B3536 /* NPTableAnimator-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 0479736FDBBCEE7842C6EE84E3E2217D /* NPTableAnimator-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		6E577614ACDFC07DB1901DD19CD1DF2E /* NPTableAnimator-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 0378D13CCC75C56EC49489360CE308A0 /* NPTableAnimator-dummy.m */; };
-		7528B19C20219BCA00B536B8 /* TableAnimations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DE805FA31446B5CD522DF5E2E2F4D3 /* TableAnimations.swift */; };
-		7B9296AB2CC65912D94FB84E03AD9A5D /* TableAnimationApplier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DB4ECE9B61B6F8D3B49D7F121FFE42 /* TableAnimationApplier.swift */; };
-		84C7AB0F20F73DAB00DD8648 /* ApplyAnimationOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C7AB0E20F73DAB00DD8648 /* ApplyAnimationOptions.swift */; };
-		84C7AB1120F73DC900DD8648 /* ApplyHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C7AB1020F73DC900DD8648 /* ApplyHelpers.swift */; };
-		8F60281721D486E77C17C9FD /* TableAnimationSafeApplier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F6023288D114064B2B5CCB2 /* TableAnimationSafeApplier.swift */; };
-		8F602D505BE3173768E591CC /* TableAnimationSafeApplier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F6023288D114064B2B5CCB2 /* TableAnimationSafeApplier.swift */; };
-		AB9DAD74544E271D64C8A5CC0FD17326 /* Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = F0014404BF69D9798C5C7ABD9DE3C5C8 /* Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C132D1354B9470A47656E3820DCC1D3A /* TableAnimations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DE805FA31446B5CD522DF5E2E2F4D3 /* TableAnimations.swift */; };
-		C4FBE448A9A81ACAE72BC7C4D08EE1D0 /* TableAnimationsProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DF1BA620EBB388FAD9B25B3392CE47A /* TableAnimationsProtocols.swift */; };
-		D2F68E90DEF5C4DF97716BE10420C70D /* TableAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE3AAC3ED32348894606C9BDE27E694 /* TableAnimator.swift */; };
-		E354D5ED34ABFBE7E9DF2FC5A481DEBD /* Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = C267404AFCE83F4FF17C05F608981394 /* Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests-dummy.m */; };
-		F42D8E3FAFE4CEC986CA1304CE3EB82B /* TableAnimatorConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9152267377527061C1F28B4012B94F /* TableAnimatorConfiguration.swift */; };
+		628896A1677B5DF529D073ACC326A400 /* TableAnimationsProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB365017001FD6E3B8FBA3796B55F03E /* TableAnimationsProtocols.swift */; };
+		63169D357B76B7D5B946A1141663058B /* Pods-NPTableAnimator_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 4503E6743A58CEFA247AC0B455A5AA5A /* Pods-NPTableAnimator_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		64E3906C21441475D3FA91761BF77C96 /* NPTableAnimator-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CB58AC05474B6C868865B924928817C /* NPTableAnimator-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB4435B07AFD3642E0B900A5381FFBC6 /* SingleSectionTableAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A79BAEB48C5CA3889DBCF6262D6D74B /* SingleSectionTableAnimator.swift */; };
+		AB9DAD74544E271D64C8A5CC0FD17326 /* Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 065974832288077223341D0552EF5BA5 /* Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B2DB28954844EEB933157C4EC40AFF2F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
+		C5C9E77B59C629ABF8D177C523C16485 /* TableAnimatorConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF8ABA96E1365173AAF6097CC6C06001 /* TableAnimatorConfiguration.swift */; };
+		E354D5ED34ABFBE7E9DF2FC5A481DEBD /* Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ED12A82105B8413A5A03CA9F7CE0B06 /* Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests-dummy.m */; };
+		F6869C70E32285B52E3BDA4832AB43ED /* TableAnimationApplier.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE30C002A8F7EC46803B238D90EBEF50 /* TableAnimationApplier.swift */; };
+		FF56863C689A9326E11C13D649687A84 /* TableAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46C79841EF7F86573002D48708E7C2B /* TableAnimator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,59 +32,62 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 3F94AC8AFA69DDF66384E9102BC78763;
+			remoteGlobalIDString = 26B17BCC213A0C2E35603DD893451041;
 			remoteInfo = NPTableAnimator;
 		};
 		984A81129B610E6B5D558B705E188FF7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 3F94AC8AFA69DDF66384E9102BC78763;
+			remoteGlobalIDString = 26B17BCC213A0C2E35603DD893451041;
 			remoteInfo = NPTableAnimator;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		01809BD495D39A1B9D82963325725AA1 /* Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests-frameworks.sh"; sourceTree = "<group>"; };
-		0378D13CCC75C56EC49489360CE308A0 /* NPTableAnimator-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "NPTableAnimator-dummy.m"; sourceTree = "<group>"; };
-		03DE805FA31446B5CD522DF5E2E2F4D3 /* TableAnimations.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TableAnimations.swift; path = NPTableAnimator/Classes/TableAnimations.swift; sourceTree = "<group>"; };
-		0479736FDBBCEE7842C6EE84E3E2217D /* NPTableAnimator-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "NPTableAnimator-umbrella.h"; sourceTree = "<group>"; };
-		08F2E121FD0B900BBFF92801D9DDE943 /* Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests-acknowledgements.markdown"; sourceTree = "<group>"; };
-		0DF1BA620EBB388FAD9B25B3392CE47A /* TableAnimationsProtocols.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TableAnimationsProtocols.swift; path = NPTableAnimator/Classes/TableAnimationsProtocols.swift; sourceTree = "<group>"; };
-		116E34E78293A48524281ADA72689175 /* NPTableAnimator.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = NPTableAnimator.xcconfig; sourceTree = "<group>"; };
-		20E19BE7E89F9551FD3202B8910F54B5 /* Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests-resources.sh"; sourceTree = "<group>"; };
-		36724AE126FB217FAB37AE64FA9865C6 /* Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests.debug.xcconfig"; sourceTree = "<group>"; };
-		3F9152267377527061C1F28B4012B94F /* TableAnimatorConfiguration.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TableAnimatorConfiguration.swift; path = NPTableAnimator/Classes/TableAnimatorConfiguration.swift; sourceTree = "<group>"; };
-		4F35184FD46BA0B60C7437A528DCC118 /* Pods-NPTableAnimator_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-NPTableAnimator_Example.release.xcconfig"; sourceTree = "<group>"; };
-		545291A138E0DDBDFC30EF1691690825 /* Pods-NPTableAnimator_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-NPTableAnimator_Example.modulemap"; sourceTree = "<group>"; };
-		58DD199AF4AC4EED4CEEF5DA8036F4BB /* Pods-NPTableAnimator_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-NPTableAnimator_Example.debug.xcconfig"; sourceTree = "<group>"; };
-		5CE3AAC3ED32348894606C9BDE27E694 /* TableAnimator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TableAnimator.swift; path = NPTableAnimator/Classes/TableAnimator.swift; sourceTree = "<group>"; };
-		63DB4ECE9B61B6F8D3B49D7F121FFE42 /* TableAnimationApplier.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TableAnimationApplier.swift; path = NPTableAnimator/Classes/TableAnimationApplier.swift; sourceTree = "<group>"; };
+		062A11D4DFB7461E106CD56E3C16705A /* NPTableAnimator.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = NPTableAnimator.xcconfig; sourceTree = "<group>"; };
+		065974832288077223341D0552EF5BA5 /* Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests-umbrella.h"; sourceTree = "<group>"; };
+		0F539C4C8B8BC33F4B4FEC21B7318B9E /* Pods-NPTableAnimator_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-NPTableAnimator_Example.modulemap"; sourceTree = "<group>"; };
+		1BFC15E3DDDA76C187EB63FCD09680F1 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
+		1ED12A82105B8413A5A03CA9F7CE0B06 /* Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests-dummy.m"; sourceTree = "<group>"; };
+		2379ACC6DD8771FAC3400D60C2E51AB6 /* Pods-NPTableAnimator_Example-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-NPTableAnimator_Example-acknowledgements.markdown"; sourceTree = "<group>"; };
+		4503E6743A58CEFA247AC0B455A5AA5A /* Pods-NPTableAnimator_Example-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-NPTableAnimator_Example-umbrella.h"; sourceTree = "<group>"; };
+		4CB58AC05474B6C868865B924928817C /* NPTableAnimator-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "NPTableAnimator-umbrella.h"; sourceTree = "<group>"; };
+		647A5AEE6C6CF73938F2D68B392ED813 /* NPTableAnimator.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; path = NPTableAnimator.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		75AB9EE0A1E2F6A20044DD396F0985D4 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		7DD1714FDD9AE06869DE6FEF127B6990 /* NPTableAnimator.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = NPTableAnimator.modulemap; sourceTree = "<group>"; };
-		84C7AB0E20F73DAB00DD8648 /* ApplyAnimationOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplyAnimationOptions.swift; sourceTree = "<group>"; };
-		84C7AB1020F73DC900DD8648 /* ApplyHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplyHelpers.swift; sourceTree = "<group>"; };
-		8F6023288D114064B2B5CCB2 /* TableAnimationSafeApplier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TableAnimationSafeApplier.swift; path = NPTableAnimator/Classes/TableAnimationSafeApplier.swift; sourceTree = "<group>"; };
-		9043854C87DDCA9DCC7A5F5A00013947 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		9782D60A86402005E2C04823AA0FFD34 /* Pods-NPTableAnimator_Example-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-NPTableAnimator_Example-acknowledgements.plist"; sourceTree = "<group>"; };
-		9C80A505365F0E1706DC8591E0C04100 /* Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests.modulemap"; sourceTree = "<group>"; };
-		C004E6D34396966CE6CE9F1BFEF5ACA6 /* NPTableAnimator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NPTableAnimator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C23B8D5A25D3F2CB73F2F0B8CB1C9948 /* Pods-NPTableAnimator_Example-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-NPTableAnimator_Example-acknowledgements.markdown"; sourceTree = "<group>"; };
-		C267404AFCE83F4FF17C05F608981394 /* Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests-dummy.m"; sourceTree = "<group>"; };
-		C857EBE4433E3A9F9C7116D6E462F2DC /* Pods-NPTableAnimator_Example-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-NPTableAnimator_Example-frameworks.sh"; sourceTree = "<group>"; };
-		DD323C7D4D3437540690751F867C9241 /* Pods-NPTableAnimator_Example-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-NPTableAnimator_Example-resources.sh"; sourceTree = "<group>"; };
-		DE5A3A9E82A7754C44D60C212894D9C4 /* Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests.release.xcconfig"; sourceTree = "<group>"; };
-		E36DEEC0EEEF45BBF222D1BDCDB051BA /* Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests-acknowledgements.plist"; sourceTree = "<group>"; };
-		EB7A4A160DC60526ACF0168DAD0BAE01 /* Pods_NPTableAnimator_Example_NPTableAnimator_ExampleTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NPTableAnimator_Example_NPTableAnimator_ExampleTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		ED99206B35707820E6504488F5C03861 /* Pods-NPTableAnimator_Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-NPTableAnimator_Example-dummy.m"; sourceTree = "<group>"; };
-		EDEE74D1D86C35E9D819681BA7340B9D /* Pods-NPTableAnimator_Example-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-NPTableAnimator_Example-umbrella.h"; sourceTree = "<group>"; };
-		EE492C91DB727766E7C9C37C7C48E8F3 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F0014404BF69D9798C5C7ABD9DE3C5C8 /* Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests-umbrella.h"; sourceTree = "<group>"; };
-		F09B9AF5425275CC53DB6A74C3C95974 /* Pods_NPTableAnimator_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NPTableAnimator_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		F150FCAF00DC8D6A32AEEB0449BEB2F6 /* NPTableAnimator-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "NPTableAnimator-prefix.pch"; sourceTree = "<group>"; };
-		FA0CCD18307FC86B5D05689670787E65 /* SingleSectionTableAnimator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SingleSectionTableAnimator.swift; path = NPTableAnimator/Classes/SingleSectionTableAnimator.swift; sourceTree = "<group>"; };
+		67FC2F32F35AC0FB1EB5AD98CE96D746 /* Pods-NPTableAnimator_Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-NPTableAnimator_Example-dummy.m"; sourceTree = "<group>"; };
+		6AB25B267C7E21D09791467ADDE543AF /* ApplyHelpers.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ApplyHelpers.swift; path = NPTableAnimator/Classes/ApplyHelpers.swift; sourceTree = "<group>"; };
+		6FE45BC2028743EFFD67E653A156C8D4 /* NPTableAnimator-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "NPTableAnimator-prefix.pch"; sourceTree = "<group>"; };
+		7469568E85F7F597F7C2C33A41A5FBAA /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
+		769BD7F8926F3BF87D8A7CAFF0F0CFDC /* ApplyAnimationOptions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ApplyAnimationOptions.swift; path = NPTableAnimator/Classes/ApplyAnimationOptions.swift; sourceTree = "<group>"; };
+		77F1F61FFA4C8DB1D6EC7386D9547192 /* NPTableAnimator-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "NPTableAnimator-dummy.m"; sourceTree = "<group>"; };
+		7F16C590E0CE7BC78DD8514F2E15DA59 /* Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests.release.xcconfig"; sourceTree = "<group>"; };
+		83B1276B5A9D83D5230D3B6C5CCC7CF9 /* Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests.modulemap"; sourceTree = "<group>"; };
+		8DA09E2F0AB57E673C599E70C8EBFD70 /* Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests-resources.sh"; sourceTree = "<group>"; };
+		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		98F816803730F7EF7F87BD1A89C1415C /* TableAnimationSafeApplier.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TableAnimationSafeApplier.swift; path = NPTableAnimator/Classes/TableAnimationSafeApplier.swift; sourceTree = "<group>"; };
+		9A79BAEB48C5CA3889DBCF6262D6D74B /* SingleSectionTableAnimator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SingleSectionTableAnimator.swift; path = NPTableAnimator/Classes/SingleSectionTableAnimator.swift; sourceTree = "<group>"; };
+		9E6F61937117EE0178FB6087EC280A87 /* Pods-NPTableAnimator_Example-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-NPTableAnimator_Example-acknowledgements.plist"; sourceTree = "<group>"; };
+		9EA5D769CF038E2CCBDA8AE8AC730EA1 /* Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests.debug.xcconfig"; sourceTree = "<group>"; };
+		A6E4001728AE5B8AC7188FED2C09540E /* TableAnimations.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TableAnimations.swift; path = NPTableAnimator/Classes/TableAnimations.swift; sourceTree = "<group>"; };
+		B17AFC122C7660AD1C77195A898FCA70 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B46C79841EF7F86573002D48708E7C2B /* TableAnimator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TableAnimator.swift; path = NPTableAnimator/Classes/TableAnimator.swift; sourceTree = "<group>"; };
+		B7BB9996C6B2EDDCFDF13A72885A69CD /* Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests-acknowledgements.markdown"; sourceTree = "<group>"; };
+		BB365017001FD6E3B8FBA3796B55F03E /* TableAnimationsProtocols.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TableAnimationsProtocols.swift; path = NPTableAnimator/Classes/TableAnimationsProtocols.swift; sourceTree = "<group>"; };
+		BD7E3B336702BC3E4146A9E5F4181C3C /* Pods-NPTableAnimator_Example-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-NPTableAnimator_Example-frameworks.sh"; sourceTree = "<group>"; };
+		C004E6D34396966CE6CE9F1BFEF5ACA6 /* NPTableAnimator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = NPTableAnimator.framework; path = NPTableAnimator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C7A2B9328984EAFB8BBB0661DBD182F9 /* Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests-frameworks.sh"; sourceTree = "<group>"; };
+		C855F24A51F15C7D9687355DAD4AE8B9 /* NPTableAnimator.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = NPTableAnimator.modulemap; sourceTree = "<group>"; };
+		C9157EBCA3F8069CFCB3641EB263B514 /* Pods-NPTableAnimator_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-NPTableAnimator_Example.release.xcconfig"; sourceTree = "<group>"; };
+		CE8DC0A9C2B9DEC2094165F9D787C1F9 /* Pods-NPTableAnimator_Example-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-NPTableAnimator_Example-resources.sh"; sourceTree = "<group>"; };
+		DFEC58F6CA01D5C7C213879132378480 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EB7A4A160DC60526ACF0168DAD0BAE01 /* Pods_NPTableAnimator_Example_NPTableAnimator_ExampleTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_NPTableAnimator_Example_NPTableAnimator_ExampleTests.framework; path = "Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		EF63F43970662F977182B20C63DE41F3 /* Pods-NPTableAnimator_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-NPTableAnimator_Example.debug.xcconfig"; sourceTree = "<group>"; };
+		F09B9AF5425275CC53DB6A74C3C95974 /* Pods_NPTableAnimator_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_NPTableAnimator_Example.framework; path = "Pods-NPTableAnimator_Example.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		FD63B91C2E59E192F4E27FFA430A32FF /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FE30C002A8F7EC46803B238D90EBEF50 /* TableAnimationApplier.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TableAnimationApplier.swift; path = NPTableAnimator/Classes/TableAnimationApplier.swift; sourceTree = "<group>"; };
+		FF8ABA96E1365173AAF6097CC6C06001 /* TableAnimatorConfiguration.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TableAnimatorConfiguration.swift; path = NPTableAnimator/Classes/TableAnimatorConfiguration.swift; sourceTree = "<group>"; };
+		FFA0E4294DF1753BBB7293CA01CA5EC4 /* Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests-acknowledgements.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,30 +107,32 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		FEAAB7D653C77FF34351BFE8082E39B7 /* Frameworks */ = {
+		FE088CC4AA4949B11AB3F4BB76928B44 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2A0D032B9978A182574D72FCD0B1E33F /* Foundation.framework in Frameworks */,
+				B2DB28954844EEB933157C4EC40AFF2F /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		2014C8AA6A745F2C30D494637BFD4817 /* Development Pods */ = {
+		67ACA4B7CFA62E3592C3692BBC1F21D8 /* Pod */ = {
 			isa = PBXGroup;
 			children = (
-				B51C484313FCD1F60AF7A123D195D402 /* NPTableAnimator */,
+				7469568E85F7F597F7C2C33A41A5FBAA /* LICENSE */,
+				647A5AEE6C6CF73938F2D68B392ED813 /* NPTableAnimator.podspec */,
+				1BFC15E3DDDA76C187EB63FCD09680F1 /* README.md */,
 			);
-			name = "Development Pods";
+			name = Pod;
 			sourceTree = "<group>";
 		};
 		6A9C645ECCDD4AC551152446B4408D02 /* Targets Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				AB91268A608EC868231355C6C584DF51 /* Pods-NPTableAnimator_Example */,
-				C3A209F855CC9A9A8C59FB6327B6FE78 /* Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests */,
+				871BD53A4AF8208B0DCF6D1B756940F3 /* Pods-NPTableAnimator_Example */,
+				E7F42814DFB1A239AD8BCC4EE5143375 /* Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests */,
 			);
 			name = "Targets Support Files";
 			sourceTree = "<group>";
@@ -138,61 +141,70 @@
 			isa = PBXGroup;
 			children = (
 				93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */,
-				2014C8AA6A745F2C30D494637BFD4817 /* Development Pods */,
+				A4EE8B524E27441DB817B34C4F1D30C9 /* Development Pods */,
 				BC3CA7F9E30CC8F7E2DD044DD34432FC /* Frameworks */,
 				E04F081BF63765D9791320434B3E1385 /* Products */,
 				6A9C645ECCDD4AC551152446B4408D02 /* Targets Support Files */,
 			);
 			sourceTree = "<group>";
 		};
-		A04718B40B25556F1C52DBB05A15839F /* Support Files */ = {
+		82ABC0CBF6FDA09ED41ED3E64172BCE9 /* NPTableAnimator */ = {
 			isa = PBXGroup;
 			children = (
-				EE492C91DB727766E7C9C37C7C48E8F3 /* Info.plist */,
-				7DD1714FDD9AE06869DE6FEF127B6990 /* NPTableAnimator.modulemap */,
-				116E34E78293A48524281ADA72689175 /* NPTableAnimator.xcconfig */,
-				0378D13CCC75C56EC49489360CE308A0 /* NPTableAnimator-dummy.m */,
-				F150FCAF00DC8D6A32AEEB0449BEB2F6 /* NPTableAnimator-prefix.pch */,
-				0479736FDBBCEE7842C6EE84E3E2217D /* NPTableAnimator-umbrella.h */,
+				769BD7F8926F3BF87D8A7CAFF0F0CFDC /* ApplyAnimationOptions.swift */,
+				6AB25B267C7E21D09791467ADDE543AF /* ApplyHelpers.swift */,
+				9A79BAEB48C5CA3889DBCF6262D6D74B /* SingleSectionTableAnimator.swift */,
+				FE30C002A8F7EC46803B238D90EBEF50 /* TableAnimationApplier.swift */,
+				A6E4001728AE5B8AC7188FED2C09540E /* TableAnimations.swift */,
+				98F816803730F7EF7F87BD1A89C1415C /* TableAnimationSafeApplier.swift */,
+				BB365017001FD6E3B8FBA3796B55F03E /* TableAnimationsProtocols.swift */,
+				B46C79841EF7F86573002D48708E7C2B /* TableAnimator.swift */,
+				FF8ABA96E1365173AAF6097CC6C06001 /* TableAnimatorConfiguration.swift */,
+				67ACA4B7CFA62E3592C3692BBC1F21D8 /* Pod */,
+				A9B9478A74CF3745854E2B052273A065 /* Support Files */,
 			);
-			name = "Support Files";
-			path = "Example/Pods/Target Support Files/NPTableAnimator";
+			name = NPTableAnimator;
+			path = ../..;
 			sourceTree = "<group>";
 		};
-		AB91268A608EC868231355C6C584DF51 /* Pods-NPTableAnimator_Example */ = {
+		871BD53A4AF8208B0DCF6D1B756940F3 /* Pods-NPTableAnimator_Example */ = {
 			isa = PBXGroup;
 			children = (
-				75AB9EE0A1E2F6A20044DD396F0985D4 /* Info.plist */,
-				545291A138E0DDBDFC30EF1691690825 /* Pods-NPTableAnimator_Example.modulemap */,
-				C23B8D5A25D3F2CB73F2F0B8CB1C9948 /* Pods-NPTableAnimator_Example-acknowledgements.markdown */,
-				9782D60A86402005E2C04823AA0FFD34 /* Pods-NPTableAnimator_Example-acknowledgements.plist */,
-				ED99206B35707820E6504488F5C03861 /* Pods-NPTableAnimator_Example-dummy.m */,
-				C857EBE4433E3A9F9C7116D6E462F2DC /* Pods-NPTableAnimator_Example-frameworks.sh */,
-				DD323C7D4D3437540690751F867C9241 /* Pods-NPTableAnimator_Example-resources.sh */,
-				EDEE74D1D86C35E9D819681BA7340B9D /* Pods-NPTableAnimator_Example-umbrella.h */,
-				58DD199AF4AC4EED4CEEF5DA8036F4BB /* Pods-NPTableAnimator_Example.debug.xcconfig */,
-				4F35184FD46BA0B60C7437A528DCC118 /* Pods-NPTableAnimator_Example.release.xcconfig */,
+				B17AFC122C7660AD1C77195A898FCA70 /* Info.plist */,
+				0F539C4C8B8BC33F4B4FEC21B7318B9E /* Pods-NPTableAnimator_Example.modulemap */,
+				2379ACC6DD8771FAC3400D60C2E51AB6 /* Pods-NPTableAnimator_Example-acknowledgements.markdown */,
+				9E6F61937117EE0178FB6087EC280A87 /* Pods-NPTableAnimator_Example-acknowledgements.plist */,
+				67FC2F32F35AC0FB1EB5AD98CE96D746 /* Pods-NPTableAnimator_Example-dummy.m */,
+				BD7E3B336702BC3E4146A9E5F4181C3C /* Pods-NPTableAnimator_Example-frameworks.sh */,
+				CE8DC0A9C2B9DEC2094165F9D787C1F9 /* Pods-NPTableAnimator_Example-resources.sh */,
+				4503E6743A58CEFA247AC0B455A5AA5A /* Pods-NPTableAnimator_Example-umbrella.h */,
+				EF63F43970662F977182B20C63DE41F3 /* Pods-NPTableAnimator_Example.debug.xcconfig */,
+				C9157EBCA3F8069CFCB3641EB263B514 /* Pods-NPTableAnimator_Example.release.xcconfig */,
 			);
 			name = "Pods-NPTableAnimator_Example";
 			path = "Target Support Files/Pods-NPTableAnimator_Example";
 			sourceTree = "<group>";
 		};
-		B51C484313FCD1F60AF7A123D195D402 /* NPTableAnimator */ = {
+		A4EE8B524E27441DB817B34C4F1D30C9 /* Development Pods */ = {
 			isa = PBXGroup;
 			children = (
-				FA0CCD18307FC86B5D05689670787E65 /* SingleSectionTableAnimator.swift */,
-				63DB4ECE9B61B6F8D3B49D7F121FFE42 /* TableAnimationApplier.swift */,
-				03DE805FA31446B5CD522DF5E2E2F4D3 /* TableAnimations.swift */,
-				0DF1BA620EBB388FAD9B25B3392CE47A /* TableAnimationsProtocols.swift */,
-				5CE3AAC3ED32348894606C9BDE27E694 /* TableAnimator.swift */,
-				3F9152267377527061C1F28B4012B94F /* TableAnimatorConfiguration.swift */,
-				A04718B40B25556F1C52DBB05A15839F /* Support Files */,
-				8F6023288D114064B2B5CCB2 /* TableAnimationSafeApplier.swift */,
-				84C7AB0E20F73DAB00DD8648 /* ApplyAnimationOptions.swift */,
-				84C7AB1020F73DC900DD8648 /* ApplyHelpers.swift */,
+				82ABC0CBF6FDA09ED41ED3E64172BCE9 /* NPTableAnimator */,
 			);
-			name = NPTableAnimator;
-			path = ../..;
+			name = "Development Pods";
+			sourceTree = "<group>";
+		};
+		A9B9478A74CF3745854E2B052273A065 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				DFEC58F6CA01D5C7C213879132378480 /* Info.plist */,
+				C855F24A51F15C7D9687355DAD4AE8B9 /* NPTableAnimator.modulemap */,
+				062A11D4DFB7461E106CD56E3C16705A /* NPTableAnimator.xcconfig */,
+				77F1F61FFA4C8DB1D6EC7386D9547192 /* NPTableAnimator-dummy.m */,
+				6FE45BC2028743EFFD67E653A156C8D4 /* NPTableAnimator-prefix.pch */,
+				4CB58AC05474B6C868865B924928817C /* NPTableAnimator-umbrella.h */,
+			);
+			name = "Support Files";
+			path = "Example/Pods/Target Support Files/NPTableAnimator";
 			sourceTree = "<group>";
 		};
 		BC3CA7F9E30CC8F7E2DD044DD34432FC /* Frameworks */ = {
@@ -201,24 +213,6 @@
 				D35AF013A5F0BAD4F32504907A52519E /* iOS */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		C3A209F855CC9A9A8C59FB6327B6FE78 /* Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests */ = {
-			isa = PBXGroup;
-			children = (
-				9043854C87DDCA9DCC7A5F5A00013947 /* Info.plist */,
-				9C80A505365F0E1706DC8591E0C04100 /* Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests.modulemap */,
-				08F2E121FD0B900BBFF92801D9DDE943 /* Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests-acknowledgements.markdown */,
-				E36DEEC0EEEF45BBF222D1BDCDB051BA /* Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests-acknowledgements.plist */,
-				C267404AFCE83F4FF17C05F608981394 /* Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests-dummy.m */,
-				01809BD495D39A1B9D82963325725AA1 /* Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests-frameworks.sh */,
-				20E19BE7E89F9551FD3202B8910F54B5 /* Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests-resources.sh */,
-				F0014404BF69D9798C5C7ABD9DE3C5C8 /* Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests-umbrella.h */,
-				36724AE126FB217FAB37AE64FA9865C6 /* Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests.debug.xcconfig */,
-				DE5A3A9E82A7754C44D60C212894D9C4 /* Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests.release.xcconfig */,
-			);
-			name = "Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests";
-			path = "Target Support Files/Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests";
 			sourceTree = "<group>";
 		};
 		D35AF013A5F0BAD4F32504907A52519E /* iOS */ = {
@@ -237,6 +231,24 @@
 				EB7A4A160DC60526ACF0168DAD0BAE01 /* Pods_NPTableAnimator_Example_NPTableAnimator_ExampleTests.framework */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		E7F42814DFB1A239AD8BCC4EE5143375 /* Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests */ = {
+			isa = PBXGroup;
+			children = (
+				FD63B91C2E59E192F4E27FFA430A32FF /* Info.plist */,
+				83B1276B5A9D83D5230D3B6C5CCC7CF9 /* Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests.modulemap */,
+				B7BB9996C6B2EDDCFDF13A72885A69CD /* Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests-acknowledgements.markdown */,
+				FFA0E4294DF1753BBB7293CA01CA5EC4 /* Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests-acknowledgements.plist */,
+				1ED12A82105B8413A5A03CA9F7CE0B06 /* Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests-dummy.m */,
+				C7A2B9328984EAFB8BBB0661DBD182F9 /* Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests-frameworks.sh */,
+				8DA09E2F0AB57E673C599E70C8EBFD70 /* Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests-resources.sh */,
+				065974832288077223341D0552EF5BA5 /* Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests-umbrella.h */,
+				9EA5D769CF038E2CCBDA8AE8AC730EA1 /* Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests.debug.xcconfig */,
+				7F16C590E0CE7BC78DD8514F2E15DA59 /* Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests.release.xcconfig */,
+			);
+			name = "Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests";
+			path = "Target Support Files/Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -258,11 +270,11 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D812462D81BB8CC437FF471515576A11 /* Headers */ = {
+		702252E0B060B08F6E183C9FC6611578 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6B28C29971B604A55CB90EB4C02B3536 /* NPTableAnimator-umbrella.h in Headers */,
+				64E3906C21441475D3FA91761BF77C96 /* NPTableAnimator-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -287,6 +299,23 @@
 			productReference = F09B9AF5425275CC53DB6A74C3C95974 /* Pods_NPTableAnimator_Example.framework */;
 			productType = "com.apple.product-type.framework";
 		};
+		26B17BCC213A0C2E35603DD893451041 /* NPTableAnimator */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 004941E84DB287B38845955E6C244C22 /* Build configuration list for PBXNativeTarget "NPTableAnimator" */;
+			buildPhases = (
+				1B8AA0C7CEDA7EA887A52B317276CB1E /* Sources */,
+				FE088CC4AA4949B11AB3F4BB76928B44 /* Frameworks */,
+				702252E0B060B08F6E183C9FC6611578 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = NPTableAnimator;
+			productName = NPTableAnimator;
+			productReference = C004E6D34396966CE6CE9F1BFEF5ACA6 /* NPTableAnimator.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 		2C2DF1EECDD06FB353B482F6007104C0 /* Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 29788302C20CD0C38B577A0EC2ECE6BB /* Build configuration list for PBXNativeTarget "Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests" */;
@@ -305,30 +334,13 @@
 			productReference = EB7A4A160DC60526ACF0168DAD0BAE01 /* Pods_NPTableAnimator_Example_NPTableAnimator_ExampleTests.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		3F94AC8AFA69DDF66384E9102BC78763 /* NPTableAnimator */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = D57B9C2584F5F9297E9CF29F0804A35D /* Build configuration list for PBXNativeTarget "NPTableAnimator" */;
-			buildPhases = (
-				B2564FA0B619F2C55039D6CEC1BCE6DF /* Sources */,
-				FEAAB7D653C77FF34351BFE8082E39B7 /* Frameworks */,
-				D812462D81BB8CC437FF471515576A11 /* Headers */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = NPTableAnimator;
-			productName = NPTableAnimator;
-			productReference = C004E6D34396966CE6CE9F1BFEF5ACA6 /* NPTableAnimator.framework */;
-			productType = "com.apple.product-type.framework";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		D41D8CD98F00B204E9800998ECF8427E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0830;
+				LastSwiftUpdateCheck = 0930;
 				LastUpgradeCheck = 0930;
 			};
 			buildConfigurationList = 2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */;
@@ -343,7 +355,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				3F94AC8AFA69DDF66384E9102BC78763 /* NPTableAnimator */,
+				26B17BCC213A0C2E35603DD893451041 /* NPTableAnimator */,
 				046228726EF059B004CFDE10135D3560 /* Pods-NPTableAnimator_Example */,
 				2C2DF1EECDD06FB353B482F6007104C0 /* Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests */,
 			);
@@ -351,30 +363,28 @@
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
+		1B8AA0C7CEDA7EA887A52B317276CB1E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				11A55AAE34FB04E21F362791801E31E2 /* ApplyAnimationOptions.swift in Sources */,
+				10488F4D1CD72CCB61BF01E85B1AC584 /* ApplyHelpers.swift in Sources */,
+				0F691EC4DCAD3D4CDA907C85EA483ABB /* NPTableAnimator-dummy.m in Sources */,
+				AB4435B07AFD3642E0B900A5381FFBC6 /* SingleSectionTableAnimator.swift in Sources */,
+				F6869C70E32285B52E3BDA4832AB43ED /* TableAnimationApplier.swift in Sources */,
+				39BDD4FFB2F217DA0A4D30C982974428 /* TableAnimations.swift in Sources */,
+				3C2CCA39884693F81A9ED3AADAD9B10E /* TableAnimationSafeApplier.swift in Sources */,
+				628896A1677B5DF529D073ACC326A400 /* TableAnimationsProtocols.swift in Sources */,
+				FF56863C689A9326E11C13D649687A84 /* TableAnimator.swift in Sources */,
+				C5C9E77B59C629ABF8D177C523C16485 /* TableAnimatorConfiguration.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		7131A3B75E72F98CAFB71BD7ABD00959 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				E354D5ED34ABFBE7E9DF2FC5A481DEBD /* Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests-dummy.m in Sources */,
-				7528B19C20219BCA00B536B8 /* TableAnimations.swift in Sources */,
-				8F602D505BE3173768E591CC /* TableAnimationSafeApplier.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B2564FA0B619F2C55039D6CEC1BCE6DF /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				84C7AB0F20F73DAB00DD8648 /* ApplyAnimationOptions.swift in Sources */,
-				6E577614ACDFC07DB1901DD19CD1DF2E /* NPTableAnimator-dummy.m in Sources */,
-				4DE39977F0BC50C14D2D0B80C4670B55 /* SingleSectionTableAnimator.swift in Sources */,
-				84C7AB1120F73DC900DD8648 /* ApplyHelpers.swift in Sources */,
-				7B9296AB2CC65912D94FB84E03AD9A5D /* TableAnimationApplier.swift in Sources */,
-				C132D1354B9470A47656E3820DCC1D3A /* TableAnimations.swift in Sources */,
-				C4FBE448A9A81ACAE72BC7C4D08EE1D0 /* TableAnimationsProtocols.swift in Sources */,
-				D2F68E90DEF5C4DF97716BE10420C70D /* TableAnimator.swift in Sources */,
-				F42D8E3FAFE4CEC986CA1304CE3EB82B /* TableAnimatorConfiguration.swift in Sources */,
-				8F60281721D486E77C17C9FD /* TableAnimationSafeApplier.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -392,22 +402,23 @@
 		988C2B8FF0CF5AB267395D20805E6450 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = NPTableAnimator;
-			target = 3F94AC8AFA69DDF66384E9102BC78763 /* NPTableAnimator */;
+			target = 26B17BCC213A0C2E35603DD893451041 /* NPTableAnimator */;
 			targetProxy = 984A81129B610E6B5D558B705E188FF7 /* PBXContainerItemProxy */;
 		};
 		E26B6E3C2070CDD101B2994E3A681FDD /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = NPTableAnimator;
-			target = 3F94AC8AFA69DDF66384E9102BC78763 /* NPTableAnimator */;
+			target = 26B17BCC213A0C2E35603DD893451041 /* NPTableAnimator */;
 			targetProxy = 274E80FAD11680D29A9B43C68A5AFAD5 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		0E08BAD2CCBDEE108C20706BD0C20400 /* Debug */ = {
+		234072E032F0DCA19EDB5AA82E3F306D /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 36724AE126FB217FAB37AE64FA9865C6 /* Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests.debug.xcconfig */;
+			baseConfigurationReference = 7F16C590E0CE7BC78DD8514F2E15DA59 /* Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -427,10 +438,179 @@
 				OTHER_LIBTOOLFLAGS = "";
 				PODS_ROOT = "$(SRCROOT)";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_NPTableAnimator_Example_NPTableAnimator_ExampleTests;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		4D683F750CC1242239F469DA6B38583E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = EF63F43970662F977182B20C63DE41F3 /* Pods-NPTableAnimator_Example.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-NPTableAnimator_Example/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-NPTableAnimator_Example/Pods-NPTableAnimator_Example.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		6322DE58542B86557AC48F7D169F48AE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9EA5D769CF038E2CCBDA8AE8AC730EA1 /* Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests/Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		87A9CFA7F67704CD931C4AF7F1576CE5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 062A11D4DFB7461E106CD56E3C16705A /* NPTableAnimator.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/NPTableAnimator/NPTableAnimator-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/NPTableAnimator/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/NPTableAnimator/NPTableAnimator.modulemap";
+				PRODUCT_MODULE_NAME = NPTableAnimator;
+				PRODUCT_NAME = NPTableAnimator;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		B4968864856F0CBAB218EDAD71EE0EEB /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C9157EBCA3F8069CFCB3641EB263B514 /* Pods-NPTableAnimator_Example.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-NPTableAnimator_Example/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-NPTableAnimator_Example/Pods-NPTableAnimator_Example.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		C7082C3C854FE8D39BD9D7637C27033C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 062A11D4DFB7461E106CD56E3C16705A /* NPTableAnimator.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/NPTableAnimator/NPTableAnimator-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/NPTableAnimator/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/NPTableAnimator/NPTableAnimator.modulemap";
+				PRODUCT_MODULE_NAME = NPTableAnimator;
+				PRODUCT_NAME = NPTableAnimator;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -439,7 +619,7 @@
 			};
 			name = Debug;
 		};
-		1CDAB5613991E411E5990BAF694995C5 /* Debug */ = {
+		C7BE62186E17127FF3B5B27A193214BD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -449,6 +629,7 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
@@ -470,6 +651,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGNING_ALLOWED = NO;
 				CODE_SIGNING_REQUIRED = NO;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
@@ -494,79 +676,13 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = NO_SIGNING/;
 				STRIP_INSTALLED_PRODUCT = NO;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SYMROOT = "${SRCROOT}/../build";
 			};
 			name = Debug;
 		};
-		2D7CC9FEA4F08002C1C08026E45D4644 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4F35184FD46BA0B60C7437A528DCC118 /* Pods-NPTableAnimator_Example.release.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "Target Support Files/Pods-NPTableAnimator_Example/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-NPTableAnimator_Example/Pods-NPTableAnimator_Example.modulemap";
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_NPTableAnimator_Example;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		5CB34DBD97825389A6566F6F56CED2CC /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 116E34E78293A48524281ADA72689175 /* NPTableAnimator.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/NPTableAnimator/NPTableAnimator-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/NPTableAnimator/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/NPTableAnimator/NPTableAnimator.modulemap";
-				PRODUCT_NAME = NPTableAnimator;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		7B62A85C412D689EF418FA67DA770A41 /* Release */ = {
+		D077E5AF30E3A09910AC48CA760A1280 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -576,6 +692,7 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
@@ -597,6 +714,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGNING_ALLOWED = NO;
 				CODE_SIGNING_REQUIRED = NO;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -617,121 +735,28 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = NO_SIGNING/;
 				STRIP_INSTALLED_PRODUCT = NO;
 				SYMROOT = "${SRCROOT}/../build";
 			};
 			name = Release;
 		};
-		B0F65631F4859AE14513EF677AC4A1F1 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 116E34E78293A48524281ADA72689175 /* NPTableAnimator.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/NPTableAnimator/NPTableAnimator-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/NPTableAnimator/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/NPTableAnimator/NPTableAnimator.modulemap";
-				PRODUCT_NAME = NPTableAnimator;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		C9856B1729AFE0D8E2920365C8B00DE5 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = DE5A3A9E82A7754C44D60C212894D9C4 /* Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests.release.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "Target Support Files/Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests/Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests.modulemap";
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_NPTableAnimator_Example_NPTableAnimator_ExampleTests;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		E12F5C73A4B13A0457D36D77F10118A0 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 58DD199AF4AC4EED4CEEF5DA8036F4BB /* Pods-NPTableAnimator_Example.debug.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "Target Support Files/Pods-NPTableAnimator_Example/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-NPTableAnimator_Example/Pods-NPTableAnimator_Example.modulemap";
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_NPTableAnimator_Example;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		004941E84DB287B38845955E6C244C22 /* Build configuration list for PBXNativeTarget "NPTableAnimator" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C7082C3C854FE8D39BD9D7637C27033C /* Debug */,
+				87A9CFA7F67704CD931C4AF7F1576CE5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		161D99D89777259472CDAD57E987E930 /* Build configuration list for PBXNativeTarget "Pods-NPTableAnimator_Example" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				E12F5C73A4B13A0457D36D77F10118A0 /* Debug */,
-				2D7CC9FEA4F08002C1C08026E45D4644 /* Release */,
+				4D683F750CC1242239F469DA6B38583E /* Debug */,
+				B4968864856F0CBAB218EDAD71EE0EEB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -739,8 +764,8 @@
 		29788302C20CD0C38B577A0EC2ECE6BB /* Build configuration list for PBXNativeTarget "Pods-NPTableAnimator_Example-NPTableAnimator_ExampleTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				0E08BAD2CCBDEE108C20706BD0C20400 /* Debug */,
-				C9856B1729AFE0D8E2920365C8B00DE5 /* Release */,
+				6322DE58542B86557AC48F7D169F48AE /* Debug */,
+				234072E032F0DCA19EDB5AA82E3F306D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -748,17 +773,8 @@
 		2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				1CDAB5613991E411E5990BAF694995C5 /* Debug */,
-				7B62A85C412D689EF418FA67DA770A41 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		D57B9C2584F5F9297E9CF29F0804A35D /* Build configuration list for PBXNativeTarget "NPTableAnimator" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				5CB34DBD97825389A6566F6F56CED2CC /* Debug */,
-				B0F65631F4859AE14513EF677AC4A1F1 /* Release */,
+				C7BE62186E17127FF3B5B27A193214BD /* Debug */,
+				D077E5AF30E3A09910AC48CA760A1280 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
