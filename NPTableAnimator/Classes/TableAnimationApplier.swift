@@ -33,8 +33,9 @@ import Foundation
     extension UIKit.UITableView: EmptyCheckableSequence {
 		
         var isEmpty: Bool {
-            let rowsCount = (0 ..< numberOfSections)
-                .reduce(into: 0) { $0 += numberOfRows(inSection: $1) }
+            let numberOfSections = (dataSource?.numberOfSections?(in: self)) ?? 0
+            let rowsCount: Int = (0 ..< numberOfSections)
+                .reduce(0) { $0 + (dataSource?.tableView(self, numberOfRowsInSection: $1) ?? 0) }
             return rowsCount == 0
         }
 		
@@ -300,8 +301,9 @@ import Foundation
     extension UIKit.UICollectionView: EmptyCheckableSequence {
 		
         var isEmpty: Bool {
+            let numberOfSections = (dataSource?.numberOfSections?(in: self)) ?? 0
             let rowsCount = (0 ..< numberOfSections)
-                .reduce(into: 0) { $0 += numberOfItems(inSection: $1) }
+                .reduce(0) { $0 + (dataSource?.collectionView(self, numberOfItemsInSection: $1) ?? 0) }
             return rowsCount == 0
         }
         
