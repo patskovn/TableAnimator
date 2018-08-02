@@ -33,10 +33,18 @@ import Foundation
     extension UIKit.UITableView: EmptyCheckableSequence {
 		
         var isEmpty: Bool {
-            let numberOfSections = (dataSource?.numberOfSections?(in: self)) ?? 0
-            let rowsCount: Int = (0 ..< numberOfSections)
-                .reduce(0) { $0 + (dataSource?.tableView(self, numberOfRowsInSection: $1) ?? 0) }
-            return rowsCount == 0
+            let block: () -> Bool = {
+                let numberOfSections = (self.dataSource?.numberOfSections?(in: self)) ?? 0
+                let rowsCount: Int = (0 ..< numberOfSections)
+                    .reduce(0) { $0 + (self.dataSource?.tableView(self, numberOfRowsInSection: $1) ?? 0) }
+                return rowsCount == 0
+            }
+            
+            if Thread.isMainThread {
+                return block()
+            } else {
+                return DispatchQueue.main.sync(execute: block)
+            }
         }
 		
 		/// Use this for applying changes for UITableView.
@@ -289,10 +297,18 @@ import Foundation
     extension UIKit.UICollectionView: EmptyCheckableSequence {
 		
         var isEmpty: Bool {
-            let numberOfSections = (dataSource?.numberOfSections?(in: self)) ?? 0
-            let rowsCount = (0 ..< numberOfSections)
-                .reduce(0) { $0 + (dataSource?.collectionView(self, numberOfItemsInSection: $1) ?? 0) }
-            return rowsCount == 0
+            let block: () -> Bool = {
+                let numberOfSections = (self.dataSource?.numberOfSections?(in: self)) ?? 0
+                let rowsCount = (0 ..< numberOfSections)
+                    .reduce(0) { $0 + (self.dataSource?.collectionView(self, numberOfItemsInSection: $1) ?? 0) }
+                return rowsCount == 0
+            }
+            
+            if Thread.isMainThread {
+                return block()
+            } else {
+                return DispatchQueue.main.sync(execute: block)
+            }
         }
         
 		var safeApplier: SafeApplier {
