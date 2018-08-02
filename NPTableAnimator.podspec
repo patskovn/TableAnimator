@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'NPTableAnimator'
-  s.version          = '4.1.1'
+  s.version          = '4.1.2'
   s.summary          = 'Animations for UITableView and UICollectionView.'
 
 # This description is used to generate tags and improve search results.

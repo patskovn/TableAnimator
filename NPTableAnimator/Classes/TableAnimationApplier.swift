@@ -120,23 +120,17 @@ import Foundation
 					})
 					
 				} else {
-					CATransaction.begin()
 					strong.beginUpdates()
 					
 					setNewListBlock((anOwner, newList))
-					
-					CATransaction.setCompletionBlock {
-						if animations.cells.toDeferredUpdate.isEmpty {
-							completion?()
-						}
-						
-						semaphore.signal()
-					}
-					
 					setAnimationsClosure(strong, animations)
 					
 					strong.endUpdates()
-					CATransaction.commit()
+                    if animations.cells.toDeferredUpdate.isEmpty {
+                        completion?()
+                    }
+                    
+                    semaphore.signal()
 				}
 			}
 			
@@ -156,17 +150,11 @@ import Foundation
 					})
 					
 				} else {
-					CATransaction.begin()
-					CATransaction.setCompletionBlock {
-						completion?()
-						semaphore.signal()
-					}
-					
 					strong.beginUpdates()
 					strong.reloadRows(at: toDeferredUpdate, with: rowAnimations.reload)
 					strong.endUpdates()
-					
-					CATransaction.commit()
+                    completion?()
+                    semaphore.signal()
 				}
 				
 			}
