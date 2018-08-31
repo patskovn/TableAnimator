@@ -84,6 +84,7 @@ import Foundation
                         guard let strongO = owner, let strong = self else { return }
                         setNewListBlock((strongO, newList))
                         strong.reloadData()
+						completion?()
                     }
                 }
                 return
@@ -394,6 +395,7 @@ import Foundation
                         guard let strongO = owner, let strong = self else { return }
                         setNewListBlock((strongO, newList))
                         strong.reloadData()
+						completion?()
                     }
                 }
                 return
