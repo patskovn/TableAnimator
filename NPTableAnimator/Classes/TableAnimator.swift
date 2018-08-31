@@ -190,7 +190,7 @@ open class TableAnimator<Section: TableAnimatorSection> {
 			if !fromList.contains(section) {
 				toAdd.insert(index)
 				
-			} else if section.updateField == section.updateField {
+			} else if let fromIndex = fromList.index(of: section), section.updateField == fromList[fromIndex].updateField {
 				orderedExistedSectionsTo.append((index, section))
 				
 				guard let existedIndex = existedSectionIndexes.index(where: { $0.0 == section })
