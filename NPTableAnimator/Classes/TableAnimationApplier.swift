@@ -19,11 +19,11 @@ import Foundation
 	
 	/// TableView rows animation style set.
 	public struct UITableViewRowAnimationSet {
-		let insert: UIKit.UITableViewRowAnimation
-		let delete: UIKit.UITableViewRowAnimation
-		let reload: UIKit.UITableViewRowAnimation
+		let insert: UIKit.UITableView.RowAnimation
+		let delete: UIKit.UITableView.RowAnimation
+		let reload: UIKit.UITableView.RowAnimation
 		
-		public init(insert: UIKit.UITableViewRowAnimation, delete: UIKit.UITableViewRowAnimation, reload: UIKit.UITableViewRowAnimation) {
+		public init(insert: UIKit.UITableView.RowAnimation, delete: UIKit.UITableView.RowAnimation, reload: UIKit.UITableView.RowAnimation) {
 			self.insert = insert
 			self.delete = delete
 			self.reload = reload
@@ -203,7 +203,7 @@ import Foundation
 		///   - completion: Block for capturing animation completion. Called from main thread.
 		///   - error: Block for capturing error during changes calculation. When we got error in changes, we call *setNewListBlock* and *tableView.reloadData()*, then error block called
 		///   - tableError: TableAnimatorError
-		public func apply<T, O: AnyObject>(owner: O, newList: [T], animator: TableAnimator<T>, animated: Bool, options: ApplyAnimationOptions = [], getCurrentListBlock: @escaping (_ owner: O) -> [T], setNewListBlock: @escaping ((owner: O, newList: [T])) -> Void, rowAnimation: UIKit.UITableViewRowAnimation, completion: (() -> Void)? = nil, error: ((_ tableError: Error) -> Void)? = nil) {
+		public func apply<T, O: AnyObject>(owner: O, newList: [T], animator: TableAnimator<T>, animated: Bool, options: ApplyAnimationOptions = [], getCurrentListBlock: @escaping (_ owner: O) -> [T], setNewListBlock: @escaping ((owner: O, newList: [T])) -> Void, rowAnimation: UIKit.UITableView.RowAnimation, completion: (() -> Void)? = nil, error: ((_ tableError: Error) -> Void)? = nil) {
 			
 			let animationSet = UITableViewRowAnimationSet(insert: rowAnimation, delete: rowAnimation, reload: rowAnimation)
             self.apply(owner: owner, newList: newList, animator: animator, animated: animated, options: options, getCurrentListBlock: getCurrentListBlock, setNewListBlock: setNewListBlock, rowAnimations: animationSet, completion: completion, error: error)
