@@ -15,22 +15,25 @@ import Foundation
 	private var tableAssociatedObjectHandle: UInt8 = 0
 	private var collectionAssociatedObjectHandle: UInt8 = 0
 	private let monitor = NSObject()
-	
+
+#if swift(>=4.2)
+	public typealias UITableViewRowAnimation = UITableView.RowAnimation
+#endif
 	
 	/// TableView rows animation style set.
 	public struct UITableViewRowAnimationSet {
-		let insert: UIKit.UITableView.RowAnimation
-		let delete: UIKit.UITableView.RowAnimation
-		let reload: UIKit.UITableView.RowAnimation
+		let insert: UITableViewRowAnimation
+		let delete: UITableViewRowAnimation
+		let reload: UITableViewRowAnimation
 		
-		public init(insert: UIKit.UITableView.RowAnimation, delete: UIKit.UITableView.RowAnimation, reload: UIKit.UITableView.RowAnimation) {
+		public init(insert: UITableViewRowAnimation, delete: UITableViewRowAnimation, reload: UITableViewRowAnimation) {
 			self.insert = insert
 			self.delete = delete
 			self.reload = reload
 		}
 	}
 	
-    extension UIKit.UITableView: EmptyCheckableSequence {
+    extension UITableView: EmptyCheckableSequence {
 		
         var isEmpty: Bool {
             let block: () -> Bool = {
@@ -203,7 +206,7 @@ import Foundation
 		///   - completion: Block for capturing animation completion. Called from main thread.
 		///   - error: Block for capturing error during changes calculation. When we got error in changes, we call *setNewListBlock* and *tableView.reloadData()*, then error block called
 		///   - tableError: TableAnimatorError
-		public func apply<T, O: AnyObject>(owner: O, newList: [T], animator: TableAnimator<T>, animated: Bool, options: ApplyAnimationOptions = [], getCurrentListBlock: @escaping (_ owner: O) -> [T], setNewListBlock: @escaping ((owner: O, newList: [T])) -> Void, rowAnimation: UIKit.UITableView.RowAnimation, completion: (() -> Void)? = nil, error: ((_ tableError: Error) -> Void)? = nil) {
+		public func apply<T, O: AnyObject>(owner: O, newList: [T], animator: TableAnimator<T>, animated: Bool, options: ApplyAnimationOptions = [], getCurrentListBlock: @escaping (_ owner: O) -> [T], setNewListBlock: @escaping ((owner: O, newList: [T])) -> Void, rowAnimation: UITableViewRowAnimation, completion: (() -> Void)? = nil, error: ((_ tableError: Error) -> Void)? = nil) {
 			
 			let animationSet = UITableViewRowAnimationSet(insert: rowAnimation, delete: rowAnimation, reload: rowAnimation)
             self.apply(owner: owner, newList: newList, animator: animator, animated: animated, options: options, getCurrentListBlock: getCurrentListBlock, setNewListBlock: setNewListBlock, rowAnimations: animationSet, completion: completion, error: error)
