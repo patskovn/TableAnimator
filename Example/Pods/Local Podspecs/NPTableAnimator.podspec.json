@@ -1,6 +1,6 @@
 {
   "name": "NPTableAnimator",
-  "version": "4.1.0",
+  "version": "4.3.0",
   "summary": "Animations for UITableView and UICollectionView.",
   "description": "This pod was developed for building table animations",
   "homepage": "https://github.com/Nekitosss/tableAnimator.git",
@@ -13,7 +13,7 @@
   },
   "source": {
     "git": "https://github.com/Nekitosss/tableAnimator.git",
-    "tag": "4.1.0"
+    "tag": "4.3.0"
   },
   "platforms": {
     "ios": "8.0"

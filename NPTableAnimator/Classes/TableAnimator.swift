@@ -167,7 +167,7 @@ open class TableAnimator<Section: TableAnimatorSection> {
 		
 		for (index, section) in fromList.enumerated() {
 			
-			if let indexInNewSection = toList.index(of: section) {
+			if let indexInNewSection = toList.firstIndex(of: section) {
 				
 				let newSection = toList[indexInNewSection]
 				
@@ -190,10 +190,10 @@ open class TableAnimator<Section: TableAnimatorSection> {
 			if !fromList.contains(section) {
 				toAdd.insert(index)
 				
-			} else if let fromIndex = fromList.index(of: section), section.updateField == fromList[fromIndex].updateField {
+			} else if let fromIndex = fromList.firstIndex(of: section), section.updateField == fromList[fromIndex].updateField {
 				orderedExistedSectionsTo.append((index, section))
 				
-				guard let existedIndex = existedSectionIndexes.index(where: { $0.0 == section })
+				guard let existedIndex = existedSectionIndexes.firstIndex(where: { $0.0 == section })
 					else { throw TableAnimatorError.sectionInconsistencyError
 				}
 				
@@ -234,8 +234,8 @@ open class TableAnimator<Section: TableAnimatorSection> {
 				
 				let indexTo = toIndexCalculatingClosure(anIndex)
 				
-				guard let indexFrom = existedSectionsFrom.index(where: { $0.section == toSection })
-					, let existedSectionIndex = existedSectionIndexes.index(where: { $0.0 == toSection })
+				guard let indexFrom = existedSectionsFrom.firstIndex(where: { $0.section == toSection })
+					, let existedSectionIndex = existedSectionIndexes.firstIndex(where: { $0.0 == toSection })
 					else { throw TableAnimatorError.sectionInconsistencyError }
 				
 				let (fromIndex, toIndex) = existedSectionIndexes[existedSectionIndex].1
@@ -285,7 +285,7 @@ open class TableAnimator<Section: TableAnimatorSection> {
 		
 		
 		for section in toMoveSequence {
-			let existedSectionIndex = existedSectionIndexes.index{ $0.0 == section }!
+			let existedSectionIndex = existedSectionIndexes.firstIndex{ $0.0 == section }!
 			let indexes = existedSectionIndexes[existedSectionIndex].1
 			
 			toMove.append(indexes)

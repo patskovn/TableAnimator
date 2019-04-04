@@ -42,8 +42,8 @@ public struct MyCell: TableAnimatorCell {
 	
 	let id: String
 	
-	public var hashValue: Int {
-		return id.hashValue
+	public func hash(into hasher: inout Hasher) {
+		hasher.combine(id)
 	}
 	
 	public var updateField: String
