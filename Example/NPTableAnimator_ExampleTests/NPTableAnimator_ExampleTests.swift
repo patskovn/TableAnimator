@@ -7,7 +7,7 @@
 //
 
 import XCTest
-import NPTableAnimator
+import TableAnimator
 
 
 class NPTableAnimator_ExampleTests: XCTestCase {

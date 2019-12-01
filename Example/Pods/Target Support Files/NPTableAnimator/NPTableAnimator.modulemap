@@ -1,6 +1,0 @@
-framework module NPTableAnimator {
-  umbrella header "NPTableAnimator-umbrella.h"
-
-  export *
-  module * { export * }
-}

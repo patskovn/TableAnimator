@@ -5,7 +5,7 @@
 //  Created by Admin on 12/07/2018.
 //
 
-import Foundation
+import UIKit
 
 
 protocol EmptyCheckableSequence: class {

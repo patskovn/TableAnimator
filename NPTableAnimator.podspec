@@ -28,7 +28,8 @@ This pod was developed for building table animations
 
   s.ios.deployment_target = '8.0'
 
-  s.source_files = 'NPTableAnimator/Classes/**/*'
+  s.source_files = 'Sources/TableAnimator/**/*'
+  s.swift_versions = ['4.0', '4.1', '4.2', '5.0', '5.1']
 
   s.frameworks = 'Foundation'
 end

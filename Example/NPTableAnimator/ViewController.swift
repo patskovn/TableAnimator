@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import NPTableAnimator
+import TableAnimator
 
 
 public func == (lhs: MySection, rhs: MySection) -> Bool {
