@@ -115,6 +115,21 @@ it, simply add the following line to your Podfile:
 pod "NPTableAnimator"
 ```
 
+Also TableAnimator is available through [Swift Package Manager](https://swift.org/package-manager/). To install
+it, simply add the following line to your Package.swift:
+
+```swift
+.package(url: "https://github.com/Nekitosss/TableAnimator.git", from: "4.4.0")
+
+// and
+
+targets: [.target(name: "YourProject", dependencies: ["TableAnimator"])
+```
+Import library for usage:
+
+```swift
+import TableAnimator
+```
 ## Author
 
 Nikita Patskov, patskovn@yahoo.com
